@@ -1,0 +1,159 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+.header {
+  background-color: #0171f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+}
+.logo {
+  width: 100px;
+}
+.btn {
+  background-color: #ee626b;
+  border-radius: 15px;
+  padding: 5px 15px;
+  color: #ffffff;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #f2858c;
+}
+
+.header-links a {
+  color: rgb(255, 255, 255);
+  padding: 5px 15px;
+  text-decoration: none;
+  border-radius: 15px;
+}
+
+.header-links a:hover {
+  background-color: #0171f9;
+}
+.header {
+  background-color: rgba(94, 70, 70, 0.4); /* لون أزرق مع شفافية 70% */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* تقدر تغير اللون وشفافيته */
+  z-index: 1;
+}
+
+.header * {
+  position: relative;
+  z-index: 2; /* عشان المحتوى يفضل ظاهر فوق الطبقة */
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212;
+  color: #fff;
+  direction: rtl;
+}
+
+.contact-section {
+  min-height: 100vh;
+  background-image: url('bg.jpg'); /* غيّر اسم الصورة حسب اللي عندك */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-box p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.contact-box a {
+  color: #00c3ff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.contact-section {
+  width: 100%;
+  min-height: 100vh; /* يغطي الشاشة كلها */
+  background-image: url('images/Untitled-1.png'); /* غيّر اسم الصورة حسب اللي عندك */
+  background-size: cover;         /* تغطي الصفحة كاملة */
+  background-position: center;    /* في النص */
+  background-repeat: no-repeat;   /* ما تتكرر */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.header {
+  background-color: rgba(0, 0, 0, 0.5); /* نصف شفاف - أسود */
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  .site-title {
+    font-size: 24px;
+  }
+  .voucher-list, .payment-methods {
+    padding: 20px;
+  }
+  .voucher-item span {
+    font-size: 14px;
+  }
+  .payment-item label {
+    font-size: 16px;
+  }
+}
+* {
+  box-sizing: border-box;
+}

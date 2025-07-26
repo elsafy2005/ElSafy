@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+.header {
+  background-color: #0171f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+}
+.logo {
+  width: 100px;
+}
+.btn {
+  background-color: #ee626b;
+  border-radius: 15px;
+  padding: 5px 15px;
+  color: #ffffff;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #f2858c;
+}
+
+.header-links a {
+  color: rgb(255, 255, 255);
+  padding: 5px 15px;
+  text-decoration: none;
+  border-radius: 15px;
+}
+
+.header-links a:hover {
+  background-color: #0171f9;
+}
+.header {
+  background-color: rgba(94, 70, 70, 0.4); /* لون أزرق مع شفافية 70% */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* تقدر تغير اللون وشفافيته */
+  z-index: 1;
+}
+
+.header * {
+  position: relative;
+  z-index: 2; /* عشان المحتوى يفضل ظاهر فوق الطبقة */
+}
+.about {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  line-height: 1.8;
+  font-family: 'Cairo', sans-serif;
+  
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+p {
+  color: #444;
+  margin-bottom: 15px;
+}
+body {
+  background-image: url('images/Untitled-1.png'); /* أو رابط مباشر للصورة */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  .site-title {
+    font-size: 24px;
+  }
+  .voucher-list, .payment-methods {
+    padding: 20px;
+  }
+  .voucher-item span {
+    font-size: 14px;
+  }
+  .payment-item label {
+    font-size: 16px;
+  }
+}
+body {
+  background-image: url('images/Untitled-1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin: 0;
+}

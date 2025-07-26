@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="free.css" />
+   <link rel="icon" type="image/png" href="images/logo.png.png">
+    <title>Bow Store | Game Top-Up</title>
+  <meta name="description" content="Top-up your favorite games like PUBG, Free Fire, and more. Fast, secure and easy game recharge from Bow Store.">
+  <meta name="keywords" content="Bow Store, game top-up, PUBG UC, Free Fire, Mobile Legends">
+  <meta name="author" content="Bow Store Team">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <!-- HEADER -->
+  <div class="header">
+    <img class="logo" src="images/bow.jpg" />
+    <div class="header-links">
+      <a href="index.html">Home</a>
+      <a href="Contact.HTML">Contact</a>
+      <a href="About.html">About</a>
+    </div>
+  </div>
+
+<div class="delivery-note">
+  ⚡ Shipping takes from 2 minutes to 2 hours!
+</div>
+
+  <!-- FORM SECTION -->
+  <div class="container">
+  
+
+    <form id="orderForm">
+      <label>اختر الكمية:</label>
+      <select name="package" required>
+        <option value="50 Free Fire – 40 EGP">50 Diamonds – 40 EGP</option>
+        <option value="100 Free Fire – 68 EGP">100 Diamonds – 68 EGP</option>
+        <option value="210 Free Fire – 130 EGP">210 Diamonds – 130 EGP</option>
+        <option value="310 Free Fire – 190 EGP">310 Diamonds – 190 EGP</option>
+        <option value="520 Free Fire – 300 EGP">520 Diamonds – 300 EGP</option>
+        <option value="1060 Free Fire – 570 EGP">1060 Diamonds – 570 EGP</option>
+        <option value="2200 Free Fire – 1150 EGP">2200 Diamonds – 1150 EGP</option>
+      </select>
+
+      <label> أيدي الاكونت :</label>
+      <input type="text" name="accountId" required placeholder="أكتب أيدي الاكونت هنا" />
+
+      <label> الرقم الذي قمت ب التحويل من خلاله:</label>
+      <input type="tel" name="phone" required placeholder="اكتب رقم الهاتف هنا" />
+
+      <button type="submit">إرسال</button>
+    </form>
+  </div>
+  <div class="payment-methods">
+  <h3>طرق الدفع</h3>
+  
+  <div class="payment-item">
+    <img src="images/cash.png" alt="Vodafone Cash" />
+    <div>
+      <label>فودافون كاش</label>
+      <input type="text" value="01060842931" readonly onclick="this.select()" />
+      <small>اضغط على الرقم لنسخه</small>
+    </div>
+  </div>
+
+  <div class="payment-item">
+    <img src="images/InstaPay_Logo.png" alt="InstaPay" />
+    <div>
+      <label>إنستا باي</label>
+      <input type="text" value="01014796589" readonly onclick="this.select()" />
+      <small>اضغط على الرقم لنسخه</small>
+    </div>
+  </div>
+</div>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YaE_xNqbHxI5il0lz"); // Public key
+    })();
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
+        .then(function() {
+          alert("✅ تم إرسال الطلب بنجاح!");
+          document.getElementById("orderForm").reset();
+        }, function(error) {
+          alert("❌ حدث خطأ أثناء الإرسال");
+          console.error("EmailJS Error:", error);
+        });
+    });
+  </script>
+</body>
+</html>
+
+</body>
+</html>

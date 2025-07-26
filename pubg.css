@@ -1,0 +1,369 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+
+  /* الخلفية */
+  background-image: url('images/pubg.jpg'); /* رابط الصورة */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; /* تغطي الصفحة كلها */
+  position: relative;
+  min-height: 100vh;
+}
+
+/* طبقة شفافة فوق الخلفية عشان تخفف الصورة */
+body::before {
+  content: "";
+  position: fixed; /* عشان تبقى ثابتة لما تعمل scroll */
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(134, 106, 106, 0.7); /* لون أبيض شفاف 70% */
+  pointer-events: none; /* عشان ما تمنعش التفاعل */
+  z-index: 0;
+}
+
+/* المحتوى فوق الخلفية */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  background-color: transparent; /* ممكن تخليها شفافة أو لون فاتح */
+}
+
+.header {
+  background-color: #b80606;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 50px;
+ position: relative;
+  top: -45px;
+}
+  .voucher-list {
+  max-width: 400px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+body {
+  background-color: #7f19e6;
+}
+
+.logo {
+  width: 100px;
+  
+}
+.btn {
+  background-color: #ee626b;
+  border-radius: 15px;
+  padding: 5px 15px;
+  color: #ffffff;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #f2858c;
+}
+
+.header-links a {
+  color: white;
+  padding: 5px 15px;
+  text-decoration: none;
+  border-radius: 15px;
+}
+
+.header-links a:hover {
+  background-color: #0171f9;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #770707;
+  margin: 0;
+  padding: 40px 20px;
+  color: #222;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  padding: 30px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: #4a4a4a;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* اخفي الراديو الافتراضي */
+input[type="radio"] {
+  display: none;
+}
+
+/* التصميم للخيارات */
+label.voucher-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: #fafafa;
+}
+
+/* صورة الUC */
+.voucher-item img.uc-icon {
+  width: 40px;
+  height: 40px;
+  margin-left: 16px;
+}
+
+/* نص الباقة */
+.voucher-item span {
+   direction: ltr;
+  unicode-bidi: embed;
+  font-weight: 600;
+  font-size: 16px;
+  color: #222;
+}
+
+/* لما يكون الراديو متفعل */
+input[type="radio"]:checked + img + span {
+  color: #004aad;
+  font-weight: 700;
+}
+
+/* تغير لون حدود اللايبيل عند التحديد */
+input[type="radio"]:checked + img,
+input[type="radio"]:checked + img + span,
+input[type="radio"]:checked + img + span::before {
+  border-color: #004aad;
+  box-shadow: 0 0 10px rgba(0, 74, 173, 0.5);
+}
+
+/* تأثير hover على الخيارات */
+label.voucher-item:hover {
+  border-color: #004aad;
+  box-shadow: 0 0 8px rgba(0, 74, 173, 0.3);
+  background: #f0f6ff;
+}
+
+.container {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+  align-items: flex-start;
+  justify-content: center;
+}
+/* تكبير الخطوط والمساحات داخل الفورم */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* مسافة أكبر بين الحقول */
+  font-size: 20px; /* حجم الخط العام */
+  max-width: 420px;
+  margin: auto;
+}
+
+/* تكبير النصوص داخل اللابل */
+form label {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* تكبير الـ select و inputs */
+form select,
+form input[type="text"],
+form input[type="tel"] {
+  font-size: 18px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* تأثير عند التركيز على الحقول */
+form select:focus,
+form input[type="text"]:focus,
+form input[type="tel"]:focus {
+  border-color: #004aad;
+  box-shadow: 0 0 6px rgba(0, 74, 173, 0.5);
+}
+
+/* تكبير زر الإرسال */
+form button[type="submit"] {
+  font-size: 22px;
+  padding: 14px 0;
+  border-radius: 10px;
+  border: none;
+  background-color: #004aad;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: #002f6c;
+}
+.payment-methods {
+  max-width: 420px;
+  margin: 30px auto 50px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.payment-methods h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #004aad;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.payment-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.payment-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.payment-item label {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: #333;
+  display: block;
+}
+
+.payment-item input[type="text"] {
+  font-size: 18px;
+  padding: 8px 12px;
+  width: 180px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: all;
+}
+
+.payment-item input[type="text"]:focus {
+  outline: none;
+  border-color: #004aad;
+  box-shadow: 0 0 6px rgba(0, 74, 173, 0.5);
+}
+
+.payment-item small {
+  color: #777;
+  font-size: 13px;
+  margin-top: 2px;
+  display: block;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(2, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header, .container, .payment-methods {
+  position: relative;
+  z-index: 1;
+}
+.header {
+  background-color: rgba(0, 0, 0, 0.6); /* خلفية سوداء شفافة 60% */
+  backdrop-filter: blur(5px);          /* تعتيم خفيف للخلفية تحتها */
+  -webkit-backdrop-filter: blur(5px);  /* دعم سفاري */
+  padding: 10px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  border-radius: 0 0 12px 12px;
+  
+}
+
+.site-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: #007bff;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
+  margin-left: -20px; /* حركها شمال 20 بكسل */
+  /* أو بدلها بـ transform إذا حابب: */
+  /* transform: translateX(-20px); */
+}
+
+.container {
+  direction: ltr;
+  text-align: left;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  .site-title {
+    font-size: 24px;
+  }
+  .voucher-list, .payment-methods {
+    padding: 20px;
+  }
+  .voucher-item span {
+    font-size: 14px;
+  }
+  .payment-item label {
+    font-size: 16px;
+  }
+}
+.delivery-note {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 10px 0 0 10px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
