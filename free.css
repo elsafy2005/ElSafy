@@ -529,3 +529,14 @@ form button {
 form button:hover {
   background-color: #0056b3;
 }
+.container,
+.payment-methods {
+  max-width: 360px; /* أو 350px لو ده المناسب لك */
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background-color: #fff;
+  box-sizing: border-box;
+}
