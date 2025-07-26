@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bowstore.netlify.app/sitemap.xml
