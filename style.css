@@ -154,33 +154,40 @@ body {
   height: 24px;
 }
 
-/* ميديا كويري للشاشات الصغيرة */
 @media (max-width: 768px) {
-  .landing-page {
-    flex-direction: column;
-    padding: 40px 20px;
-    text-align: center;
+  .container,
+  .payment-methods {
+    margin: 20px auto;
+    padding: 20px 15px;
+    max-width: 95%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
   }
 
-  .landing-page-left-section {
-    margin-bottom: 30px;
+  .payment-item {
+    margin-bottom: 20px;
   }
 
-  .header {
-    flex-direction: column;
-    gap: 10px;
+  .payment-item input {
+    width: 100%;
   }
 
-  .header-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  form label,
+  form input,
+  form select,
+  form button {
+    width: 100%;
+    margin-bottom: 15px;
   }
 
-  .card {
-    width: 90%;
+  form button {
+    padding: 12px;
+    font-size: 16px;
   }
 }
+
 body {
   background-image: url('images/Untitled-1.png'); /* غيّر المسار حسب الصورة اللي عندك */
   background-size: cover;
@@ -269,4 +276,25 @@ a, a:hover {
 }
 .card a {
   color: inherit;
+}
+.site-footer {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* تدرج أنيق */
+  color: #fff;
+  padding: 20px 10px;
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  font-size: 15px;
+  margin-top: 50px;
+  border-top: 2px solid #00aaff;
+}
+
+.site-footer span {
+  color: #00c3ff;
+  font-weight: bold;
+}
+
+.footer-content p {
+  margin: 0;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
 }

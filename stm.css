@@ -286,28 +286,39 @@ header {
   z-index: 2;
 }
 @media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+  .container,
+  .payment-methods {
+    margin: 20px auto;
+    padding: 20px 15px;
+    max-width: 95%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
   }
-  .logo {
-    width: 60px;
-    height: 60px;
+
+  .payment-item {
+    margin-bottom: 20px;
   }
-  .site-title {
-    font-size: 24px;
+
+  .payment-item input {
+    width: 100%;
   }
-  .voucher-list, .payment-methods {
-    padding: 20px;
+
+  form label,
+  form input,
+  form select,
+  form button {
+    width: 100%;
+    margin-bottom: 15px;
   }
-  .voucher-item span {
-    font-size: 14px;
-  }
-  .payment-item label {
+
+  form button {
+    padding: 12px;
     font-size: 16px;
   }
 }
+
 .delivery-note {
   position: fixed;
   top: 50%;
@@ -321,4 +332,110 @@ header {
   font-family: Arial, sans-serif;
   z-index: 9999;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.payment-methods {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 350px; /* قللنا العرض الأقصى */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+
+.payment-methods h3 {
+  font-size: 16px; /* عنوان طرق الدفع */
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.payment-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.payment-item img {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.payment-item label {
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.payment-item input {
+  width: 100%;
+  padding: 4px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.payment-item small {
+  font-size: 11px;
+  color: #666;
+}
+
+/* Responsive لو الشاشة صغيرة */
+@media (max-width: 600px) {
+  .payment-methods {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .payment-item img {
+    width: 25px;
+    height: 25px;
+    margin-left: 8px;
+  }
+
+  .payment-item label {
+    font-size: 13px;
+  }
+
+  .payment-item input {
+    font-size: 12px;
+    padding: 3px;
+  }
+
+  .payment-item small {
+    font-size: 10px;
+  }
+}
+.container {
+  background-color: #fff;
+  padding: 15px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 350px; /* نفس الحجم بتاع طرق الدفع */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.site-footer {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* تدرج أنيق */
+  color: #fff;
+  padding: 20px 10px;
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  font-size: 15px;
+  margin-top: 50px;
+  border-top: 2px solid #00aaff;
+}
+
+.site-footer span {
+  color: #00c3ff;
+  font-weight: bold;
+}
+
+.footer-content p {
+  margin: 0;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
 }
