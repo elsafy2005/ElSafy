@@ -544,3 +544,91 @@ form select {
   direction: ltr;
   text-align: left;
 }
+.container {
+  max-width: 360px;
+  margin: 20px auto;
+  background: #1e1e2f;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  color: #fff;
+  font-family: 'Cairo', sans-serif;
+}
+.payment-methods {
+  background-color: #1e1e2f;
+  padding: 20px;
+  border-radius: 15px;
+  font-family: 'Cairo', sans-serif;
+  color: #fff;
+}
+
+.payment-methods strong {
+  color: #fff;
+}
+
+.payment-methods .number {
+  background-color: #1e1e2f;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  display: inline-block;
+  margin-top: 5px;
+}
+.payment-methods input {
+  background-color: #1e1e2f; /* نفس لون القايمة */
+  color: #fff; /* لون الخط أبيض */
+  border: 1px solid #444; /* حدود خفيفة */
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.payment-methods input::placeholder {
+  color: #ccc; /* لو في placeholder يبقى لونه رمادي فاتح */
+}
+.payment-methods,
+.payment-methods * {
+  color: #fff !important;
+}
+.container {
+  background: rgba(15, 15, 30, 0.8); /* خلفية شفافة غامقة */
+  backdrop-filter: blur(10px); /* تأثير بلور */
+  -webkit-backdrop-filter: blur(10px); /* دعم كروم وسفاري */
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: fadeUp 0.7s ease forwards;
+  transform: translateY(20px); /* مكان البداية قبل الأنيميشن */
+  opacity: 0;
+}
+
+/* أنيميشن للظهور */
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.payment-methods {
+  background: rgba(15, 15, 30, 0.8); /* لون شبه القايمة */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: fadeUp 0.7s ease forwards;
+  transform: translateY(20px);
+  opacity: 0;
+  margin-top: 20px;
+}
+
+/* نفس الأنيميشن */
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

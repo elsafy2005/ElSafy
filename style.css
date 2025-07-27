@@ -352,3 +352,53 @@ a, a:hover {
     margin: 10px 0;
   }
 }
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  width: 240px;
+  transition: transform 0.3s ease;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.footer {
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+  font-size: 14px;
+  opacity: 0.6;
+}
+section, form, h1 {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.7s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* نخلي الجسم كله بارتفاع الشاشة بالكامل */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* نخلي المحتوى يتمدد وياخد كل المساحة اللي فوق الفوتر */
+.content {
+  flex: 1;
+}
+
+/* الفوتر يبقى ظاهر كويس */
+.site-footer {
+  background-color: #111;
+  color: white;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 14px;
+}
