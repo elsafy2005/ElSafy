@@ -86,53 +86,72 @@
 
 
 
-      <form onsubmit="submitForm(event)">
-        <label for="sender-number">رقم الهاتف الذي تم التحويل منه:</label>
-        <input type="text" id="sender-number" required placeholder="مثلاً: 01000000000" />
+<form id="orderForm">
+  <label for="sender-number">رقم الهاتف الذي تم التحويل منه:</label>
+  <input
+  type="text"
+  id="sender-number"
+  name="sender_number"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="ادخل رقم الهاتف المرسل منه"
+/>
 
-        <label for="pubg-id">ID PUBG:</label>
-        <input type="text" id="pubg-id" required placeholder="مثلاً: 5221122334" />
 
-        <button type="submit">إرسال الطلب</button>
-      </form>
+  <label for="pubg-id">ID PUBG:</label>
+<input
+  type="text"
+  id="pubg-id"
+  name="pubg_id"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="مثلاً: 5221122334"
+/>
+
+
+  <input type="hidden" id="package-name" name="package_name" />
+
+  <button type="submit">إرسال الطلب</button>
+</form>
+
     </div>
   </div>
 
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
-  emailjs.init("YaE_xNqbHxI5il0lz"); // ← حط هنا الـ Public Key بتاعك
+  (function(){
+    emailjs.init("YaE_xNqbHxI5il0lz"); // ← حطيت Public Key
+  })();
 
+  // عشان نحفظ اسم الباقة
   let selectedPackage = '';
 
   function selectPackage(packageName) {
     selectedPackage = packageName;
+    document.getElementById("package-name").value = packageName;
     document.getElementById('transferForm').classList.remove('hidden');
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 
-  function submitForm(event) {
-    event.preventDefault();
+  document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    const senderNumber = document.getElementById('sender-number').value;
-    const pubgId = document.getElementById('pubg-id').value;
-
-    const templateParams = {
-      package_name: selectedPackage,
-      sender_number: senderNumber,
-      pubg_id: pubgId,
-    };
-
-   emailjs.send('service_uc43cjt', 'template_prh9qcs', templateParams)
-  .then(function(response) {
-    alert('✅ تم إرسال الطلب بنجاح!');
-    event.target.reset(); // ← ده الصح
-  }, function(error) {
-    alert('❌ حصل خطأ أثناء الإرسال. حاول مرة أخرى.');
-    console.log(error);
+    emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
+      .then(function() {
+        alert("✅ تم إرسال الطلب بنجاح!");
+        document.getElementById("orderForm").reset();
+        document.getElementById('transferForm').classList.add('hidden');
+      }, function(error) {
+        alert("❌ حدث خطأ أثناء الإرسال");
+        console.error("EmailJS Error:", error);
+      });
   });
-
-  }
 </script>
+
 
 
   <footer class="site-footer">

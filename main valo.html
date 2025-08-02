@@ -1,6 +1,12 @@
 <!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <meta charset="UTF-8" />
+  <title>Bow Store | Game Top-Up</title>
+  <meta name="description" content="Top-up your favorite games like PUBG, Free Fire, and more. Fast, secure and easy game recharge from Bow Store.">
+  <meta name="keywords" content="Bow Store, game top-up, PUBG UC, Free Fire, Mobile Legends">
+  <meta name="author" content="Bow Store Team">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap"
@@ -8,101 +14,146 @@
   />
   <link rel="stylesheet" href="valo.css" />
   <link rel="icon" type="image/png" href="images/logo.png.png">
-   <title>Bow Store | Game Top-Up</title>
-  <meta name="description" content="Top-up your favorite games like PUBG, Free Fire, and more. Fast, secure and easy game recharge from Bow Store.">
-  <meta name="keywords" content="Bow Store, game top-up, PUBG UC, Free Fire, Mobile Legends">
-  <meta name="author" content="Bow Store Team">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
   <!-- HEADER -->
   <div class="header">
-    <img class="logo" src="images/bow.jpg" />
+    <img class="logo" src="images/bow.jpg" alt="Logo" />
     <div class="header-links">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
     </div>
   </div>
-
-<div class="delivery-note">
+  <div class="delivery-note">
   ⚡ Shipping takes from 2 minutes to 2 hours!
 </div>
-<div class="payment-methods">
-  <h3>طرق الدفع</h3>
-  
-  <div class="payment-item">
-    <img src="images/cash.png" alt="Vodafone Cash" />
-    <div>
-      <label>فودافون كاش</label>
-      <input type="text" value="01060842931" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
 
-  <div class="payment-item">
-    <img src="images/InstaPay_Logo.png" alt="InstaPay" />
-    <div>
-      <label>إنستا باي</label>
-      <input type="text" value="01014796589" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
-</div>
-  <!-- FORM SECTION -->
+
   <div class="container">
-  
+    <h1>تحديد الكمية</h1>
 
-    <form id="orderForm">
-      <label>اختر الكمية:</label>
-      <select name="package" required>
-        <option value="30 CP – 30 EGP">30 CP – 30 EGP</option>
-        <option value="88 CP – 65 EGP">88 CP – 65 EGP</option>
-        <option value="160 CP – 80 EGP">160 CP – 80 EGP</option>
-        <option value="460 CP – 260 EGP">460 CP – 260 EGP</option>
-        <option value="960 CP – 470 EGP">960 CP – 470 EGP</option>
-        <option value="2600 CP – 1270 EGP">2600 CP – 1270 EGP</option>
-        <option value="5400 CP – 2300 EGP">5400 CP – 2300 EGP</option>
-         <option value="11600 CP – 5600 EGP">11600 CP – 5600 EGP</option>
-        <option value="23200 CP – 10150 EGP">23200 CP – 10150 EGP</option>
-        <option value="34800 CP – 15650 EGP">34800 CP – 15650 EGP</option>
-        <option value="58000 CP – 25200 EGP">58000 CP – 25200 EGP</option>
-      </select>
+    <div class="packages">
+      <div class="package-card" onclick="selectPackage('30 CP')">
+        <img src="images/cpcall.png" alt="30 CP">
+        <h3>30 CP</h3>
+        <p>25 جنيه</p>
+      </div>
 
- <label>أسم الاكونت:</label>
-  <input type="text" name="accountName" required placeholder="اكتب اسم الاكونت هنا" />
-      <label> أيدي الاكونت :</label>
-      <input type="text" name="accountId" required placeholder="أكتب أيدي الاكونت هنا" />
+      <div class="package-card" onclick="selectPackage('80 CP')">
+        <img src="images/cpcall.png" alt="80 CP">
+        <h3>80 CP</h3>
+        <p>55 جنيه</p>
+      </div>
 
-      <label> الرقم الذي قمت ب التحويل من خلاله:</label>
-      <input type="tel" name="phone" required placeholder="اكتب رقم الهاتف هنا" />
+      <div class="package-card" onclick="selectPackage('420 CP')">
+        <img src="images/cpcall.png" alt="420 CP">
+        <h3>420 CP</h3>
+        <p>265 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('880 CP')">
+        <img src="images/cpcall.png" alt="880 CP">
+        <h3>880 CP</h3>
+        <p>500 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('2400 CP')">
+        <img src="images/cpcall.png" alt="2400 CP">
+        <h3>2400 CP</h3>
+        <p>1220 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('5000 CP')">
+        <img src="images/cpcall.png" alt="5000 CP">
+        <h3>5000 CP</h3>
+        <p>2340 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('10800 CP')">
+        <img src="images/cpcall.png" alt="10800 CP">
+        <h3>10800 CP</h3>
+        <p>4750 جنيه</p>
+      </div>
 
-      <button type="submit">إرسال</button>
-    </form>
+    </div>
+    
+
+ <div id="transferForm" class="hidden">
+  <h2>بيانات التحويل</h2>
+  <p>الرجاء تحويل المبلغ إلى الرقم التالي:</p>
+  <div class="transfer-info">
+    <img src="images/cash.png" alt="Vodafone Cash" class="vodafone-logo">
+    <span class="transfer-number">01060842931</span>
   </div>
-  
 
 
-  <!-- JAVASCRIPT -->
+
+<form id="orderForm">
+  <label for="sender-number">رقم الهاتف الذي تم التحويل منه:</label>
+  <input
+  type="text"
+  id="sender-number"
+  name="sender_number"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="ادخل رقم الهاتف المرسل منه"
+/>
+
+
+  <label for="pubg-id">ID :</label>
+<input
+  type="text"
+  id="pubg-id"
+  name="pubg_id"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+
+/>
+
+
+  <input type="hidden" id="package-name" name="package_name" />
+
+  <button type="submit">إرسال الطلب</button>
+</form>
+
+    </div>
+  </div>
+
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("YaE_xNqbHxI5il0lz"); // Public key
-    })();
+<script>
+  (function(){
+    emailjs.init("YaE_xNqbHxI5il0lz"); // ← حطيت Public Key
+  })();
 
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+  // عشان نحفظ اسم الباقة
+  let selectedPackage = '';
 
-      emailjs.sendForm("service_uc43cjt", "template_7j9uvur", this)
-        .then(function() {
-          alert("✅ تم إرسال الطلب بنجاح!");
-          document.getElementById("orderForm").reset();
-        }, function(error) {
-          alert("❌ حدث خطأ أثناء الإرسال");
-          console.error("EmailJS Error:", error);
-        });
-    });
-  </script>
+  function selectPackage(packageName) {
+    selectedPackage = packageName;
+    document.getElementById("package-name").value = packageName;
+    document.getElementById('transferForm').classList.remove('hidden');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
+      .then(function() {
+        alert("✅ تم إرسال الطلب بنجاح!");
+        document.getElementById("orderForm").reset();
+        document.getElementById('transferForm').classList.add('hidden');
+      }, function(error) {
+        alert("❌ حدث خطأ أثناء الإرسال");
+        console.error("EmailJS Error:", error);
+      });
+  });
+</script>
+
+
+
   <footer class="site-footer">
   <div class="footer-content">
     <p>© 2025 جميع الحقوق محفوظة - <span>بو ستور</span> 💙</p>
