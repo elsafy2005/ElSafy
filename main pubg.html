@@ -30,77 +30,111 @@
   ⚡ Shipping takes from 2 minutes to 2 hours!
 </div>
 
- <div class="payment-methods">
-  <h3>طرق الدفع</h3>
-  
-  <div class="payment-item">
-    <img src="images/cash.png" alt="Vodafone Cash" />
-    <div>
-      <label>فودافون كاش</label>
-      <input type="text" value="01060842931" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
 
-  <div class="payment-item">
-    <img src="images/InstaPay_Logo.png" alt="InstaPay" />
-    <div>
-      <label>إنستا باي</label>
-      <input type="text" value="01014796589" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
-</div>
-
-  <!-- FORM SECTION -->
   <div class="container">
-  
+    <h1>تحديد الكمية</h1>
 
-    <form id="orderForm">
-      <label>اختر الكمية:</label>
-      <select name="package" required>
-        <option value="60 UC – 55 EGP">60 UC – 55 EGP</option>
-        <option value="325 UC – 275 EGP">325 UC – 275 EGP</option>
-        <option value="660 UC – 465 EGP">660 UC – 465 EGP</option>
-        <option value="1800 UC – 1150 EGP">1800 UC – 1150 EGP</option>
-        <option value="3850 UC – 2200 EGP">3850 UC – 2200 EGP</option>
-        <option value="8100 UC – 4400 EGP">8100 UC – 4400 EGP</option>
-        <option value="16200 UC – 8600 EGP">16200 UC – 8600 EGP</option>
-      </select>
+    <div class="packages">
+      <div class="package-card" onclick="selectPackage('60 UC')">
+        <img src="images/uc.png" alt="60 UC">
+        <h3>60 UC</h3>
+        <p>55 جنيه</p>
+      </div>
 
- <label>أسم الاكونت:</label>
-  <input type="text" name="accountName" required placeholder="اكتب اسم الاكونت هنا" />
-      <label> أيدي الاكونت :</label>
-      <input type="text" name="accountId" required placeholder="أكتب أيدي الاكونت هنا" />
+      <div class="package-card" onclick="selectPackage('325 UC')">
+        <img src="images/uc.png" alt="325 UC">
+        <h3>325 UC</h3>
+        <p>260 جنيه</p>
+      </div>
 
-      <label> الرقم الذي قمت ب التحويل من خلاله:</label>
-      <input type="tel" name="phone" required placeholder="اكتب رقم الهاتف هنا" />
+      <div class="package-card" onclick="selectPackage('660 UC')">
+        <img src="images/uc.png" alt="660 UC">
+        <h3>660 UC</h3>
+        <p>465 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('1800 UC')">
+        <img src="images/uc.png" alt="1800 UC">
+        <h3>1800 UC</h3>
+        <p>1200 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('3850 UC')">
+        <img src="images/uc.png" alt="3850 UC">
+        <h3>3850 UC</h3>
+        <p>2250 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('8100 UC')">
+        <img src="images/uc.png" alt="8100 UC">
+        <h3>8100 UC</h3>
+        <p>4400 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('16200 UC')">
+        <img src="images/uc.png" alt="16200 UC">
+        <h3>16200 UC</h3>
+        <p>8700 جنيه</p>
+      </div>
 
-      <button type="submit">إرسال</button>
-    </form>
+    </div>
+    
+
+ <div id="transferForm" class="hidden">
+  <h2>بيانات التحويل</h2>
+  <p>الرجاء تحويل المبلغ إلى الرقم التالي:</p>
+  <div class="transfer-info">
+    <img src="images/cash.png" alt="Vodafone Cash" class="vodafone-logo">
+    <span class="transfer-number">01060842931</span>
   </div>
- 
 
-  <!-- JAVASCRIPT -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("YaE_xNqbHxI5il0lz"); // Public key
-    })();
 
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-      e.preventDefault();
 
-      emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
-        .then(function() {
-          alert("✅ تم إرسال الطلب بنجاح!");
-          document.getElementById("orderForm").reset();
-        }, function(error) {
-          alert("❌ حدث خطأ أثناء الإرسال");
-          console.error("EmailJS Error:", error);
-        });
-    });
-  </script>
+      <form onsubmit="submitForm(event)">
+        <label for="sender-number">رقم الهاتف الذي تم التحويل منه:</label>
+        <input type="text" id="sender-number" required placeholder="مثلاً: 01000000000" />
+
+        <label for="pubg-id">ID PUBG:</label>
+        <input type="text" id="pubg-id" required placeholder="مثلاً: 5221122334" />
+
+        <button type="submit">إرسال الطلب</button>
+      </form>
+    </div>
+  </div>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init("YaE_xNqbHxI5il0lz"); // ← حط هنا الـ Public Key بتاعك
+
+  let selectedPackage = '';
+
+  function selectPackage(packageName) {
+    selectedPackage = packageName;
+    document.getElementById('transferForm').classList.remove('hidden');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  function submitForm(event) {
+    event.preventDefault();
+
+    const senderNumber = document.getElementById('sender-number').value;
+    const pubgId = document.getElementById('pubg-id').value;
+
+    const templateParams = {
+      package_name: selectedPackage,
+      sender_number: senderNumber,
+      pubg_id: pubgId,
+    };
+
+   emailjs.send('service_uc43cjt', 'template_prh9qcs', templateParams)
+  .then(function(response) {
+    alert('✅ تم إرسال الطلب بنجاح!');
+    event.target.reset(); // ← ده الصح
+  }, function(error) {
+    alert('❌ حصل خطأ أثناء الإرسال. حاول مرة أخرى.');
+    console.log(error);
+  });
+
+  }
+</script>
+
+
   <footer class="site-footer">
   <div class="footer-content">
     <p>© 2025 جميع الحقوق محفوظة - <span>بو ستور</span> 💙</p>

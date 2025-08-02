@@ -3,33 +3,33 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 
-  /* الخلفية */
-  background-image: url('images/PUBG-Mobile-.jpg'); /* رابط الصورة */
+
+  background-image: url('images/PUBG-Mobile-.jpg'); 
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover; /* تغطي الصفحة كلها */
+  background-size: cover; 
   position: relative;
   min-height: 100vh;
 }
 
-/* طبقة شفافة فوق الخلفية عشان تخفف الصورة */
+
 body::before {
   content: "";
-  position: fixed; /* عشان تبقى ثابتة لما تعمل scroll */
+  position: fixed; 
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(134, 106, 106, 0.7); /* لون أبيض شفاف 70% */
-  pointer-events: none; /* عشان ما تمنعش التفاعل */
+  background-color: rgba(134, 106, 106, 0.7);
+  pointer-events: none; 
   z-index: 0;
 }
 
-/* المحتوى فوق الخلفية */
+
 .container {
   position: relative;
   z-index: 1;
   max-width: 900px;
   margin: auto;
   padding: 40px 20px;
-  background-color: transparent; /* ممكن تخليها شفافة أو لون فاتح */
+  background-color: transparent; 
 }
 
 .header {
@@ -107,12 +107,12 @@ form {
   gap: 15px;
 }
 
-/* اخفي الراديو الافتراضي */
+
 input[type="radio"] {
   display: none;
 }
 
-/* التصميم للخيارات */
+
 label.voucher-item {
   display: flex;
   align-items: center;
@@ -124,14 +124,14 @@ label.voucher-item {
   background: #fafafa;
 }
 
-/* صورة الUC */
+
 .voucher-item img.uc-icon {
   width: 40px;
   height: 40px;
   margin-left: 16px;
 }
 
-/* نص الباقة */
+
 .voucher-item span {
    direction: ltr;
   unicode-bidi: embed;
@@ -140,13 +140,13 @@ label.voucher-item {
   color: #222;
 }
 
-/* لما يكون الراديو متفعل */
+
 input[type="radio"]:checked + img + span {
   color: #004aad;
   font-weight: 700;
 }
 
-/* تغير لون حدود اللايبيل عند التحديد */
+
 input[type="radio"]:checked + img,
 input[type="radio"]:checked + img + span,
 input[type="radio"]:checked + img + span::before {
@@ -154,7 +154,7 @@ input[type="radio"]:checked + img + span::before {
   box-shadow: 0 0 10px rgba(0, 74, 173, 0.5);
 }
 
-/* تأثير hover على الخيارات */
+
 label.voucher-item:hover {
   border-color: #004aad;
   box-shadow: 0 0 8px rgba(0, 74, 173, 0.3);
@@ -168,17 +168,17 @@ label.voucher-item:hover {
   align-items: flex-start;
   justify-content: center;
 }
-/* تكبير الخطوط والمساحات داخل الفورم */
+
 form {
   display: flex;
   flex-direction: column;
-  gap: 25px; /* مسافة أكبر بين الحقول */
-  font-size: 20px; /* حجم الخط العام */
+  gap: 25px; 
+  font-size: 20px;
   max-width: 420px;
   margin: auto;
 }
 
-/* تكبير النصوص داخل اللابل */
+
 form label {
   font-weight: 600;
   font-size: 20px;
@@ -186,7 +186,7 @@ form label {
   display: block;
 }
 
-/* تكبير الـ select و inputs */
+
 form select,
 form input[type="text"],
 form input[type="tel"] {
@@ -198,7 +198,7 @@ form input[type="tel"] {
   transition: border-color 0.3s ease;
 }
 
-/* تأثير عند التركيز على الحقول */
+
 form select:focus,
 form input[type="text"]:focus,
 form input[type="tel"]:focus {
@@ -206,7 +206,7 @@ form input[type="tel"]:focus {
   box-shadow: 0 0 6px rgba(0, 74, 173, 0.5);
 }
 
-/* تكبير زر الإرسال */
+
 form button[type="submit"] {
   font-size: 22px;
   padding: 14px 0;
@@ -296,9 +296,9 @@ body::before {
   z-index: 1;
 }
 .header {
-  background-color: rgba(0, 0, 0, 0.6); /* خلفية سوداء شفافة 60% */
-  backdrop-filter: blur(5px);          /* تعتيم خفيف للخلفية تحتها */
-  -webkit-backdrop-filter: blur(5px);  /* دعم سفاري */
+  background-color: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(5px);        
+  -webkit-backdrop-filter: blur(5px);  
   padding: 10px 50px;
   display: flex;
   justify-content: space-between;
@@ -315,9 +315,7 @@ body::before {
   color: #007bff;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 1px;
-  margin-left: -20px; /* حركها شمال 20 بكسل */
-  /* أو بدلها بـ transform إذا حابب: */
-  /* transform: translateX(-20px); */
+  margin-left: -20px; 
 }
 
 .container {
@@ -330,7 +328,7 @@ body::before {
   border-radius: 50%;
   object-fit: cover;
 }
-/* ==================== تحسين شكل القوائم والفورم على الموبايل ==================== */
+
 @media (max-width: 768px) {
   .container,
   .payment-methods {
@@ -384,7 +382,7 @@ body::before {
   padding: 15px;
   margin: 20px auto;
   width: 100%;
-  max-width: 350px; /* قللنا العرض الأقصى */
+  max-width: 350px; 
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   font-size: 14px;
@@ -392,7 +390,7 @@ body::before {
 
 
 .payment-methods h3 {
-  font-size: 16px; /* عنوان طرق الدفع */
+  font-size: 16px; 
   margin-bottom: 10px;
   text-align: center;
 }
@@ -429,7 +427,7 @@ body::before {
   color: #666;
 }
 
-/* Responsive لو الشاشة صغيرة */
+
 @media (max-width: 600px) {
   .payment-methods {
     padding: 10px;
@@ -460,12 +458,12 @@ body::before {
   padding: 15px;
   margin: 0 auto;
   width: 100%;
-  max-width: 350px; /* نفس الحجم بتاع طرق الدفع */
+  max-width: 350px; 
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .site-footer {
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* تدرج أنيق */
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); 
   color: #fff;
   padding: 20px 10px;
   text-align: center;
@@ -501,14 +499,14 @@ body::before {
 
 @media (max-width: 600px) {
   .nav-links {
-    flex-direction: column; /* يخليهم تحت بعض بشكل مرتب */
+    flex-direction: column; 
     align-items: flex-start;
   }
 }
 @media (max-width: 600px) {
   .header-links {
     display: flex;
-    flex-wrap: wrap; /* يخليهم يلفوا لو مفيش مساحة */
+    flex-wrap: wrap; 
     justify-content: center;
     gap: 10px;
     padding: 10px;
@@ -577,7 +575,7 @@ form button:hover {
 }
 .container,
 .payment-methods {
-  max-width: 360px; /* أو 350px لو ده المناسب لك */
+  max-width: 360px; 
   width: 100%;
   margin: 20px auto;
   padding: 20px;
@@ -622,9 +620,9 @@ form select {
   margin-top: 5px;
 }
 .payment-methods input {
-  background-color: #1e1e2f; /* نفس لون القايمة */
-  color: #fff; /* لون الخط أبيض */
-  border: 1px solid #444; /* حدود خفيفة */
+  background-color: #1e1e2f; 
+  color: #fff;
+  border: 1px solid #444; 
   padding: 10px;
   border-radius: 10px;
   font-size: 18px;
@@ -633,25 +631,25 @@ form select {
 }
 
 .payment-methods input::placeholder {
-  color: #ccc; /* لو في placeholder يبقى لونه رمادي فاتح */
+  color: #ccc; 
 }
 .payment-methods,
 .payment-methods * {
   color: #fff !important;
 }
 .container {
-  background: rgba(15, 15, 30, 0.8); /* خلفية شفافة غامقة */
-  backdrop-filter: blur(10px); /* تأثير بلور */
-  -webkit-backdrop-filter: blur(10px); /* دعم كروم وسفاري */
+  background: rgba(15, 15, 30, 0.8); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   animation: fadeUp 0.7s ease forwards;
-  transform: translateY(20px); /* مكان البداية قبل الأنيميشن */
+  transform: translateY(20px); 
   opacity: 0;
 }
 
-/* أنيميشن للظهور */
+
 @keyframes fadeUp {
   to {
     transform: translateY(0);
@@ -659,7 +657,7 @@ form select {
   }
 }
 .payment-methods {
-  background: rgba(15, 15, 30, 0.8); /* لون شبه القايمة */
+  background: rgba(15, 15, 30, 0.8); 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -671,10 +669,191 @@ form select {
   margin-top: 20px;
 }
 
-/* نفس الأنيميشن */
+
 @keyframes fadeUp {
   to {
     transform: translateY(0);
     opacity: 1;
   }
+}
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #0e0e0e;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.packages {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.package-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 15px;
+  width: 120px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(21, 10, 85, 0.6);
+}
+
+.package-card:hover {
+  transform: scale(1.05);
+  background-color: #292929;
+}
+
+.package-card img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.package-card h3 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+}
+
+.package-card p {
+  margin: 0;
+  color: #ccc;
+}
+
+#transferForm {
+  background-color: #1a1a1a;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: right;
+}
+
+.transfer-number {
+  font-weight: bold;
+  font-size: 18px;
+  color: #4caf50;
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+}
+
+form button {
+  padding: 12px 25px;
+  border: none;
+  background-color: #00bcd4;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background-color: #0097a7;
+}
+
+.hidden {
+  display: none;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: 10px 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.packages {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 20px;
+}
+@media (max-width: 600px) {
+  .ticket-form, .ticket-display {
+    width: 90%;
+    padding: 15px;
+  }
+
+  input, textarea, button {
+    font-size: 16px;
+  }
+
+  h2, h3 {
+    font-size: 18px;
+  }
+}
+.packages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(221, 5, 5, 0.0);
+  border-radius: 20px;
+  max-width: 100%;
+  margin: 50px auto;
+  box-sizing: border-box;
+}
+@media (max-width: 768px) {
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* يخلي كرتين في السطر */
+    gap: 10px; /* مسافة بين الكروت */
+    padding: 10px;
+  }
+}
+.packages::-webkit-scrollbar {
+  height: 6px;
+}
+
+.packages::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.vodafone-logo {
+  width: 24px;
+  height: 24px;
 }

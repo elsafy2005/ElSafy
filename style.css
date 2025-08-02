@@ -15,7 +15,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background-color: rgba(0, 0, 0, 0.4); /* شفاف */
+  background-color: rgba(0, 0, 0, 0.4); 
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -189,7 +189,7 @@ body {
 }
 
 body {
-  background-image: url('images/Untitled-1.png'); /* غيّر المسار حسب الصورة اللي عندك */
+  background-image: url('images/Untitled-1.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -233,7 +233,7 @@ body {
   background-color: #0171f9;
 }
 .header {
-  background-color: rgba(0, 0, 0, 0.4); /* لون أزرق مع شفافية 70% */
+  background-color: rgba(0, 0, 0, 0.4); 
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -250,18 +250,18 @@ body {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); /* تقدر تغير اللون وشفافيته */
+  background-color: rgba(0, 0, 0, 0.4); 
   z-index: 1;
 }
 
 .header * {
   position: relative;
-  z-index: 2; /* عشان المحتوى يفضل ظاهر فوق الطبقة */
+  z-index: 2; 
 }
 
 
 .landing-page {
-  margin-top: 0; /* مهم! */
+  margin-top: 0; 
 }
 body {
   margin: 0;
@@ -270,7 +270,7 @@ body {
 a {
   text-decoration: none;
 }
-/* شيل underline من كل الروابط */
+
 a, a:hover {
   text-decoration: none;
 }
@@ -278,7 +278,7 @@ a, a:hover {
   color: inherit;
 }
 .site-footer {
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* تدرج أنيق */
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); 
   color: #fff;
   padding: 20px 10px;
   text-align: center;
@@ -314,14 +314,14 @@ a, a:hover {
 
 @media (max-width: 600px) {
   .nav-links {
-    flex-direction: column; /* يخليهم تحت بعض بشكل مرتب */
+    flex-direction: column; 
     align-items: flex-start;
   }
 }
 @media (max-width: 600px) {
   .header-links {
     display: flex;
-    flex-wrap: wrap; /* يخليهم يلفوا لو مفيش مساحة */
+    flex-wrap: wrap; 
     justify-content: center;
     gap: 10px;
     padding: 10px;
@@ -344,7 +344,7 @@ a, a:hover {
 @media (max-width: 600px) {
   .trending-cards {
     flex-direction: column;
-    align-items: center; /* يخلي الكروت تتوسّط في العمود */
+    align-items: center; 
   }
 
   .card {
@@ -381,7 +381,7 @@ section, form, h1 {
     transform: translateY(0);
   }
 }
-/* نخلي الجسم كله بارتفاع الشاشة بالكامل */
+
 body {
   min-height: 100vh;
   display: flex;
@@ -389,12 +389,12 @@ body {
   margin: 0;
 }
 
-/* نخلي المحتوى يتمدد وياخد كل المساحة اللي فوق الفوتر */
+
 .content {
   flex: 1;
 }
 
-/* الفوتر يبقى ظاهر كويس */
+
 .site-footer {
   background-color: #111;
   color: white;

@@ -35,7 +35,7 @@ body {
   background-color: #0171f9;
 }
 .header {
-  background-color: rgba(94, 70, 70, 0.4); /* لون أزرق مع شفافية 70% */
+  background-color: rgba(94, 70, 70, 0.4);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,13 +52,13 @@ body {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); /* تقدر تغير اللون وشفافيته */
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
 .header * {
   position: relative;
-  z-index: 2; /* عشان المحتوى يفضل ظاهر فوق الطبقة */
+  z-index: 2; 
 }
 body {
   margin: 0;
@@ -70,7 +70,7 @@ body {
 
 .contact-section {
   min-height: 100vh;
-  background-image: url('bg.jpg'); /* غيّر اسم الصورة حسب اللي عندك */
+  background-image: url('bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -113,11 +113,11 @@ body, html {
 
 .contact-section {
   width: 100%;
-  min-height: 100vh; /* يغطي الشاشة كلها */
-  background-image: url('images/Untitled-1.png'); /* غيّر اسم الصورة حسب اللي عندك */
-  background-size: cover;         /* تغطي الصفحة كاملة */
-  background-position: center;    /* في النص */
-  background-repeat: no-repeat;   /* ما تتكرر */
+  min-height: 100vh; 
+  background-image: url('images/Untitled-1.png'); 
+  background-size: cover;        
+  background-position: center;  
+  background-repeat: no-repeat;   
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +125,7 @@ body, html {
 }
 
 .header {
-  background-color: rgba(0, 0, 0, 0.5); /* نصف شفاف - أسود */
+  background-color: rgba(0, 0, 0, 0.5); 
   position: absolute;
   top: 0;
   width: 100%;
@@ -173,14 +173,14 @@ body, html {
 
 @media (max-width: 600px) {
   .nav-links {
-    flex-direction: column; /* يخليهم تحت بعض بشكل مرتب */
+    flex-direction: column; 
     align-items: flex-start;
   }
 }
 @media (max-width: 600px) {
   .header-links {
     display: flex;
-    flex-wrap: wrap; /* يخليهم يلفوا لو مفيش مساحة */
+    flex-wrap: wrap; 
     justify-content: center;
     gap: 10px;
     padding: 10px;
