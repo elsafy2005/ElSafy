@@ -1,6 +1,12 @@
-
 <!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
+  <meta charset="UTF-8" />
+  <title> El Safy Store | Game Top-Up</title>
+<meta name="description" content="Elsafy Store - أسرع وأأمن موقع لشحن الألعاب زي PUBG, Free Fire, Mobile Legends و 8 Ball Pool. شحن مضمون وفوري بأفضل الأسعار.">
+<meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
+<meta name="author" content="Elsafy Store">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -8,103 +14,151 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="free.css" />
-   <link rel="icon" type="image/png" href="images/logo.png.png">
-    <title>Bow Store | Game Top-Up</title>
-  <meta name="description" content="Top-up your favorite games like PUBG, Free Fire, and more. Fast, secure and easy game recharge from Bow Store.">
-  <meta name="keywords" content="Bow Store, game top-up, PUBG UC, Free Fire, Mobile Legends">
-  <meta name="author" content="Bow Store Team">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="images/logo.png">
 </head>
 <body>
+
   <!-- HEADER -->
   <div class="header">
-    <img class="logo" src="images/bow.jpg" />
+    <img class="logo" src="images/logo.png" alt="Logo" />
     <div class="header-links">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
     </div>
   </div>
-
-<div class="delivery-note">
+  <div class="delivery-note">
   ⚡ Shipping takes from 2 minutes to 2 hours!
 </div>
- <div class="payment-methods">
-  <h3>طرق الدفع</h3>
-  
-  <div class="payment-item">
-    <img src="images/cash.png" alt="Vodafone Cash" />
-    <div>
-      <label>فودافون كاش</label>
-      <input type="text" value="01060842931" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
 
-  <div class="payment-item">
-    <img src="images/InstaPay_Logo.png" alt="InstaPay" />
-    <div>
-      <label>إنستا باي</label>
-      <input type="text" value="01014796589" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
-</div>
-  <!-- FORM SECTION -->
+
   <div class="container">
-  
+    <h1>تحديد الكمية</h1>
 
-    <form id="orderForm">
-      <label>اختر الكمية:</label>
-      <select name="package" required>
-        <option value="50 Free Fire – 40 EGP">50 Diamonds – 40 EGP</option>
-        <option value="100 Free Fire – 68 EGP">100 Diamonds – 68 EGP</option>
-        <option value="210 Free Fire – 130 EGP">210 Diamonds – 130 EGP</option>
-        <option value="310 Free Fire – 190 EGP">310 Diamonds – 190 EGP</option>
-        <option value="520 Free Fire – 300 EGP">520 Diamonds – 300 EGP</option>
-        <option value="1060 Free Fire – 570 EGP">1060 Diamonds – 570 EGP</option>
-        <option value="2200 Free Fire – 1150 EGP">2200 Diamonds – 1150 EGP</option>
-      </select>
+    <div class="packages">
+      <div class="package-card" onclick="selectPackage('50 free')">
+        <img src="images/point.png" alt="50 free">
+        <h3>50</h3>
+        <p>35 جنيه</p>
+      </div>
 
-      <label> أيدي الاكونت :</label>
-      <input type="text" name="accountId" required placeholder="أكتب أيدي الاكونت هنا" />
+      <div class="package-card" onclick="selectPackage('100 free')">
+        <img src="images/point.png" alt="100 free">
+        <h3>100</h3>
+        <p>65 جنيه</p>
+      </div>
 
-      <label> الرقم الذي قمت ب التحويل من خلاله:</label>
-      <input type="tel" name="phone" required placeholder="اكتب رقم الهاتف هنا" />
+      <div class="package-card" onclick="selectPackage('210 free')">
+        <img src="images/point.png" alt="210 free">
+        <h3>210</h3>
+        <p>125 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('310 free')">
+        <img src="images/point.png" alt="310 free">
+        <h3>310</h3>
+        <p>180 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('520 free')">
+        <img src="images/point.png" alt="520 free">
+        <h3>520</h3>
+        <p>290 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('1060 free')">
+        <img src="images/point.png" alt="1060 free">
+        <h3>1060</h3>
+        <p>580 جنيه</p>
+      </div>
+      <div class="package-card" onclick="selectPackage('2200 free')">
+        <img src="images/point.png" alt="2200 free">
+        <h3>2200</h3>
+        <p>1100 جنيه</p>
+      </div>
 
-      <button type="submit">إرسال</button>
-    </form>
+    </div>
+    
+
+ <div id="transferForm" class="hidden">
+  <h2>بيانات التحويل</h2>
+  <p>الرجاء تحويل المبلغ إلى الرقم التالي:</p>
+  <div class="transfer-info">
+    <img src="images/cash.png" alt="Vodafone Cash" class="vodafone-logo">
+    <span class="transfer-number">01060842931</span>
   </div>
- 
 
 
-  <!-- JAVASCRIPT -->
+
+<form id="orderForm">
+  <label for="sender-number">رقم الهاتف الذي تم التحويل منه:</label>
+  <input
+  type="text"
+  id="sender-number"
+  name="sender_number"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="ادخل رقم الهاتف المرسل منه"
+/>
+
+
+  <label for="pubg-id">ID FreeFire :</label>
+<input
+  type="text"
+  id="pubg-id"
+  name="pubg_id"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="مثلاً: 5221122334"
+/>
+
+
+  <input type="hidden" id="package-name" name="package_name" />
+
+  <button type="submit">إرسال الطلب</button>
+</form>
+
+    </div>
+  </div>
+
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("YaE_xNqbHxI5il0lz"); // Public key
-    })();
+<script>
+  (function(){
+    emailjs.init("YaE_xNqbHxI5il0lz"); // ← حطيت Public Key
+  })();
 
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+  // عشان نحفظ اسم الباقة
+  let selectedPackage = '';
 
-      emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
-        .then(function() {
-          alert("✅ تم إرسال الطلب بنجاح!");
-          document.getElementById("orderForm").reset();
-        }, function(error) {
-          alert("❌ حدث خطأ أثناء الإرسال");
-          console.error("EmailJS Error:", error);
-        });
-    });
-  </script>
+  function selectPackage(packageName) {
+    selectedPackage = packageName;
+    document.getElementById("package-name").value = packageName;
+    document.getElementById('transferForm').classList.remove('hidden');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
+      .then(function() {
+        alert("✅ تم إرسال الطلب بنجاح!");
+        document.getElementById("orderForm").reset();
+        document.getElementById('transferForm').classList.add('hidden');
+      }, function(error) {
+        alert("❌ حدث خطأ أثناء الإرسال");
+        console.error("EmailJS Error:", error);
+      });
+  });
+</script>
+
+
+
   <footer class="site-footer">
   <div class="footer-content">
-    <p>© 2025 جميع الحقوق محفوظة - <span>بو ستور</span> 💙</p>
+    <p>© 2025 جميع الحقوق محفوظة - <span> El Safy Store </span> 💙</p>
   </div>
 </footer>
-</body>
-</html>
-
 </body>
 </html>

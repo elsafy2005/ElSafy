@@ -7,17 +7,18 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="fc.css" />
-  <link rel="icon" type="image/png" href="images/logo.png.png">
-   <title>Bow Store | Game Top-Up</title>
-  <meta name="description" content="Top-up your favorite games like PUBG, Free Fire, and more. Fast, secure and easy game recharge from Bow Store.">
-  <meta name="keywords" content="Bow Store, game top-up, PUBG UC, Free Fire, Mobile Legends">
-  <meta name="author" content="Bow Store Team">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="images/logo.png">
+   <title>El Safy Store | Game Top-Up</title>
+<meta name="description" content="Elsafy Store - أسرع وأأمن موقع لشحن الألعاب زي PUBG, Free Fire, Mobile Legends و 8 Ball Pool. شحن مضمون وفوري بأفضل الأسعار.">
+<meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
+<meta name="author" content="Elsafy Store">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
   <!-- HEADER -->
   <div class="header">
-    <img class="logo" src="images/bow.jpg" />
+    <img class="logo" src="images/logo.png" />
     <div class="header-links">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
@@ -28,82 +29,131 @@
 <div class="delivery-note">
   ⚡ Shipping takes from 2 minutes to 2 hours!
 </div>
-<div class="payment-methods">
-  <h3>طرق الدفع</h3>
-  
-  <div class="payment-item">
-    <img src="images/cash.png" alt="Vodafone Cash" />
-    <div>
-      <label>فودافون كاش</label>
-      <input type="text" value="01060842931" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
+ <div class="container">
+    <h1>تحديد الكمية</h1>
 
-  <div class="payment-item">
-    <img src="images/InstaPay_Logo.png" alt="InstaPay" />
-    <div>
-      <label>إنستا باي</label>
-      <input type="text" value="01014796589" readonly onclick="this.select()" />
-      <small>اضغط على الرقم لنسخه</small>
-    </div>
-  </div>
+    <div class="packages">
+<div class="package-card" onclick="selectPackage('100 FC Coins')">
+  <img src="images/fc1.png" alt="100 FC Coins">
+  <h3>100 FC Points</h3>
+  <p>55 جنيه</p>
 </div>
-  <!-- FORM SECTION -->
-  <div class="container">
-  
 
-    <form id="orderForm">
-      <label>اختر الكمية:</label>
-<select name="package" required>
-  <!-- FC POINTS -->
-  <option disabled>── FC Points ──</option>
-<option value="40 FC POINTS – 30 EGP">40 FC POINTS – 30 EGP</option>
-  <option value="100 FC POINTS – 60 EGP">100 FC POINTS – 60 EGP</option>
-  <option value="520 FC POINTS – 280 EGP">520 FC POINTS – 280 EGP</option>
-  <option value="1070 FC POINTS –540 EGP">1070 FC POINTS – 540 EGP</option>
-  <option value="2200 FC POINTS – 1080 EGP">2200 FC POINTS – 1080 EGP</option>
-  <option value="5750 FC POINTS – 2600 EGP">5750 FC POINTS – 2600 EGP</option>
-   <option value="12000 FC POINTS – 5100 EGP">12000 FC POINTS – 5100 EGP</option>
+<div class="package-card" onclick="selectPackage('520 FC Coins')">
+  <img src="images/fc1.png" alt="520 FC Coins">
+  <h3>520 FC Points</h3>
+  <p>270 جنيه</p>
+</div>
+
+<div class="package-card" onclick="selectPackage('1070 FC Coins')">
+  <img src="images/fc2.png" alt="1070 FC Coins">
+  <h3>1070 FC Points</h3>
+  <p>550 جنيه</p>
+</div>
+
+<div class="package-card" onclick="selectPackage('2200 FC Coins')">
+  <img src="images/fc3.png" alt="2200 FC Coins">
+  <h3>2200 FC Points</h3>
+  <p>1100 جنيه</p>
+</div>
+
+<div class="package-card" onclick="selectPackage('5750 FC Coins')">
+  <img src="images/fc4.png" alt="5750 FC Coins">
+  <h3>5750 FC Points</h3>
+  <p>2550 جنيه</p>
+</div>
+
+<div class="package-card" onclick="selectPackage('12000 FC Coins')">
+  <img src="images/fc 5.png" alt="12000 FC Coins">
+  <h3>12000 FC Points</h3>
+  <p>5200 جنيه</p>
+</div>
 
 
-      </select>
+    </div>
+    
 
-      <label> أيدي الاكونت :</label>
-      <input type="text" name="accountId" required placeholder="أكتب أيدي الاكونت هنا" />
-
-      <label> الرقم الذي قمت ب التحويل من خلاله:</label>
-      <input type="tel" name="phone" required placeholder="اكتب رقم الهاتف هنا" />
-
-      <button type="submit">إرسال</button>
-    </form>
+ <div id="transferForm" class="hidden">
+  <h2>بيانات التحويل</h2>
+  <p>الرجاء تحويل المبلغ إلى الرقم التالي:</p>
+  <div class="transfer-info">
+    <img src="images/cash.png" alt="Vodafone Cash" class="vodafone-logo">
+    <span class="transfer-number">01060842931</span>
   </div>
-  
 
 
-  <!-- JAVASCRIPT -->
+
+<form id="orderForm">
+  <label for="sender-number">رقم الهاتف الذي تم التحويل منه:</label>
+  <input
+  type="text"
+  id="sender-number"
+  name="sender_number"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="ادخل رقم الهاتف المرسل منه"
+/>
+
+
+  <label for="pubg-id">FC Mobile ID :</label>
+<input
+  type="text"
+  id="pubg-id"
+  name="pubg_id"
+  required
+  inputmode="numeric"
+  pattern="[0-9]*"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  placeholder="مثلاً: 5221122334"
+/>
+
+
+  <input type="hidden" id="package-name" name="package_name" />
+
+  <button type="submit">إرسال الطلب</button>
+</form>
+
+    </div>
+  </div>
+
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){
-      emailjs.init("YaE_xNqbHxI5il0lz"); // Public key
-    })();
+<script>
+  (function(){
+    emailjs.init("YaE_xNqbHxI5il0lz"); // ← حطيت Public Key
+  })();
 
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+  // عشان نحفظ اسم الباقة
+  let selectedPackage = '';
 
-      emailjs.sendForm("service_uc43cjt", "template_7j9uvur", this)
-        .then(function() {
-          alert("✅ تم إرسال الطلب بنجاح!");
-          document.getElementById("orderForm").reset();
-        }, function(error) {
-          alert("❌ حدث خطأ أثناء الإرسال");
-          console.error("EmailJS Error:", error);
-        });
-    });
-  </script>
+  function selectPackage(packageName) {
+    selectedPackage = packageName;
+    document.getElementById("package-name").value = packageName;
+    document.getElementById('transferForm').classList.remove('hidden');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
+      .then(function() {
+        alert("✅ تم إرسال الطلب بنجاح!");
+        document.getElementById("orderForm").reset();
+        document.getElementById('transferForm').classList.add('hidden');
+      }, function(error) {
+        alert("❌ حدث خطأ أثناء الإرسال");
+        console.error("EmailJS Error:", error);
+      });
+  });
+</script>
+
+
+
   <footer class="site-footer">
   <div class="footer-content">
-    <p>© 2025 جميع الحقوق محفوظة - <span>بو ستور</span> 💙</p>
+    <p>© 2025 جميع الحقوق محفوظة - <span> El Safy Store </span> 💙</p>
   </div>
 </footer>
 </body>

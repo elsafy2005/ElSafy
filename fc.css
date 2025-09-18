@@ -1,16 +1,59 @@
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  padding: 0;
+  font-family: Arial, sans-serif;
+
+
+  background-image: url('images/fcbanner.jpg'); 
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; 
+  position: relative;
+  min-height: 100vh;
 }
+
+
+body::before {
+  content: "";
+  position: fixed; 
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(134, 106, 106, 0.7);
+  pointer-events: none; 
+  z-index: 0;
+}
+
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  background-color: transparent; 
+}
+
 .header {
-  background-color: #0171f9;
+  background-color: #b80606;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 50px;
+  padding: 5px 50px;
+ position: relative;
+  top: -45px;
 }
+  .voucher-list {
+  max-width: 400px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+body {
+  background-color: #7f19e6;
+}
+
 .logo {
   width: 100px;
+  
 }
 .btn {
   background-color: #ee626b;
@@ -25,7 +68,7 @@ body {
 }
 
 .header-links a {
-  color: rgb(255, 255, 255);
+  color: white;
   padding: 5px 15px;
   text-decoration: none;
   border-radius: 15px;
@@ -34,32 +77,14 @@ body {
 .header-links a:hover {
   background-color: #0171f9;
 }
-.header {
-  background-color: rgba(94, 70, 70, 0.4); 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 50px;
-}
-.logo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #770707;
+  margin: 0;
+  padding: 40px 20px;
+  color: #222;
 }
 
-.header::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); 
-  z-index: 1;
-}
-
-.header * {
-  position: relative;
-  z-index: 2;
-}
 .container {
   max-width: 420px;
   margin: auto;
@@ -261,7 +286,7 @@ body::before {
   content: "";
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(2, 0, 0, 0.4);
   pointer-events: none;
   z-index: 0;
 }
@@ -270,21 +295,40 @@ body::before {
   position: relative;
   z-index: 1;
 }
-body {
-  background-image: url("images/fcbanner.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-color: #000000; 
-}
-header {
-  background: rgba(0, 0, 0, 0.4); 
-  color: white;
-  padding: 20px;
-  text-align: center;
+.header {
+  background-color: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(5px);        
+  -webkit-backdrop-filter: blur(5px);  
+  padding: 10px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
   z-index: 2;
+  border-radius: 0 0 12px 12px;
+  
 }
+
+.site-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: #007bff;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
+  margin-left: -20px; 
+}
+
+.container {
+  direction: ltr;
+  text-align: left;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 @media (max-width: 768px) {
   .container,
   .payment-methods {
@@ -346,7 +390,7 @@ header {
 
 
 .payment-methods h3 {
-  font-size: 16px;
+  font-size: 16px; 
   margin-bottom: 10px;
   text-align: center;
 }
@@ -419,7 +463,7 @@ header {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .site-footer {
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); 
   color: #fff;
   padding: 20px 10px;
   text-align: center;
@@ -455,7 +499,7 @@ header {
 
 @media (max-width: 600px) {
   .nav-links {
-    flex-direction: column;
+    flex-direction: column; 
     align-items: flex-start;
   }
 }
@@ -577,7 +621,7 @@ form select {
 }
 .payment-methods input {
   background-color: #1e1e2f; 
-  color: #fff; 
+  color: #fff;
   border: 1px solid #444; 
   padding: 10px;
   border-radius: 10px;
@@ -596,7 +640,7 @@ form select {
 .container {
   background: rgba(15, 15, 30, 0.8); 
   backdrop-filter: blur(10px); 
-  -webkit-backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -631,4 +675,185 @@ form select {
     transform: translateY(0);
     opacity: 1;
   }
+}
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #0e0e0e;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.packages {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.package-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 15px;
+  width: 120px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(21, 10, 85, 0.6);
+}
+
+.package-card:hover {
+  transform: scale(1.05);
+  background-color: #292929;
+}
+
+.package-card img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.package-card h3 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+}
+
+.package-card p {
+  margin: 0;
+  color: #ccc;
+}
+
+#transferForm {
+  background-color: #1a1a1a;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: right;
+}
+
+.transfer-number {
+  font-weight: bold;
+  font-size: 18px;
+  color: #4caf50;
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+}
+
+form button {
+  padding: 12px 25px;
+  border: none;
+  background-color: #00bcd4;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background-color: #0097a7;
+}
+
+.hidden {
+  display: none;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: 10px 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.packages {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 20px;
+}
+@media (max-width: 600px) {
+  .ticket-form, .ticket-display {
+    width: 90%;
+    padding: 15px;
+  }
+
+  input, textarea, button {
+    font-size: 16px;
+  }
+
+  h2, h3 {
+    font-size: 18px;
+  }
+}
+.packages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(221, 5, 5, 0.0);
+  border-radius: 20px;
+  max-width: 100%;
+  margin: 50px auto;
+  box-sizing: border-box;
+}
+@media (max-width: 768px) {
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* يخلي كرتين في السطر */
+    gap: 10px; /* مسافة بين الكروت */
+    padding: 10px;
+  }
+}
+.packages::-webkit-scrollbar {
+  height: 6px;
+}
+
+.packages::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.vodafone-logo {
+  width: 24px;
+  height: 24px;
 }

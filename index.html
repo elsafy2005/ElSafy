@@ -7,20 +7,21 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="images/logo.png.png">
+  <link rel="icon" type="image/png" href="images/logo.png">
 
-   <title>Bow Store | Game Top-Up</title>
+   <title> El Safy Store | Game Top-Up</title>
    
-  <meta name="description" content="Top-up your favorite games like PUBG, Free Fire, and more. Fast, secure and easy game recharge from Bow Store.">
-  <meta name="keywords" content="Bow Store, game top-up, PUBG UC, Free Fire, Mobile Legends">
-  <meta name="author" content="Bow Store Team">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Elsafy Store - أسرع وأأمن موقع لشحن الألعاب زي PUBG, Free Fire, Mobile Legends و 8 Ball Pool. شحن مضمون وفوري بأفضل الأسعار.">
+<meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
+<meta name="author" content="Elsafy Store">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
   
   <!-- HEADER -->
   <div class="header">
-    <img class="logo" src="images/bow.jpg" />
+    <img class="logo" src="images/logo.png" />
     <div class="header-links">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
@@ -31,16 +32,28 @@
   <!-- Landing Page -->
   <div class="landing-page">
     <div class="landing-page-left-section">
-      <span>Welcome To BOW STORE!</span>
+      <span>Welcome To El Safy Store !</span>
       <h1>Top Up Your Favorite Games in Seconds</h1>
       <p>
-        Welcome to the Bow Store. We offer you a service to charge all games in an easy and safe way
+        Welcome to the El Safy Store. We offer you a service to charge all games in an easy and safe way
       </p>
     </div>
-    <div class="landing-page-image-container">
-      <img src="images/top-10-online-games-2020.jpg" />
+  <div class="slider">
+    <div class="slides" id="slides">
+      <a href="main pubg.html"><img src="images/banbupd.jpg" alt="PUBG"></a>
+      <a href="free.html"><img src="images/banfree.png" alt="Free Fire"></a>
+      <a href="valornt.html"><img src="images/valoban.webp" alt="Mobile Legends"></a>
     </div>
   </div>
+
+  <div class="navigation" id="nav-dots">
+    <span class="bar active"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </div>
+  </div>
+  
+  
 
 <div>
     <!-- Trending Games -->
@@ -107,16 +120,6 @@
 
 
 
-<a href="crossfire.html" class="card">
-  <img class="thumb" src="images/crossfire-.jpg" width="240" />
-  <div class="card-info">
-    <div class="card-name">
-      <p>Action</p>
-      <h3>CROSSFIRE</h3>
-    </div>
-    <img src="images/online-shopping.png" />
-  </div>
-</a>
 
 <a href="fc.html" class="card">
   <img class="thumb" src="images/fc.jpg" width="240" />
@@ -177,7 +180,28 @@
 
 <footer class="site-footer">
     <div class="footer-content">
-      <p>© 2025 جميع الحقوق محفوظة - <span>بو ستور</span> 💙</p>
+      <p>© 2025 جميع الحقوق محفوظة - <span> El Safy Store </span> 💙</p>
     </div>
   </footer>
+    <script>
+    const slides = document.getElementById("slides");
+    const dots = document.querySelectorAll(".bar");
+    let index = 0;
+
+    function showSlide(i) {
+      index = i;
+      slides.style.transform = `translateX(${-index * 100}%)`;
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[index].classList.add("active");
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => showSlide(i));
+    });
+
+    setInterval(() => {
+      index = (index + 1) % dots.length;
+      showSlide(index);
+    }, 4000);
+  </script>
 </body>
