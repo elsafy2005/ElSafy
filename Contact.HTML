@@ -10,9 +10,18 @@
 <meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
 <meta name="author" content="Elsafy Store">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+
 
 </head>
 <body>
+    <div id="loading">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
   <!-- HEADER -->
   <div class="header">
     <img class="logo" src="images/logo.png" />
@@ -39,5 +48,12 @@
       </div>
     </div>
   </section>
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+      }, 1400); // ثانية و7 أعشار
+    });
+  </script>
 </body>
 </html>

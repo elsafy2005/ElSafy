@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap"
-    rel="stylesheet"
-  />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="images/logo.png">
 
@@ -28,7 +25,13 @@
 
 </head>
 <body>
-  
+    <div id="loading">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
   <!-- HEADER -->
   <div class="header">
     <img class="logo" src="images/logo.png" />
@@ -43,7 +46,7 @@
   <div class="landing-page">
     <div class="landing-page-left-section">
       <span>Welcome To El Safy Store !</span>
-      <h1>Top Up Your Favorite Games in Seconds</h1>
+      <h1>Top-Up Your Favorite Games in Seconds</h1>
       <p>
         Welcome to the El Safy Store. We offer you a service to charge all games in an easy and safe way
       </p>
@@ -214,4 +217,23 @@
       showSlide(index);
     }, 4000);
   </script>
+ <script>
+    // قفل الاسكرول وقت اللودنج
+    document.body.style.overflow = "hidden";
+
+    // يخفي شاشة اللودنج بعد تحميل الصفحة
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+        document.body.style.overflow = "auto"; // رجّع الاسكرول
+      }, 1600); // 2 ثانية تجربة
+    });
+  </script>
+<script>
+  // لما الصفحة تخلص تحميل، يرجع لأعلى
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
+</script>
+
 </body>

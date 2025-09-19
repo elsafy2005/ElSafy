@@ -35,7 +35,7 @@ body {
   background-color: #0171f9;
 }
 .header {
-  background-color: rgba(94, 70, 70, 0.4); 
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,7 +52,7 @@ body {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); 
+  background-color: rgba(0, 0, 0, 0.2); 
   z-index: 1;
 }
 
@@ -64,7 +64,7 @@ body {
   max-width: 800px;
   margin: auto;
   padding: 20px;
-  background: #f9f9f9;
+  background: #ffffff;
   border-radius: 10px;
   line-height: 1.8;
   font-family: 'Cairo', sans-serif;
@@ -77,11 +77,10 @@ h1 {
 }
 
 p {
-  color: #444;
+  color: #ffffff;
   margin-bottom: 15px;
 }
 body {
-  background-image: url('images/Untitled-1.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -110,12 +109,36 @@ body {
   }
 }
 body {
-  background-image: url('images/Untitled-1.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
   margin: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2; /* تحت كل حاجة */
+  background: url("images/From\ KlickPin\ CF\ Pin\ by\ Cristian\ Alejandro\ Sanchez\ Ala\ on\ Juguetes\ in\ 2025\ _\ Greenscreen\ ideas\ Green\ screen\ footage\ Moving\ backgrounds.gif") no-repeat center center;
+  background-size: cover;
+}
+
+body::before {
+  content: "";
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
+  pointer-events: none; 
+  z-index: -1; /* بين العناصر والخلفية */
 }
 .header {
   display: flex;
@@ -159,4 +182,115 @@ body {
   .header-links a:hover {
     background-color: #0056b3;
   }
+}
+#loading {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(12px); /* بلور ناعم */
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* loader احترافي */
+.loader {
+  display: flex;
+  gap: 12px;
+}
+
+.loader span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.7);
+  animation: bounce 0.6s infinite alternate;
+}
+
+.loader span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loader span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* بعد الاختفاء */
+#loading.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* باقي الصفحة */
+body {
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  background: url("your-bg.jpg") center/cover no-repeat;
+}
+
+.content {
+  text-align: center;
+  padding: 50px;
+  color: #fff;
+}
+.about {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 30px 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1); /* شفافية */
+  backdrop-filter: blur(10px); /* بلور */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* بوردر خفيف */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* ظل ناعم */
+  color: #fff;
+  text-align: center;
+  line-height: 1.8;
+  font-size: 18px;
+  animation: fadeInUp 1s ease;
+}
+
+.about h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #00c6ff, #0b5ec4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.about p {
+  margin-bottom: 15px;
+}
+
+/* أنيميشن الدخول */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+}
+}
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5rem;
+    color: #ff4d4d;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }

@@ -189,17 +189,43 @@ body {
 }
 
 body {
-  background-image: url('images/Untitled-1.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Roboto', sans-serif;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 15px;
   padding: 20px;
   margin: 10px;
 }
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2; /* تحت كل حاجة */
+  background: url("images/wall.gif") no-repeat center center;
+  background-size: cover;
+}
+
+body::before {
+  content: "";
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
+  pointer-events: none; 
+  z-index: -1; /* بين العناصر والخلفية */
+}
+
+
 .header {
   background-color: #0171f9;
   display: flex;
@@ -353,7 +379,7 @@ a, a:hover {
   }
 }
 .card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.07);
   padding: 15px;
   border-radius: 10px;
   width: 240px;
@@ -459,3 +485,76 @@ body {
   }
 }
 
+/* شاشة اللودينج */
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;     /* هنا بدلنا 100vw */
+  height: 100vh;   /* ارتفاع الشاشة */
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+    /* loader احترافي */
+    .loader {
+      display: flex;
+      gap: 12px;
+    }
+
+    .loader span {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      box-shadow: 0 0 15px rgba(0, 198, 255, 0.7);
+      animation: bounce 0.6s infinite alternate;
+    }
+
+    .loader span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loader span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+      to {
+        transform: translateY(-20px) scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    /* بعد الاختفاء */
+    #loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* باقي الصفحة */
+    body {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      background: url("your-bg.jpg") center/cover no-repeat;
+    }
+
+    .content {
+      text-align: center;
+      padding: 50px;
+      color: #fff;
+      height: 3000px; /* علشان نجرب الاسكرول */
+    }
+    body, h1, h2, h3, p ,span {
+    font-family: 'Bungee', cursive;
+    font-weight: 300; /* Light */
+}
