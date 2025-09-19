@@ -2,9 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-
-
-  background-image: url('images/league-of-legends-pc-game-cover.jpg'); 
+ 
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover; 
@@ -12,6 +10,29 @@ body {
   min-height: 100vh;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;          /* ورا كل حاجة */
+  background: black;    /* fallback لو الفيديو ما اشتغلش */
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  background: url("images/From\ KlickPin\ CF\ Irelia\ Wallpaper\ [Video]\ _\ League\ of\ legends\ live\ Lol\ league\ of\ legends\ League\ of\ legends.gif") no-repeat center center;
+  background-size: cover;
+}
 
 body::before {
   content: "";
