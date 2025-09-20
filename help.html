@@ -21,44 +21,7 @@ textarea:focus, input[type=text]:focus { outline:none; border-color:#007bff; }
 /* زرار */
 button { background:#007bff; color:#fff; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-size:15px; transition: background 0.2s; }
 button:hover { background:#0056b3; }
-/* Responsive للموبايل */
-@media (max-width: 768px) {
-  .desktop-nav { display: none; }
-  .menu-btn { display: inline-block; }
-}
-@media screen and (max-width:768px) {
-  .header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    position: relative;
-  }
 
-  .logo {
-    order: 1; /* اللوجو على اليمين */
-    width: 60px;
-    height: 60px;
-  }
-
-  .menu-btn {
-    display: inline-block;
-    order: 2; /* الزر على الشمال */
-  }
-
-  .dropdown {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;  /* تظهر القايمة على الشمال */
-    background: #1e3a8a;
-    border-radius: 8px;
-    min-width: 150px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.2);
-    flex-direction: column;
-    z-index: 999;
-  }
-}
 /* تيكيتات المستخدم */
 .ticket { background:#fff; border-radius:12px; padding:20px; margin:15px 0; box-shadow:0 3px 10px rgba(0,0,0,0.05); transition: transform 0.2s; }
 .ticket:hover { transform: translateY(-2px); }
@@ -438,43 +401,6 @@ body {
 }
 body{
   direction: ltr;
-
-
-}
-/* بعد الاختفاء */
-#loading.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* القائمة المنسدلة */
-#dropdownMenu {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 60px; 
-  left: 0; /* تظهر من الشمال */
-  background: #1e3a8a;
-  border-radius: 8px;
-  min-width: 150px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.2);
-  z-index: 999;
-}
-
-#dropdownMenu a {
-  padding: 12px 20px;
-  color: white;
-  text-decoration: none;
-}
-
-#dropdownMenu a:hover {
-  background-color: #374ac0;
-}
-
-/* Media Query للموبايل */
-@media screen and (max-width:768px) {
-  .desktop-nav { display: none; } /* اخفاء القوائم العادية */
-  .menu-btn { display: inline-block; } /* اظهار زر القائمة */
 }
 #userNameMobile {
   color: rgba(255, 255, 255, 0.767);
@@ -492,25 +418,149 @@ body::before {
   pointer-events: none; 
   z-index: -1; /* بين العناصر والخلفية */
 }
-.header {
+/* شاشة اللودينج */
+#loading {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(12px); /* بلور ناعم */
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
-  justify-content: space-between; /* توزيع المساحة بين العناصر */
   align-items: center;
-  padding: 10px 20px;
-  background-color: rgba(0,0,0,0.5);
-  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
-/* اللوجو على الشمال */
-.logo {
-  width: 100px;
-  height: 100px;
+/* loader احترافي */
+.loader {
+  display: flex;
+  gap: 12px;
+}
+
+.loader span {
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  object-fit: cover;
-  order: 1; /* يظهر أول عنصر */
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.7);
+  animation: bounce 0.6s infinite alternate;
 }
 
-/* زر القوائم على اليمين */
+.loader span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loader span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* بعد الاختفاء */
+#loading.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* باقي الصفحة */
+body {
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  background: url("your-bg.jpg") center/cover no-repeat;
+}
+
+.content {
+  text-align: center;
+  padding: 50px;
+  color: #fff;
+}
+.package-card.selected {
+  border: 3px solid #3498db;
+  background-color: #092f4e;
+  transition: 0.3s;
+  position: relative;
+}
+
+.package-card .checkmark {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+}
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.desktop-nav a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 5px 12px; /* تصغير البوكس */
+  line-height: 1.4;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.desktop-nav a:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+/* صورة المستخدم واسم المستخدم */
+#userPhoto, #userPhotoMobile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+#userName, #userNameMobile {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+
+
+/* اخفاء زر القائمة والقائمة المنسدلة على الكمبيوتر */
+.menu-btn, #dropdownMenu {
+  display: none;
+}
+
+/* Media Query للموبايل */
+@media screen and (max-width:768px) {
+  .desktop-nav { display: none; }      /* اخفاء القوائم العادية */
+  .menu-btn { display: block; }        /* اظهار زر القائمة */
+  #dropdownMenu {
+    display: none;                     /* مخفي افتراضياً */
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+  #dropdownMenu a {
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  #dropdownMenu a:hover { background: #374ac0; }
+}
 .menu-btn {
   display: none;
   background: #007BFF;
@@ -520,39 +570,47 @@ body::before {
   font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
-  order: 2; /* يظهر بعد اللوجو */
 }
 
-/* القوائم العادية للكمبيوتر */
-.desktop-nav {
-  display: flex;
-  gap: 15px;
-  order: 2; /* تظهر بعد اللوجو */
+.dropdown a {
+  text-decoration: none;
+  color: #333;
+  padding: 8px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.dropdown a:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+.dropdown.show {
+  right: 0;
 }
 
-/* للموبايل */
-@media screen and (max-width: 768px) {
-  .menu-btn { display: block; }
+/* صورة المستخدم */
+.user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Responsive للموبايل */
+@media (max-width: 768px) {
   .desktop-nav { display: none; }
-  
-  .header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-  }
-  
-  .logo {
-    width: 60px;
-    height: 60px;
-  }
+  .menu-btn { display: inline-block; }
 }
-
 /* عنوان التيكيتات */
 h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
 </style>
 </head>
 <body>
+      <div id="loading">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
 <div class="header">
   <img class="logo" src="images/logo.png" />
 
@@ -757,5 +815,12 @@ window.addEventListener("click", function(e){
   }
 });
 </script>
+<script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+      }, 1400); // ثانية و7 أعشار
+    });
+  </script>
 </body>
 </html>
