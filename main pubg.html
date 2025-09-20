@@ -219,6 +219,80 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
     });
   </script>
 
+<script type="module">
+  // استدعاء مكتبات Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+  // إعدادات Firebase الخاصة بمشروعك
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // تهيئة Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+
+  // اختيار الباقة
+  function selectPackage(packageName, element) {
+    selectedPackage = packageName;
+    document.getElementById("package-name").value = packageName;
+    document.getElementById('transferForm').classList.remove('hidden');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+  window.selectPackage = selectPackage; // علشان تشتغل مع onclick
+
+  // التعامل مع الفورم
+  document.getElementById("orderForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    if (selectedPackage === '') {
+      alert("❌ الرجاء اختيار باقة أولاً");
+      return;
+    }
+
+    // تحقق من تسجيل الدخول
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        alert("⚠️ لازم تسجل دخول الأول قبل عمل طلب");
+        return;
+      }
+
+      const submitButton = e.target.querySelector("button[type='submit']");
+      submitButton.disabled = true;
+      submitButton.innerText = "جاري الإرسال...";
+
+      try {
+        // إضافة الطلب إلى Firestore
+        await addDoc(collection(db, "orders"), {
+          userId: user.uid, // ID المستخدم
+          game: GAME_NAME,
+          package: selectedPackage,
+          phone: document.getElementById("sender-number").value,
+          pubg_id: document.getElementById("pubg-id").value,
+          createdAt: serverTimestamp() // وقت الطلب
+        });
+
+        window.location.href = "thanks.html"; // بعد الحفظ يروح لصفحة الشكر
+      } catch (error) {
+        alert("❌ حصل خطأ أثناء حفظ الطلب");
+        console.error("Error:", error);
+        submitButton.disabled = false;
+        submitButton.innerText = "إرسال الطلب";
+      }
+    });
+  });
+</script>
+
+
   <footer class="site-footer">
   <div class="footer-content">
     <p>© 2025 جميع الحقوق محفوظة - <span> El Safy Store </span> 💙</p>
