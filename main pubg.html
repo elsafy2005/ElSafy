@@ -26,66 +26,6 @@
 
   gtag('config', 'G-LS3Z6JTV3W');
 </script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-
-
-const analytics = getAnalytics(app);
-const provider = new GoogleAuthProvider();
-
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("loginLink");
-  const userName = document.getElementById("userName");
-  const userPhoto = document.getElementById("userPhoto");
-  let logoutBtn = document.getElementById("logoutBtn");
-
-  if(!logoutBtn) {
-    logoutBtn = document.createElement("a");
-    logoutBtn.href = "#";
-    logoutBtn.id = "logoutBtn";
-    logoutBtn.innerText = "Logout";
-    loginBtn.parentNode.appendChild(logoutBtn);
-    logoutBtn.style.display = "none";
-    logoutBtn.style.marginLeft = "10px";
-  }
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      userName.innerText = user.displayName;
-      userPhoto.src = user.photoURL || "images/img_avatar.png"; // صورة افتراضية لو مفيش
-      loginBtn.style.display = "none";
-      logoutBtn.style.display = "inline-block";
-    } else {
-      userName.innerText = "";
-      userPhoto.src = "images/img_avatar.png"; // صورة افتراضية
-      loginBtn.style.display = "inline-block";
-      logoutBtn.style.display = "none";
-    }
-  });
-
-  loginBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        window.location.href = "user-dashboard.html";
-      })
-      .catch((error) => {
-        console.error("Login Error:", error);
-        alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
-      });
-  });
-
-  logoutBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    });
-  });
-});
-</script>
-
 </head>
 <body>
   <div id="loading">
@@ -102,9 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
-            <a href="#" id="loginLink">Login</a>
-      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
-<span id="userName"></span>
     </div>
   </div>
   <div class="delivery-note">
@@ -206,68 +143,71 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 
 
-<script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWL-9s-EV8PthAzGc81IHNFaOZ2uy7VjEezxCkf_vwOxAY22ISPzItqn71bgBqH7fTng/exec";
-const GAME_NAME = "Pubg Mobile"; // ثابت حسب موقعك
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-let selectedPackage = '';
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+    authDomain: "elsafy-store.firebaseapp.com",
+    projectId: "elsafy-store",
+    storageBucket: "elsafy-store.firebasestorage.app",
+    messagingSenderId: "517856691965",
+    appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+    measurementId: "G-H5Y50LG1DS"
+  };
 
-function selectPackage(packageName, element) {
-  selectedPackage = packageName;
-  document.getElementById("package-name").value = packageName;
-  document.getElementById('transferForm').classList.remove('hidden');
-  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-  // إزالة التأثير من كل الكروت
-  document.querySelectorAll('.package-card').forEach(card => {
-    card.classList.remove('selected');
-    let check = card.querySelector('.checkmark');
-    if(check) check.remove();
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK-sx5sRflYa8O0rfLWJSTVrQ6E9TXyh_GCW_UTVVs72MDUsjbhxPywGt6kSPG5zvWWw/exec"; 
+  const GAME_NAME = "Pubg Mobile"; 
+
+  let selectedPackage = '';
+
+  document.getElementById("orderForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    if (selectedPackage === '') {
+      alert("❌ لازم تختار باقة");
+      return;
+    }
+
+    const submitButton = e.target.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+    submitButton.innerText = "جاري الإرسال...";
+
+    const user = auth.currentUser;
+    if (!user) {
+      alert("⚠️ لازم تسجل دخول الأول");
+      submitButton.disabled = false;
+      submitButton.innerText = "إرسال الطلب";
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("uid", user.uid); // 🟢 ربط الطلب بالمستخدم
+    formData.append("phone", document.getElementById("sender-number").value);
+    formData.append("pubg_id", document.getElementById("pubg-id").value);
+    formData.append("package", selectedPackage);
+    formData.append("game", GAME_NAME);
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: formData
+    })
+    .then(() => {
+      window.location.href = "thanks.html";
+    })
+    .catch(err => {
+      alert("❌ خطأ أثناء الإرسال");
+      console.error(err);
+      submitButton.disabled = false;
+      submitButton.innerText = "إرسال الطلب";
+    });
   });
-
-  // إضافة تأثير الكرت المختار وعلامة ✅
-  element.classList.add('selected');
-  let checkmark = document.createElement('span');
-  checkmark.className = 'checkmark';
-  checkmark.innerText = '✅';
-  element.appendChild(checkmark);
-}
-
-// التعامل مع إرسال الفورم
-document.getElementById("orderForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  if(selectedPackage === '') {
-    alert("❌ الرجاء اختيار باقة أولاً");
-    return;
-  }
-
-  const submitButton = this.querySelector("button[type='submit']");
-  submitButton.disabled = true; 
-  submitButton.innerText = "جاري الإرسال...";
-
-  const formData = new FormData();
-  formData.append("phone", document.getElementById("sender-number").value);
-  formData.append("pubg_id", document.getElementById("pubg-id").value);
-  formData.append("package", selectedPackage);
-  formData.append("game", GAME_NAME);
-
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
-    // بعد الإرسال مباشرة نروح لصفحة الشكر
-    window.location.href = "thanks.html";
-  })
-  .catch(err => {
-    alert("❌ حصل خطأ أثناء الإرسال");
-    console.error("Error:", err);
-    submitButton.disabled = false;
-    submitButton.innerText = "إرسال الطلب";
-  });
-});
 </script>
+
 
 
 
@@ -281,76 +221,6 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
       }, 1400); // ثانية و7 أعشار
     });
   </script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-
-  function selectPackage(packageName, element) {
-    selectedPackage = packageName;
-    document.getElementById("package-name").value = packageName;
-    document.getElementById('transferForm').classList.remove('hidden');
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }
-  window.selectPackage = selectPackage;
-
-  document.getElementById("orderForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    if (selectedPackage === '') {
-      alert("❌ الرجاء اختيار باقة أولاً");
-      return;
-    }
-
-    const submitButton = e.target.querySelector("button[type='submit']");
-    submitButton.disabled = true;
-    submitButton.innerText = "جاري الإرسال...";
-
-    // نشوف المستخدم الحالي
-    const user = auth.currentUser;
-
-    if (!user) {
-      alert("⚠️ لازم تسجل دخول الأول قبل عمل طلب");
-      submitButton.disabled = false;
-      submitButton.innerText = "إرسال الطلب";
-      return; // هنا وقفنا الكود ومش هيروح لصفحة الشكر
-    }
-
-    try {
-      await addDoc(collection(db, "orders"), {
-        userId: user.uid,
-        game: GAME_NAME,
-        package: selectedPackage,
-        phone: document.getElementById("sender-number").value,
-        pubg_id: document.getElementById("pubg-id").value,
-        createdAt: serverTimestamp()
-      });
-
-      window.location.href = "thanks.html";
-    } catch (error) {
-      alert("❌ حصل خطأ أثناء حفظ الطلب");
-      console.error("Error:", error);
-      submitButton.disabled = false;
-      submitButton.innerText = "إرسال الطلب";
-    }
-  });
-</script>
-
 
 
   <footer class="site-footer">
