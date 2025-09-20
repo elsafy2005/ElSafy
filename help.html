@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="ltr" >
 <head>
 <meta charset="UTF-8">
 <title>Customer Dashboard - My Tickets</title>
@@ -21,7 +21,44 @@ textarea:focus, input[type=text]:focus { outline:none; border-color:#007bff; }
 /* زرار */
 button { background:#007bff; color:#fff; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-size:15px; transition: background 0.2s; }
 button:hover { background:#0056b3; }
+/* Responsive للموبايل */
+@media (max-width: 768px) {
+  .desktop-nav { display: none; }
+  .menu-btn { display: inline-block; }
+}
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+  }
 
+  .logo {
+    order: 1; /* اللوجو على اليمين */
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    order: 2; /* الزر على الشمال */
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;  /* تظهر القايمة على الشمال */
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    flex-direction: column;
+    z-index: 999;
+  }
+}
 /* تيكيتات المستخدم */
 .ticket { background:#fff; border-radius:12px; padding:20px; margin:15px 0; box-shadow:0 3px 10px rgba(0,0,0,0.05); transition: transform 0.2s; }
 .ticket:hover { transform: translateY(-2px); }
@@ -399,7 +436,11 @@ body {
     opacity: 1;
   }
 }
+body{
+  direction: ltr;
 
+
+}
 /* بعد الاختفاء */
 #loading.hidden {
   opacity: 0;
@@ -435,7 +476,10 @@ body {
   .desktop-nav { display: none; } /* اخفاء القوائم العادية */
   .menu-btn { display: inline-block; } /* اظهار زر القائمة */
 }
-
+#userNameMobile {
+  color: rgba(255, 255, 255, 0.767);
+}
+#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
 body::before {
   content: "";
   position: fixed; 

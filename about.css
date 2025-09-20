@@ -30,7 +30,10 @@ body {
   text-decoration: none;
   border-radius: 15px;
 }
-
+#userNameMobile {
+  color: rgba(255, 255, 255, 0.767);
+}
+#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
 .header-links a:hover {
   background-color: #0171f9;
 }

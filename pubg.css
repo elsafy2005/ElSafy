@@ -1088,3 +1088,7 @@ body{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#userNameMobile {
+  color: rgba(255, 255, 255, 0.767);
+}
+#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
