@@ -28,6 +28,7 @@
 </script>
  
 
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
@@ -48,53 +49,50 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("loginLink");
-  const userName = document.getElementById("userName");
-  const userPhoto = document.getElementById("userPhoto");
-  let logoutBtn = document.getElementById("logoutBtn");
+// توحيد كل العناصر
+const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
+const logoutBtns = [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")];
+const userPhotos = [document.getElementById("userPhotoDesktop"), document.getElementById("userPhotoMobile")];
+const userNames = [document.getElementById("userNameDesktop"), document.getElementById("userNameMobile")];
 
-  if(!logoutBtn) {
-    logoutBtn = document.createElement("a");
-    logoutBtn.href = "#";
-    logoutBtn.id = "logoutBtn";
-    logoutBtn.innerText = "Logout";
-    loginBtn.parentNode.appendChild(logoutBtn);
-    logoutBtn.style.display = "none";
-    logoutBtn.style.marginLeft = "10px";
+// متابعة حالة تسجيل الدخول لكل الأجهزة
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    loginBtns.forEach(btn => btn.style.display = "none");
+    logoutBtns.forEach(btn => btn.style.display = "inline-block");
+    userPhotos.forEach(photo => photo.src = user.photoURL || "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = user.displayName);
+  } else {
+    loginBtns.forEach(btn => btn.style.display = "inline-block");
+    logoutBtns.forEach(btn => btn.style.display = "none");
+    userPhotos.forEach(photo => photo.src = "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = "");
   }
+});
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      userName.innerText = user.displayName;
-      userPhoto.src = user.photoURL || "images/img_avatar.png"; // صورة افتراضية لو مفيش
-      loginBtn.style.display = "none";
-      logoutBtn.style.display = "inline-block";
-    } else {
-      userName.innerText = "";
-      userPhoto.src = "images/img_avatar.png"; // صورة افتراضية
-      loginBtn.style.display = "inline-block";
-      logoutBtn.style.display = "none";
+// تسجيل الدخول
+loginBtns.forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signInWithPopup(auth, provider);
+    }catch(err){
+      console.error("Login Error:", err);
+      alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
     }
   });
+});
 
-  loginBtn.addEventListener("click", (e) => {
+// تسجيل الخروج
+logoutBtns.forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
     e.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        window.location.href = "index.html";
-      })
-      .catch((error) => {
-        console.error("Login Error:", error);
-        alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
-      });
-  });
-
-  logoutBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    });
+    try{
+      await signOut(auth);
+    }catch(err){
+      console.error("Logout Error:", err);
+      alert("حدث خطأ أثناء تسجيل الخروج.");
+    }
   });
 });
 </script>
@@ -120,9 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
     <a href="Contact.HTML">Contact</a>
     <a href="user-dashboard.html">Orders</a>
     <a href="About.html">About</a>
-          <a href="#" id="loginLink">Login</a>
-<img class="userPhoto" src="images/img_avatar.png" alt="User">
-<span class="userName"></span>
+    <a href="#" id="loginLinkDesktop">Login</a>
+    <button id="logoutBtnDesktop" style="display:none;">Logout</button>
+    <img id="userPhotoDesktop" class="userPhoto" src="images/img_avatar.png" alt="User">
+    <span id="userNameDesktop" class="userName"></span>
   </nav>
 
   <!-- زر القوائم للموبايل -->
@@ -130,13 +129,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <!-- القائمة المنسدلة للموبايل -->
   <div class="dropdown" id="dropdownMenu">
-      <a href="index.html">Home</a>
-      <a href="Contact.HTML">Contact</a>
-      <a href="user-dashboard.html">Orders</a>
-      <a href="About.html">About</a>
-      <a href="#" id="loginLink">Login</a>
-<img class="userPhoto" src="images/img_avatar.png" alt="User">
-<span class="userName"></span>
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+    <a href="#" id="loginLinkMobile">Login</a>
+    <button id="logoutBtnMobile" style="display:none;">Logout</button>
+    <img id="userPhotoMobile" class="userPhoto" src="images/img_avatar.png" alt="User">
+    <span id="userNameMobile" class="userName"></span>
   </div>
 </div>
 
