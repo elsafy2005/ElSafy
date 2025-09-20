@@ -438,7 +438,7 @@ logoutBtn?.addEventListener("click", async (e) => {
 // تحميل الطلبات وعرضها في الجدول
 async function loadDashboard(uid) {
   const ordersRef = collection(db, "orders");
-  const q = query(ordersRef, where("player_id", "==", uid));
+  const q = query(ordersRef, where("pubg_id", "==", uid));
   const querySnapshot = await getDocs(q);
 
   ordersTable.innerHTML = `
@@ -464,7 +464,7 @@ async function loadDashboard(uid) {
     const data = doc.data();
     const row = ordersTable.insertRow();
     row.insertCell(0).innerText = data.order_id || "-";
-    row.insertCell(1).innerText = data.id_pubg || "-"; // يظهر Pubg ID الحقيقي
+    row.insertCell(1).innerText = data.pubg_id|| "-"; // يظهر Pubg ID الحقيقي
     row.insertCell(2).innerText = data.phone || "-";
     row.insertCell(3).innerText = data.game_type || "-";
     row.insertCell(4).innerText = data.package || "-";
