@@ -111,18 +111,34 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
   <!-- HEADER -->
-  <div class="header">
-    <img class="logo" src="images/logo.png" />
-    <div class="header-links">
+<div class="header">
+  <img class="logo" src="images/logo.png" />
+
+  <!-- القوائم العادية للويب -->
+  <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+          <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
+  </nav>
+
+  <!-- زر القوائم للموبايل -->
+  <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
+
+  <!-- القائمة المنسدلة للموبايل -->
+  <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
       <a href="#" id="loginLink">Login</a>
-<img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
-<span id="userName"></span>
-    </div>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
   </div>
+</div>
 
   <!-- Landing Page -->
   <div class="landing-page">
@@ -311,5 +327,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1600); // 2 ثانية تجربة
     });
   </script>
+
+<script>
+const dropdown = document.getElementById("dropdownMenu");
+
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+// اغلاق القائمة لو ضغط المستخدم خارجها
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
 
 </body>
