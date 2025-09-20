@@ -277,15 +277,6 @@ onAuthStateChanged(auth, (user) => {
     userPhoto.src = "images/img_avatar.png";
   }
 });
-
-// تسجيل الدخول
-document.getElementById("loginLink").addEventListener("click", (e)=>{
-  e.preventDefault();
-  signInWithPopup(auth, provider)
-    .then(()=> window.location.href="index.html")
-    .catch(err => console.error(err));
-});
-
 const loginBtns = [
   document.getElementById("loginLinkDesktop"),
   document.getElementById("loginLinkMobile")
@@ -347,6 +338,13 @@ logoutBtns.forEach(btn => {
   });
 });
 
+// تسجيل الدخول
+document.getElementById("loginLink").addEventListener("click", (e)=>{
+  e.preventDefault();
+  signInWithPopup(auth, provider)
+    .then(()=> window.location.href="index.html")
+    .catch(err => console.error(err));
+});
 
 // تسجيل الخروج
 document.getElementById("logoutBtn")?.addEventListener("click", (e)=>{
