@@ -402,3 +402,116 @@ body{
   .desktop-nav { display: none; }
   .menu-btn { display: inline-block; }
 }
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+  }
+
+  .logo {
+    order: 1; /* اللوجو على اليمين */
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    order: 2; /* الزر على الشمال */
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;  /* تظهر القايمة على الشمال */
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    flex-direction: column;
+    z-index: 999;
+  }
+}
+/* الهيدر العام */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative; /* مش ثابت */
+  background-color: rgba(0,0,0,0.5);
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  order: 2; /* اللوجو على اليمين */
+}
+
+/* زر القائمة */
+.menu-btn {
+  display: none;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  order: 1; /* الزر على الشمال */
+}
+
+/* القوائم العادية للكمبيوتر */
+.desktop-nav {
+  display: flex;
+  gap: 15px;
+}
+
+.desktop-nav a {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.desktop-nav a:hover {
+  background-color: #007BFF;
+}
+
+/* القائمة المنسدلة */
+#dropdownMenu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px; 
+  left: 0; /* تظهر من الشمال */
+  background: #1e3a8a;
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+#dropdownMenu a {
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+#dropdownMenu a:hover {
+  background-color: #374ac0;
+}
+
+/* Media Query للموبايل */
+@media screen and (max-width:768px) {
+  .desktop-nav { display: none; } /* اخفاء القوائم العادية */
+  .menu-btn { display: inline-block; } /* اظهار زر القائمة */
+}

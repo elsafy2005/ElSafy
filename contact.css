@@ -413,3 +413,36 @@ body{
   .desktop-nav { display: none; }
   .menu-btn { display: inline-block; }
 }
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+  }
+
+  .logo {
+    order: 1; /* اللوجو على اليمين */
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    order: 2; /* الزر على الشمال */
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;  /* تظهر القايمة على الشمال */
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    flex-direction: column;
+    z-index: 999;
+  }
+}

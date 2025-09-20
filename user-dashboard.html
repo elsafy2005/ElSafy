@@ -277,6 +277,39 @@ body::before {
   pointer-events: none; 
   z-index: -1; /* بين العناصر والخلفية */
 }
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+  }
+
+  .logo {
+    order: 1; /* اللوجو على اليمين */
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    order: 2; /* الزر على الشمال */
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;  /* تظهر القايمة على الشمال */
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    flex-direction: column;
+    z-index: 999;
+  }
+}
 
 </style>
 </head>
@@ -288,32 +321,36 @@ body::before {
       <span></span>
     </div>
   </div>
-  <div class="header">
-    <img class="logo" src="images/logo.png" />
-      <nav class="desktop-nav">
-    <a href="index.html">Home</a>
-    <a href="Contact.HTML">Contact</a>
-    <a href="user-dashboard.html">Orders</a>
-    <a href="About.html">About</a>
-          <a href="#" id="loginLink">Login</a>
-      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
-      <span id="userName"></span>
-  </nav>
-
+<div class="header">
   <!-- زر القوائم للموبايل -->
   <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
 
-  <!-- القائمة المنسدلة للموبايل -->
+  <!-- اللوجو -->
+  <img class="logo" src="images/logo.png" />
+
+  <!-- القايمة المنسدلة -->
   <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
       <a href="#" id="loginLink">Login</a>
-      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+            <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
       <span id="userName"></span>
   </div>
+
+  <!-- القايمة العادية للبيسي -->
+  <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+    <a href="#" id="loginLink">Login</a>
+          <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
+  </nav>
 </div>
+
 
 <div id="dashboard" style="display:none">
   <h1>طلباتك</h1>
@@ -346,10 +383,17 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
+// عناصر الكمبيوتر
 const loginBtn = document.getElementById("loginLink");
 const logoutBtn = document.getElementById("logoutBtn");
 const userName = document.getElementById("userName");
 const userPhoto = document.getElementById("userPhoto");
+
+// عناصر الموبايل
+const loginBtnMobile = document.getElementById("loginLinkMobile");
+const userNameMobile = document.getElementById("userNameMobile");
+const userPhotoMobile = document.getElementById("userPhotoMobile");
+
 const ordersTable = document.getElementById("ordersTable");
 
 let currentUser = null;
@@ -358,30 +402,50 @@ let currentUser = null;
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUser = user;
+
+    // الكمبيوتر
     loginBtn.style.display = "none";
     if(logoutBtn) logoutBtn.style.display = "inline-block";
     userName.innerText = user.displayName;
     userPhoto.src = user.photoURL || "images/img_avatar.png";
+
+    // الموبايل
+    if(loginBtnMobile) loginBtnMobile.style.display = "none";
+    if(userNameMobile) userNameMobile.innerText = user.displayName;
+    if(userPhotoMobile) userPhotoMobile.src = user.photoURL || "images/img_avatar.png";
+
     document.getElementById("dashboard").style.display = "block";
     await loadDashboard(user.uid);
   } else {
     currentUser = null;
+
+    // الكمبيوتر
     loginBtn.style.display = "inline-block";
     if(logoutBtn) logoutBtn.style.display = "none";
     userName.innerText = "";
     userPhoto.src = "images/img_avatar.png";
+
+    // الموبايل
+    if(loginBtnMobile) loginBtnMobile.style.display = "inline-block";
+    if(userNameMobile) userNameMobile.innerText = "";
+    if(userPhotoMobile) userPhotoMobile.src = "images/img_avatar.png";
+
     document.getElementById("dashboard").style.display = "none";
   }
 });
 
-// تسجيل الدخول
-loginBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    await signInWithPopup(auth, provider);
-  } catch(err) {
-    console.error(err);
-    alert("حدث خطأ أثناء تسجيل الدخول.");
+// تسجيل الدخول (الكمبيوتر والموبايل)
+[loginBtn, loginBtnMobile].forEach(btn => {
+  if(btn){
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithPopup(auth, provider);
+      } catch(err) {
+        console.error(err);
+        alert("حدث خطأ أثناء تسجيل الدخول.");
+      }
+    });
   }
 });
 
@@ -434,6 +498,7 @@ async function loadDashboard(uid) {
   });
 }
 </script>
+
 <script>
 const dropdown = document.getElementById("dropdownMenu");
 
