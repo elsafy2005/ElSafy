@@ -53,17 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userName = document.getElementById("userName");
   const userPhoto = document.getElementById("userPhoto");
   let logoutBtn = document.getElementById("logoutBtn");
-
-  if(!logoutBtn) {
-    logoutBtn = document.createElement("a");
-    logoutBtn.href = "#";
-    logoutBtn.id = "logoutBtn";
-    logoutBtn.innerText = "Logout";
-    loginBtn.parentNode.appendChild(logoutBtn);
-    logoutBtn.style.display = "none";
-    logoutBtn.style.marginLeft = "10px";
-  }
-
+  
 const loginBtns = [
   document.getElementById("loginLinkDesktop"),
   document.getElementById("loginLinkMobile")
@@ -96,36 +86,17 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// تسجيل الدخول
-loginBtns.forEach(btn => {
-  btn.addEventListener("click", async (e)=>{
-    e.preventDefault();
-    try{
-      await signInWithPopup(auth, provider);
-      // يحدث الصفحة بعد تسجيل الدخول لتطبيق كل العناصر
-      window.location.reload();
-    }catch(err){
-      console.error("Login Error:", err);
-      alert("حدث خطأ أثناء تسجيل الدخول");
-    }
-  });
-});
+  if(!logoutBtn) {
+    logoutBtn = document.createElement("a");
+    logoutBtn.href = "#";
+    logoutBtn.id = "logoutBtn";
+    logoutBtn.innerText = "Logout";
+    loginBtn.parentNode.appendChild(logoutBtn);
+    logoutBtn.style.display = "none";
+    logoutBtn.style.marginLeft = "10px";
+  }
 
-// تسجيل الخروج
-logoutBtns.forEach(btn => {
-  btn.addEventListener("click", async (e)=>{
-    e.preventDefault();
-    try{
-      await signOut(auth);
-      window.location.reload();
-    }catch(err){
-      console.error("Logout Error:", err);
-      alert("حدث خطأ أثناء تسجيل الخروج");
-    }
-  });
-});
-
-
+  
   onAuthStateChanged(auth, (user) => {
     if (user) {
       userName.innerText = user.displayName;
