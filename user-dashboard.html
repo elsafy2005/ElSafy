@@ -518,6 +518,8 @@ body{
   <table id="ordersTable"></table>
 </div>
 
+<table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
@@ -539,44 +541,42 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-let currentUser = null;
-
-// عناصر الصفحة
-const loginBtn = document.getElementById("loginBtn") || document.getElementById("loginLink");
+const loginBtn = document.getElementById("loginLink");
 const logoutBtn = document.getElementById("logoutBtn");
 const userName = document.getElementById("userName");
 const userPhoto = document.getElementById("userPhoto");
-const dashboard = document.getElementById("dashboard");
 const ordersTable = document.getElementById("ordersTable");
+
+let currentUser = null;
 
 // متابعة حالة تسجيل الدخول
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUser = user;
-    if (loginBtn) loginBtn.style.display = "none";
-    if (logoutBtn) logoutBtn.style.display = "inline-block";
-    if (userName) userName.innerText = user.displayName || "User";
-    if (userPhoto) userPhoto.src = user.photoURL || "images/img_avatar.png";
-    if (dashboard) dashboard.style.display = "block";
+    loginBtn.style.display = "none";
+    if(logoutBtn) logoutBtn.style.display = "inline-block";
+    userName.innerText = user.displayName;
+    userPhoto.src = user.photoURL || "images/img_avatar.png";
+    document.getElementById("dashboard").style.display = "block";
     await loadDashboard(user.uid);
   } else {
     currentUser = null;
-    if (loginBtn) loginBtn.style.display = "inline-block";
-    if (logoutBtn) logoutBtn.style.display = "none";
-    if (userName) userName.innerText = "";
-    if (userPhoto) userPhoto.src = "images/img_avatar.png";
-    if (dashboard) dashboard.style.display = "none";
+    loginBtn.style.display = "inline-block";
+    if(logoutBtn) logoutBtn.style.display = "none";
+    userName.innerText = "";
+    userPhoto.src = "images/img_avatar.png";
+    document.getElementById("dashboard").style.display = "none";
   }
 });
 
 // تسجيل الدخول
-loginBtn?.addEventListener("click", async (e) => {
+loginBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
     await signInWithPopup(auth, provider);
-  } catch (err) {
+  } catch(err) {
     console.error(err);
-    alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
+    alert("حدث خطأ أثناء تسجيل الدخول.");
   }
 });
 
@@ -585,56 +585,50 @@ logoutBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
     await signOut(auth);
-    if (dashboard) dashboard.style.display = "none";
-    window.location.href = "index.html";
-  } catch (err) {
+    ordersTable.innerHTML = ""; // مسح الجدول بعد الخروج
+  } catch(err) {
     console.error(err);
     alert("حدث خطأ أثناء تسجيل الخروج.");
   }
 });
 
-// تحميل الطلبات وعرضها في الجدول بدون عمود الاسم
+// تحميل الطلبات وعرضها في الجدول
 async function loadDashboard(uid) {
-  try {
-    const ordersRef = collection(db, "orders");
-    const q = query(ordersRef, where("player_id", "==", uid));
-    const querySnapshot = await getDocs(q);
+  const ordersRef = collection(db, "orders");
+  const q = query(ordersRef, where("player_id", "==", uid));
+  const querySnapshot = await getDocs(q);
 
-    // إعادة تهيئة الجدول بدون عمود الاسم
-    ordersTable.innerHTML = `
-      <tr>
-        <th>Order ID</th>
-        <th>Player ID</th>
-        <th>Phone</th>
-        <th>Game</th>
-        <th>Package</th>
-        <th>Time</th>
-      </tr>
-    `;
+  ordersTable.innerHTML = `
+    <tr>
+      <th>Order ID</th>
+      <th>Player ID</th>
+      <th>Phone</th>
+      <th>Game</th>
+      <th>Package</th>
+      <th>Time</th>
+    </tr>
+  `;
 
-    querySnapshot.forEach(doc => {
-      const data = doc.data();
-      const row = ordersTable.insertRow();
-      row.insertCell(0).innerText = data.order_id || "-";
-      row.insertCell(1).innerText = data.player_id || "-";
-      row.insertCell(2).innerText = data.phone || "-";
-      row.insertCell(3).innerText = data.game_type || "-";
-      row.insertCell(4).innerText = data.package || "-";
-      row.insertCell(5).innerText = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleString() : "-";
-    });
-  } catch (err) {
-    console.error("Error loading dashboard:", err);
-    alert("حدث خطأ أثناء تحميل الطلبات.");
+  if (querySnapshot.empty) {
+    const row = ordersTable.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 6;
+    cell.innerText = "لا توجد طلبات مسجلة";
+    return;
   }
+
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+    const row = ordersTable.insertRow();
+    row.insertCell(0).innerText = data.order_id || "-";
+    row.insertCell(1).innerText = data.player_id || "-";
+    row.insertCell(2).innerText = data.phone || "-";
+    row.insertCell(3).innerText = data.game_type || "-";
+    row.insertCell(4).innerText = data.package || "-";
+    row.insertCell(5).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
+  });
 }
 </script>
 
-<script>
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loading").classList.add("hidden");
-      }, 1400); // ثانية و7 أعشار
-    });
-  </script>
 </body>
 </html>
