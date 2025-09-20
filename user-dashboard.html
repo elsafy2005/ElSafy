@@ -472,6 +472,12 @@ async function loadDashboard(uid) {
   });
 }
 </script>
-
+<script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+      }, 1400); // ثانية و7 أعشار
+    });
+  </script>
 </body>
 </html>
