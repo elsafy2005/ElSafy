@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr" >
+<html lang="ar"  >
 <head>
 <meta charset="UTF-8">
 <title>Customer Dashboard - My Tickets</title>
@@ -399,9 +399,7 @@ body {
     opacity: 1;
   }
 }
-body{
-  direction: ltr;
-}
+
 #userNameMobile {
   color: rgba(255, 255, 255, 0.767);
 }
@@ -421,11 +419,13 @@ body::before {
 /* الهيدر العام */
 .header {
   display: flex;
-  justify-content: space-between; /* يوزع المساحة بين اللوجو والعناصر */
+  justify-content: space-between; /* اللوجو على الشمال، القوائم على اليمين */
   align-items: center;
   padding: 10px 20px;
   background-color: rgba(0,0,0,0.5);
   flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
 }
 
 /* اللوجو على الشمال */
@@ -434,6 +434,13 @@ body::before {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* القوائم العادية للكمبيوتر */
+.desktop-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
 /* زر القائمة للموبايل */
@@ -448,33 +455,42 @@ body::before {
   cursor: pointer;
 }
 
-/* القوائم العادية للكمبيوتر */
-.desktop-nav {
-  display: flex;
-  gap: 15px;
+/* القائمة المنسدلة للموبايل */
+#dropdownMenu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 0; /* تظهر من اليمين */
+  background: #1e3a8a;
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+#dropdownMenu a {
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+#dropdownMenu a:hover {
+  background-color: #374ac0;
 }
 
 /* Responsive للموبايل */
 @media screen and (max-width: 768px) {
   .desktop-nav { display: none; } /* اخفاء القوائم العادية */
   .menu-btn { display: block; }   /* اظهار زر القائمة */
-
+  
   .header {
-    flex-direction: row;
-    justify-content: space-between; /* اللوجو على الشمال، الزر على اليمين */
-    align-items: center;
     padding: 10px 15px;
   }
 
   .logo {
     width: 60px;
     height: 60px;
-  }
-
-  #dropdownMenu {
-    top: 60px;
-    right: 0; /* تظهر من اليمين */
-    left: auto;
   }
 }
 
@@ -561,7 +577,49 @@ body {
   align-items: center;
   gap: 15px;
 }
+/* صورة المستخدم */
+.user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 
+/* Responsive للموبايل */
+@media (max-width: 768px) {
+  .desktop-nav { display: none; }
+  .menu-btn { display: inline-block; }
+}
+body{
+  direction: ltr;
+
+
+}
+/* صورة المستخدم */
+.userPhoto {
+  width: 35px;          /* حجم أصغر */
+  height: 35px;
+  border-radius: 50%;   /* دائري */
+  object-fit: cover;    /* لتعبئة الصورة داخل الدائرة */
+  margin-left: 8px;
+  vertical-align: middle;
+  border: 2px solid #fff; /* إطار خفيف */
+}
+
+/* اسم المستخدم */
+.userName {
+  font-weight: 600;
+  color: #fff;
+  margin-left: 5px;
+  vertical-align: middle;
+  max-width: 120px;       /* منع الالتصاق بالحدود */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#userNameMobile {
+  color: rgba(255, 255, 255, 0.767);
+}
+#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
 .desktop-nav a {
   text-decoration: none;
   color: #ffffff;
@@ -674,7 +732,7 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
 <div class="header">
   <img class="logo" src="images/logo.png" alt="Logo" />
 
-  <!-- القوائم العادية للويب -->
+  <!-- القوائم العادية للكمبيوتر -->
   <nav class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="Contact.HTML">Contact</a>
