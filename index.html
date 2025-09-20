@@ -29,12 +29,12 @@
  
 
 <script type="module">
-  // استيراد الوظائف الأساسية من Firebase
+  // استيراد الوظائف الأساسية
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-  // إعدادات مشروع Firebase الجديد
+  // إعدادات Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
     authDomain: "elsafy-store.firebaseapp.com",
@@ -51,37 +51,40 @@
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  // عناصر الهيدر
-  const loginLink = document.getElementById("loginLink"); // رابط تسجيل الدخول
-  const userName = document.getElementById("userName");   // عنصر عرض اسم المستخدم
+  // عناصر الصفحة
+  const loginBtn = document.getElementById("loginLink"); // الزر في الهيدر
+  const userName = document.getElementById("userName");
+  const userPhoto = document.getElementById("userPhoto");
 
-  // تسجيل الدخول باستخدام Google
-  loginLink.addEventListener("click", (e) => {
-    e.preventDefault(); // منع إعادة تحميل الصفحة
+  // مراقبة حالة تسجيل الدخول
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // إذا المستخدم مسجل الدخول
+      if(userName) userName.innerText = "مرحباً، " + user.displayName;
+      if(userPhoto) userPhoto.src = user.photoURL || "images/default-user.png";
+    } else {
+      if(userName) userName.innerText = "";
+      if(userPhoto) userPhoto.src = "";
+    }
+  });
+
+  // حدث تسجيل الدخول
+  loginBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        userName.innerText = "مرحباً، " + user.displayName;
         console.log("User UID:", user.uid);
-        // توجيه المستخدم لصفحة الطلبات بعد تسجيل الدخول
+        // بعد تسجيل الدخول يمكن تحويله للداش بورد
         window.location.href = "user-dashboard.html";
       })
       .catch((error) => {
-        console.error(error);
-        alert("حدث خطأ أثناء تسجيل الدخول");
+        console.error("Login Error:", error);
+        alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
       });
   });
-
-  // تسجيل الخروج (اختياري إذا حبيت تضيف زر خروج)
-  const logoutBtn = document.getElementById("logoutBtn");
-  if(logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      signOut(auth).then(() => {
-        userName.innerText = "";
-      });
-    });
-  }
 </script>
+
 
 
 </head>
@@ -100,8 +103,10 @@
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
-      <a href="#" id="loginLink"> Login</a>
+      <a href="#" id="loginLink">تسجيل الدخول</a>
+<img id="userPhoto" src="" alt="User Photo" style="width:40px; border-radius:50%;">
 <span id="userName"></span>
+
 
     </div>
   </div>
