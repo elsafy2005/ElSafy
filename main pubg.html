@@ -232,6 +232,19 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+
+  async function sendDataToFirestore(data) {
+  try {
+    const docRef = await addDoc(collection(db, "orders"), data);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+// مثال:
+sendDataToFirestore({name: "Zeyad", product: "Game", quantity: 2});
+
 </script>
 
 
