@@ -303,6 +303,7 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
       phone: document.getElementById("sender-number").value,
       game_type: "League of Legends", // أو GAME_NAME لو معرف
       package: selectedPackage,
+       status: "قيد التنفيذ", // ✅ هنا القيمة الجديدة
       timestamp: serverTimestamp()
     });
     window.location.href = "thanks.html";

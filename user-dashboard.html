@@ -473,6 +473,7 @@ async function loadDashboard(uid) {
       <th>Phone</th>
       <th>Game</th>
       <th>Package</th>
+      <th>Package</th>
       <th>Time</th>
     </tr>
   `;
@@ -493,7 +494,8 @@ async function loadDashboard(uid) {
     row.insertCell(2).innerText = data.phone || "-";
     row.insertCell(3).innerText = data.game_type || "-";
     row.insertCell(4).innerText = data.package || "-";
-    row.insertCell(5).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
+    row.insertCell(5).innerText = data.status || "-";
+    row.insertCell(6).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
   });
 }
 </script>
