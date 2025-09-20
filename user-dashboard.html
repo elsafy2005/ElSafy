@@ -218,6 +218,20 @@ tr:hover { background:#e0e7ff; }
   color: #fff;
   font-weight: 500;
 }
+@media screen and (max-width:768px) {
+  .dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;       /* تحت اللوجو */
+    left: 10px;      /* بدل right: 10px */
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+}
 
 .table-wrapper tr:nth-child(even) { background:#f3f4f6; }
 .table-wrapper tr:hover { background:#e0e7ff; }
@@ -263,35 +277,6 @@ body::before {
   pointer-events: none; 
   z-index: -1; /* بين العناصر والخلفية */
 }
-@media screen and (max-width:768px) {
-  .header {
-    flex-direction: row;       /* خليهم صف */
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-  }
-
-  .logo {
-    width: 60px;
-    height: 60px;
-  }
-
-  .desktop-nav {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;          /* تسمح بالتمرير أفقي إذا كبرت القوائم */
-    flex-wrap: nowrap;
-  }
-
-  .desktop-nav a {
-    flex-shrink: 0;            /* لا تصغر الروابط */
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-
-  .menu-btn { display: none; } /* نلغي زر القائمة لأنه مش محتاج */
-}
-
 
 </style>
 </head>
@@ -332,14 +317,11 @@ body::before {
 
 <div id="dashboard" style="display:none">
   <h1>طلباتك</h1>
+  <button id="logoutBtn">تسجيل الخروج</button>
   <div class="table-wrapper">
     <table id="ordersTable"></table>
   </div>
-</div>
 
-  <button id="logoutBtn">تسجيل الخروج</button>
-  <table id="ordersTable"></table>
-</div>
 
 <table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
 
