@@ -475,6 +475,18 @@ body{
     padding: 10px;
   }
   }
+  @media (max-width: 768px) {
+  table {
+    font-size: 12px; /* تصغير حجم الخط */
+  }
+  th, td {
+    padding: 6px 8px; /* تصغير الحشوة داخل الخلايا */
+  }
+  #dashboard h1 {
+    font-size: 1.5rem; /* تصغير العنوان */
+  }
+}
+
 </style>
 </head>
 <body>
@@ -629,6 +641,19 @@ async function loadDashboard(uid) {
   });
 }
 </script>
+<script>
+const dropdown = document.getElementById("dropdownMenu");
 
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+// إخفاء القائمة عند الضغط خارجها
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
 </body>
 </html>
