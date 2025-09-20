@@ -2,34 +2,72 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Customer Service</title>
+<title>Admin Dashboard - Tickets</title>
 <style>
-body { font-family: Arial, sans-serif; }
-.ticket, .newTicket { border:1px solid #ccc; padding:15px; margin:10px; border-radius:5px; }
-.ticket h3, .newTicket h3 { margin:0 0 5px; }
-.ticket p { margin:5px 0; }
-textarea { width: 100%; height: 60px; margin-top:5px; }
-button { margin-top:5px; padding:5px 10px; }
+/* إعدادات عامة */
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7fa; margin:0; padding:0; }
+h1 { text-align:center; color:#333; margin-top:20px; }
+.container { max-width:1000px; margin:0 auto; padding:20px; }
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2; /* تحت كل حاجة */
+  background: url("images/wall.gif") no-repeat center center;
+  background-size: cover;
+}
+
+body::before {
+  content: "";
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
+  pointer-events: none; 
+  z-index: -1; /* بين العناصر والخلفية */
+}
+/* بطاقة التيكيت */
+.ticket { background:#fff; border-radius:12px; padding:20px; margin:15px 0; box-shadow:0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s; }
+.ticket:hover { transform: translateY(-3px); }
+.ticket h3 { margin-top:0; color:#007bff; }
+.ticket p { margin:6px 0; color:#555; }
+.ticket .status { font-weight:bold; color:#e67e22; }
+
+/* الحقول */
+textarea, select { width:100%; padding:10px; margin-top:8px; margin-bottom:12px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box; font-size:14px; }
+textarea:focus, select:focus { outline:none; border-color:#007bff; }
+
+/* زرار */
+button { background:#007bff; color:#fff; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-size:15px; transition: background 0.2s; }
+button:hover { background:#0056b3; }
+
+/* قسم البحث أو الفلترة (اختياري) */
+.searchContainer { display:flex; justify-content:flex-end; margin-bottom:15px; }
+.searchContainer input { width:250px; margin-left:10px; }
 </style>
 </head>
 <body>
 
-<h1>خدمة العملاء</h1>
+<div class="container">
+<h1>لوحة تحكم Admin - التيكيتات</h1>
 
-<div class="newTicket">
-  <h3>فتح تيكيت جديد</h3>
-  <input type="text" id="ticketSubject" placeholder="موضوع التيكيت" />
-  <textarea id="ticketMessage" placeholder="اكتب رسالتك هنا"></textarea>
-  <button id="openTicketBtn">فتح التيكيت</button>
+<div class="searchContainer">
+  <input type="text" id="searchTickets" placeholder="ابحث عن تيكيت أو مستخدم...">
 </div>
 
-<h2>التيكيتات الحالية</h2>
 <div id="ticketsContainer">جاري تحميل التيكيتات...</div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
@@ -46,83 +84,68 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
-let currentUser = null;
+let ticketsArray = [];
 
-// متابعة حالة تسجيل الدخول
+// تسجيل الدخول لمرة واحدة
 onAuthStateChanged(auth, async (user) => {
   if(!user){
-    try{
-      await signInWithPopup(auth, provider);
-    }catch(err){
-      alert("❌ حدث خطأ أثناء تسجيل الدخول");
-      return;
-    }
+    try{ await signInWithPopup(auth, provider); } 
+    catch(err){ alert("❌ حدث خطأ أثناء تسجيل الدخول"); return; }
   }
-  currentUser = auth.currentUser;
   loadTickets();
 });
 
-// فتح تيكيت جديد
-document.getElementById("openTicketBtn").addEventListener("click", async () => {
-  const subject = document.getElementById("ticketSubject").value.trim();
-  const message = document.getElementById("ticketMessage").value.trim();
-  if(!subject || !message) return alert("❌ الرجاء ملء كل الحقول");
-
-  try {
-    await addDoc(collection(db, "tickets"), {
-      user_id: currentUser.uid,
-      user_name: currentUser.displayName,
-      subject,
-      message,
-      status: "قيد التنفيذ",
-      adminReply: "",
-      timestamp: serverTimestamp()
-    });
-    alert("✅ تم فتح التيكيت بنجاح");
-    document.getElementById("ticketSubject").value = "";
-    document.getElementById("ticketMessage").value = "";
-    loadTickets();
-  } catch(err){
-    console.error(err);
-    alert("❌ حدث خطأ أثناء فتح التيكيت");
-  }
-});
-
-// تحميل وعرض التيكيتات
+// تحميل التيكيتات
 async function loadTickets(){
   const ticketsContainer = document.getElementById("ticketsContainer");
   ticketsContainer.innerHTML = "جاري تحميل التيكيتات...";
 
-  const snapshot = await getDocs(collection(db, "tickets"));
+  const ticketsQuery = query(collection(db, "tickets"), orderBy("timestamp", "desc"));
+  const snapshot = await getDocs(ticketsQuery);
+
+  ticketsArray = snapshot.docs.map(docSnap => ({ id: docSnap.id, data: docSnap.data() }));
+
+  renderTickets(ticketsArray);
+}
+
+// عرض التيكيتات
+function renderTickets(tickets){
+  const ticketsContainer = document.getElementById("ticketsContainer");
   ticketsContainer.innerHTML = "";
 
-  snapshot.forEach(docSnap => {
-    const ticket = docSnap.data();
+  if(tickets.length === 0){
+    ticketsContainer.innerHTML = "<p>لا توجد تيكيتات حتى الآن.</p>";
+    return;
+  }
+
+  tickets.forEach(ticketObj => {
+    const ticket = ticketObj.data;
     const ticketDiv = document.createElement("div");
     ticketDiv.className = "ticket";
 
     ticketDiv.innerHTML = `
       <h3>${ticket.subject}</h3>
-      <p><strong>من المستخدم:</strong> ${ticket.user_name || ticket.user_id}</p>
+      <p><strong>المستخدم:</strong> ${ticket.user_name} (${ticket.user_id})</p>
       <p><strong>الرسالة:</strong> ${ticket.message}</p>
       <p><strong>الحالة:</strong> <span class="status">${ticket.status}</span></p>
       <select class="statusSelect">
         <option value="قيد التنفيذ" ${ticket.status === "قيد التنفيذ" ? "selected" : ""}>قيد التنفيذ</option>
         <option value="تم الحل" ${ticket.status === "تم الحل" ? "selected" : ""}>تم الحل</option>
       </select>
-      <p><strong>رد:</strong></p>
+      <p><strong>رد Admin:</strong></p>
       <textarea class="adminReply" placeholder="اكتب رد هنا">${ticket.adminReply || ""}</textarea>
       <button class="updateBtn">تحديث الحالة والرد</button>
     `;
 
+    // تحديث الحالة والرد
     ticketDiv.querySelector(".updateBtn").addEventListener("click", async () => {
       const newStatus = ticketDiv.querySelector(".statusSelect").value;
       const reply = ticketDiv.querySelector(".adminReply").value;
 
       try {
-        await updateDoc(doc(db, "tickets", docSnap.id), { status: newStatus, adminReply: reply });
+        await updateDoc(doc(db, "tickets", ticketObj.id), { status: newStatus, adminReply: reply });
         ticketDiv.querySelector(".status").innerText = newStatus;
-        alert("✅ تم تحديث الحالة والرد");
+        alert("✅ تم تحديث الحالة وإرسال الرد");
       } catch(err){
         console.error(err);
         alert("❌ حدث خطأ أثناء تحديث التيكيت");
@@ -132,6 +155,16 @@ async function loadTickets(){
     ticketsContainer.appendChild(ticketDiv);
   });
 }
+
+// بحث سريع
+document.getElementById("searchTickets").addEventListener("input", (e)=>{
+  const term = e.target.value.toLowerCase();
+  const filtered = ticketsArray.filter(t => 
+    t.data.subject.toLowerCase().includes(term) || 
+    t.data.user_name.toLowerCase().includes(term)
+  );
+  renderTickets(filtered);
+});
 </script>
 
 </body>
