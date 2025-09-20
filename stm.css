@@ -1063,3 +1063,25 @@ body{
 
 
 }
+/* صورة المستخدم */
+.userPhoto {
+  width: 35px;          /* حجم أصغر */
+  height: 35px;
+  border-radius: 50%;   /* دائري */
+  object-fit: cover;    /* لتعبئة الصورة داخل الدائرة */
+  margin-left: 8px;
+  vertical-align: middle;
+  border: 2px solid #fff; /* إطار خفيف */
+}
+
+/* اسم المستخدم */
+.userName {
+  font-weight: 600;
+  color: #fff;
+  margin-left: 5px;
+  vertical-align: middle;
+  max-width: 120px;       /* منع الالتصاق بالحدود */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
