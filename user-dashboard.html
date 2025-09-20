@@ -360,8 +360,6 @@ body::before {
   </div>
 
 
-<table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
-
 <!-- HTML مثال -->
 <header class="header">
   <a href="#" id="loginLink">تسجيل الدخول</a>
@@ -370,7 +368,7 @@ body::before {
   <img id="userPhoto" src="images/img_avatar.png" alt="User" width="35" height="35">
 </header>
 
-<section id="dashboard" style="display:none;">
+<section id="dashboard">
   <table id="ordersTable" border="1" style="width:100%; text-align:center;">
     <tr>
       <th>Order ID</th>
@@ -383,24 +381,11 @@ body::before {
   </table>
 </section>
 
-<form id="orderForm">
-  <input type="text" id="pubg-id" placeholder="ادخل ID PUBG" required>
-  <input type="text" id="sender-number" placeholder="رقم الهاتف" required>
-  <select id="game-select">
-    <option value="Pubg">Pubg</option>
-    <option value="FreeFire">FreeFire</option>
-    <!-- أضف ألعاب أخرى -->
-  </select>
-  <input type="text" id="package" placeholder="الباقة" required>
-  <button type="submit">إرسال الطلب</button>
-</form>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-// إعداد Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
   authDomain: "elsafy-store.firebaseapp.com",
@@ -414,99 +399,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
 
-const loginBtn = document.getElementById("loginLink");
 const logoutBtn = document.getElementById("logoutBtn");
 const userName = document.getElementById("userName");
 const userPhoto = document.getElementById("userPhoto");
 const ordersTable = document.getElementById("ordersTable");
-const dashboard = document.getElementById("dashboard");
-const orderForm = document.getElementById("orderForm");
-
-let currentUser = null;
 
 // متابعة حالة تسجيل الدخول
 onAuthStateChanged(auth, async (user) => {
-  currentUser = user || null;
-
-  if (currentUser) {
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    userName.innerText = currentUser.displayName;
-    userPhoto.src = currentUser.photoURL || "images/img_avatar.png";
-    dashboard.style.display = "block";
-    await loadDashboard(currentUser.uid);
-  } else {
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-    userName.innerText = "";
-    userPhoto.src = "images/img_avatar.png";
-    dashboard.style.display = "none";
-    ordersTable.innerHTML = `
-      <tr>
-        <th>Order ID</th>
-        <th>ID</th>
-        <th>Phone</th>
-        <th>Game</th>
-        <th>Package</th>
-        <th>Time</th>
-      </tr>`;
+  if (!user) {
+    // لو المستخدم مش مسجل دخول يرجع للصفحة الرئيسية
+    window.location.href = "index.html";
+    return;
   }
-});
-
-// تسجيل الدخول
-loginBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    await signInWithPopup(auth, provider);
-  } catch(err) {
-    console.error(err);
-    alert("حدث خطأ أثناء تسجيل الدخول.");
-  }
+  
+  userName.innerText = user.displayName;
+  userPhoto.src = user.photoURL || "images/img_avatar.png";
+  
+  await loadDashboard(user.uid);
 });
 
 // تسجيل الخروج
-logoutBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    await signOut(auth);
-  } catch(err) {
-    console.error(err);
-    alert("حدث خطأ أثناء تسجيل الخروج.");
-  }
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "index.html";
 });
 
-// إرسال الطلب
-orderForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  if(!currentUser) return alert("❌ يجب تسجيل الدخول أولاً");
-
-  const pubgId = document.getElementById("pubg-id").value;
-  const phone = document.getElementById("sender-number").value;
-  const game = document.getElementById("game-select").value;
-  const packageValue = document.getElementById("package").value;
-
-  try {
-    await addDoc(collection(db, "orders"), {
-      order_id: Date.now(),
-      player_id: currentUser.uid,
-      id_pubg: pubgId,
-      phone: phone,
-      game_type: game,
-      package: packageValue,
-      timestamp: serverTimestamp()
-    });
-    alert("✅ تم إرسال الطلب بنجاح!");
-    orderForm.reset();
-    await loadDashboard(currentUser.uid);
-  } catch(err) {
-    console.error(err);
-    alert("❌ حدث خطأ أثناء إرسال الطلب");
-  }
-});
-
-// تحميل البيانات في الداشبورد
+// تحميل البيانات
 async function loadDashboard(uid) {
   const ordersRef = collection(db, "orders");
   const q = query(ordersRef, where("player_id", "==", uid));
@@ -543,7 +462,6 @@ async function loadDashboard(uid) {
   });
 }
 </script>
-
 <script>
     window.addEventListener("load", () => {
       setTimeout(() => {
