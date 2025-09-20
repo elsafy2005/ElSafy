@@ -29,12 +29,10 @@
  
 
 <script type="module">
-  // استيراد الوظائف الأساسية
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
   import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-  // إعدادات Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
     authDomain: "elsafy-store.firebaseapp.com",
@@ -45,37 +43,46 @@
     measurementId: "G-H5Y50LG1DS"
   };
 
-  // تهيئة Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  // عناصر الصفحة
-  const loginBtn = document.getElementById("loginLink"); // الزر في الهيدر
+  const loginBtn = document.getElementById("loginLink");
   const userName = document.getElementById("userName");
   const userPhoto = document.getElementById("userPhoto");
+
+  // زر خروج افتراضي
+  let logoutBtn = document.getElementById("logoutBtn");
+  if(!logoutBtn) {
+    logoutBtn = document.createElement("a");
+    logoutBtn.href = "#";
+    logoutBtn.id = "logoutBtn";
+    logoutBtn.innerText = "تسجيل الخروج";
+    loginBtn.parentNode.appendChild(logoutBtn);
+    logoutBtn.style.display = "none"; // يختفي بالافتراض
+    logoutBtn.style.marginLeft = "10px";
+  }
 
   // مراقبة حالة تسجيل الدخول
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // إذا المستخدم مسجل الدخول
-      if(userName) userName.innerText = "مرحباً، " + user.displayName;
-      if(userPhoto) userPhoto.src = user.photoURL || "images/default-user.png";
+      userName.innerText = "مرحباً، " + user.displayName;
+      userPhoto.src = user.photoURL || "images/default-user.png";
+      loginBtn.style.display = "none";   // اخفاء زر تسجيل الدخول
+      logoutBtn.style.display = "inline-block"; // اظهار زر الخروج
     } else {
-      if(userName) userName.innerText = "";
-      if(userPhoto) userPhoto.src = "";
+      userName.innerText = "";
+      userPhoto.src = "";
+      loginBtn.style.display = "inline-block";
+      logoutBtn.style.display = "none";
     }
   });
 
-  // حدث تسجيل الدخول
   loginBtn.addEventListener("click", (e) => {
     e.preventDefault();
     signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user;
-        console.log("User UID:", user.uid);
-        // بعد تسجيل الدخول يمكن تحويله للداش بورد
         window.location.href = "user-dashboard.html";
       })
       .catch((error) => {
@@ -83,6 +90,14 @@
         alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
       });
   });
+
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => {
+      window.location.href = "index.html"; // يرجع للصفحة الرئيسية
+    });
+  });
+
 </script>
 
 
@@ -103,7 +118,7 @@
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
-      <a href="#" id="loginLink">تسجيل الدخول</a>
+      <a href="#" id="loginLink">Login</a>
 <img id="userPhoto" src="" alt="User Photo" style="width:40px; border-radius:50%;">
 <span id="userName"></span>
 
