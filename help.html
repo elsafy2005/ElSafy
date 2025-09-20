@@ -492,6 +492,61 @@ body::before {
   pointer-events: none; 
   z-index: -1; /* بين العناصر والخلفية */
 }
+.header {
+  display: flex;
+  justify-content: space-between; /* توزيع المساحة بين العناصر */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(0,0,0,0.5);
+  flex-wrap: wrap;
+}
+
+/* اللوجو على الشمال */
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  order: 1; /* يظهر أول عنصر */
+}
+
+/* زر القوائم على اليمين */
+.menu-btn {
+  display: none;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  order: 2; /* يظهر بعد اللوجو */
+}
+
+/* القوائم العادية للكمبيوتر */
+.desktop-nav {
+  display: flex;
+  gap: 15px;
+  order: 2; /* تظهر بعد اللوجو */
+}
+
+/* للموبايل */
+@media screen and (max-width: 768px) {
+  .menu-btn { display: block; }
+  .desktop-nav { display: none; }
+  
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+  }
+  
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+}
 
 /* عنوان التيكيتات */
 h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
