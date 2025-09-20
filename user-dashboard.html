@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم المستخدم | El Safy Store</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { font-family: 'Cairo', sans-serif; background:#f7f7f7; margin:0; padding:0; }
+  .header { display:flex; justify-content:space-between; align-items:center; padding:15px 30px; background:#222; color:white; }
+  .header img { height:40px; }
+  .header button { background:#ff4d4d; border:none; padding:8px 15px; color:white; cursor:pointer; border-radius:5px; }
+  .dashboard { max-width:900px; margin:30px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+  .user-info { display:flex; align-items:center; gap:15px; margin-bottom:20px; }
+  .user-info img { width:70px; height:70px; border-radius:50%; object-fit:cover; }
+  h2 { margin:0; }
+  .orders { margin-top:20px; }
+  .order-card { background:#f0f0f0; padding:15px; border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
+  .order-card span { font-weight:bold; }
+  .add-order { display:block; margin:20px 0; background:#28a745; color:white; text-align:center; padding:10px 15px; border-radius:5px; text-decoration:none; width:200px; }
+</style>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+  authDomain: "elsafy-store.firebaseapp.com",
+  projectId: "elsafy-store",
+  storageBucket: "elsafy-store.firebasestorage.app",
+  messagingSenderId: "517856691965",
+  appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+  measurementId: "G-H5Y50LG1DS"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const userName = document.getElementById("userName");
+const userPhoto = document.getElementById("userPhoto");
+const ordersContainer = document.getElementById("orders");
+const logoutBtn = document.getElementById("logoutBtn");
+
+// مراقبة حالة تسجيل الدخول
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userName.innerText = user.displayName;
+    userPhoto.src = user.photoURL || "images/default-user.png";
+
+    // جلب الطلبات الخاصة بالمستخدم
+    const ordersRef = collection(db, "orders");
+    const q = query(ordersRef, where("userId", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      ordersContainer.innerHTML = "<p>لا توجد طلبات حتى الآن.</p>";
+    } else {
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "order-card";
+        div.innerHTML = `<span>${data.package}</span> - حالة الشحن: ${data.status}`;
+        ordersContainer.appendChild(div);
+      });
+    }
+  } else {
+    // إذا لم يكن المستخدم مسجل الدخول، ارجعه للصفحة الرئيسية
+    window.location.href = "index.html";
+  }
+});
+
+// زر تسجيل الخروج
+logoutBtn.addEventListener("click", () => {
+  signOut(auth).then(() => {
+    window.location.href = "index.html";
+  });
+});
+</script>
+</head>
+<body>
+
+<div class="header">
+  <img src="images/logo.png" alt="Logo">
+  <button id="logoutBtn">تسجيل الخروج</button>
+</div>
+
+<div class="dashboard">
+  <div class="user-info">
+    <img id="userPhoto" src="" alt="User Photo">
+    <h2 id="userName"></h2>
+  </div>
+
+  <a href="index.html" class="add-order">أضف طلب جديد</a>
+
+  <div class="orders" id="orders">
+    <!-- الطلبات ستظهر هنا -->
+  </div>
+</div>
+
+</body>
+</html>

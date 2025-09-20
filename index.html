@@ -26,42 +26,61 @@
 
   gtag('config', 'G-LS3Z6JTV3W');
 </script>
+ 
 
 <script type="module">
+  // استيراد الوظائف الأساسية من Firebase
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
   import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
+  // إعدادات مشروع Firebase الجديد
   const firebaseConfig = {
-    apiKey: "AIzaSyDaCB5CHyGOCh1joruOW2SjbyozWsOVQGU",
-    authDomain: "my-site-a96df.firebaseapp.com",
-    projectId: "my-site-a96df",
-    storageBucket: "my-site-a96df.appspot.com",
-    messagingSenderId: "411737239421",
-    appId: "1:411737239421:web:b24c551698ceb33f3d6614",
-    measurementId: "G-TRKFK7MMQ0"
+    apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+    authDomain: "elsafy-store.firebaseapp.com",
+    projectId: "elsafy-store",
+    storageBucket: "elsafy-store.firebasestorage.app",
+    messagingSenderId: "517856691965",
+    appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+    measurementId: "G-H5Y50LG1DS"
   };
 
+  // تهيئة Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  const loginLink = document.getElementById("loginLink");
+  // عناصر الهيدر
+  const loginLink = document.getElementById("loginLink"); // رابط تسجيل الدخول
+  const userName = document.getElementById("userName");   // عنصر عرض اسم المستخدم
 
+  // تسجيل الدخول باستخدام Google
   loginLink.addEventListener("click", (e) => {
-    e.preventDefault();
+    e.preventDefault(); // منع إعادة تحميل الصفحة
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        // بعد تسجيل الدخول نوجه المستخدم لصفحة الحساب
-        window.location.href = "user-dashboard.html"; 
+        userName.innerText = "مرحباً، " + user.displayName;
+        console.log("User UID:", user.uid);
+        // توجيه المستخدم لصفحة الطلبات بعد تسجيل الدخول
+        window.location.href = "user-dashboard.html";
       })
       .catch((error) => {
         console.error(error);
         alert("حدث خطأ أثناء تسجيل الدخول");
       });
   });
+
+  // تسجيل الخروج (اختياري إذا حبيت تضيف زر خروج)
+  const logoutBtn = document.getElementById("logoutBtn");
+  if(logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      signOut(auth).then(() => {
+        userName.innerText = "";
+      });
+    });
+  }
 </script>
 
 
@@ -81,7 +100,9 @@
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
-        <a href="#" id="loginLink">Login</a>
+      <a href="#" id="loginLink"> Login</a>
+<span id="userName"></span>
+
     </div>
   </div>
 
