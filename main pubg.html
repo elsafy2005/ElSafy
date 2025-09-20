@@ -52,47 +52,50 @@
   <div class="container">
     <h1>تحديد الكمية</h1>
 
-    <div class="packages">
-      <div class="package-card" onclick="selectPackage('60 UC')">
-        <img src="images/uc.png" alt="60 UC">
-        <h3>60 UC</h3>
-        <p>55 جنيه</p>
-      </div>
+<div class="packages">
+  <div class="package-card" onclick="selectPackage('60 UC', this)">
+    <img src="images/uc.png" alt="60 UC">
+    <h3>60 UC</h3>
+    <p>55 جنيه</p>
+  </div>
 
-      <div class="package-card" onclick="selectPackage('325 UC')">
-        <img src="images/uc.png" alt="325 UC">
-        <h3>325 UC</h3>
-        <p>260 جنيه</p>
-      </div>
+  <div class="package-card" onclick="selectPackage('325 UC', this)">
+    <img src="images/uc.png" alt="325 UC">
+    <h3>325 UC</h3>
+    <p>260 جنيه</p>
+  </div>
 
-      <div class="package-card" onclick="selectPackage('660 UC')">
-        <img src="images/uc.png" alt="660 UC">
-        <h3>660 UC</h3>
-        <p>465 جنيه</p>
-      </div>
-      <div class="package-card" onclick="selectPackage('1800 UC')">
-        <img src="images/uc.png" alt="1800 UC">
-        <h3>1800 UC</h3>
-        <p>1200 جنيه</p>
-      </div>
-      <div class="package-card" onclick="selectPackage('3850 UC')">
-        <img src="images/uc.png" alt="3850 UC">
-        <h3>3850 UC</h3>
-        <p>2250 جنيه</p>
-      </div>
-      <div class="package-card" onclick="selectPackage('8100 UC')">
-        <img src="images/uc.png" alt="8100 UC">
-        <h3>8100 UC</h3>
-        <p>4400 جنيه</p>
-      </div>
-      <div class="package-card" onclick="selectPackage('16200 UC')">
-        <img src="images/uc.png" alt="16200 UC">
-        <h3>16200 UC</h3>
-        <p>8700 جنيه</p>
-      </div>
+  <div class="package-card" onclick="selectPackage('660 UC', this)">
+    <img src="images/uc.png" alt="660 UC">
+    <h3>660 UC</h3>
+    <p>465 جنيه</p>
+  </div>
 
-    </div>
-    
+  <div class="package-card" onclick="selectPackage('1800 UC', this)">
+    <img src="images/uc.png" alt="1800 UC">
+    <h3>1800 UC</h3>
+    <p>1200 جنيه</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('3850 UC', this)">
+    <img src="images/uc.png" alt="3850 UC">
+    <h3>3850 UC</h3>
+    <p>2250 جنيه</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('8100 UC', this)">
+    <img src="images/uc.png" alt="8100 UC">
+    <h3>8100 UC</h3>
+    <p>4400 جنيه</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('16200 UC', this)">
+    <img src="images/uc.png" alt="16200 UC">
+    <h3>16200 UC</h3>
+    <p>8700 جنيه</p>
+  </div>
+</div>
+
 
  <div id="transferForm" class="hidden">
   <h2>بيانات التحويل</h2>
@@ -139,36 +142,74 @@
     </div>
   </div>
 
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
 <script>
-  (function(){
-    emailjs.init("YaE_xNqbHxI5il0lz"); // ← حطيت Public Key
-  })();
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWL-9s-EV8PthAzGc81IHNFaOZ2uy7VjEezxCkf_vwOxAY22ISPzItqn71bgBqH7fTng/exec";
+const GAME_NAME = "Pubg Mobile"; // ثابت حسب موقعك
 
-  // عشان نحفظ اسم الباقة
-  let selectedPackage = '';
+let selectedPackage = '';
 
-  function selectPackage(packageName) {
-    selectedPackage = packageName;
-    document.getElementById("package-name").value = packageName;
-    document.getElementById('transferForm').classList.remove('hidden');
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+function selectPackage(packageName, element) {
+  selectedPackage = packageName;
+  document.getElementById("package-name").value = packageName;
+  document.getElementById('transferForm').classList.remove('hidden');
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+  // إزالة التأثير من كل الكروت
+  document.querySelectorAll('.package-card').forEach(card => {
+    card.classList.remove('selected');
+    let check = card.querySelector('.checkmark');
+    if(check) check.remove();
+  });
+
+  // إضافة تأثير الكرت المختار وعلامة ✅
+  element.classList.add('selected');
+  let checkmark = document.createElement('span');
+  checkmark.className = 'checkmark';
+  checkmark.innerText = '✅';
+  element.appendChild(checkmark);
+}
+
+// التعامل مع إرسال الفورم
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  if(selectedPackage === '') {
+    alert("❌ الرجاء اختيار باقة أولاً");
+    return;
   }
 
-  document.getElementById("orderForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+  const submitButton = this.querySelector("button[type='submit']");
+  submitButton.disabled = true; 
+  submitButton.innerText = "جاري الإرسال...";
 
-    emailjs.sendForm("service_uc43cjt", "template_prh9qcs", this)
-      .then(function() {
-        alert("✅ تم إرسال الطلب بنجاح!");
-        document.getElementById("orderForm").reset();
-        document.getElementById('transferForm').classList.add('hidden');
-      }, function(error) {
-        alert("❌ حدث خطأ أثناء الإرسال");
-        console.error("EmailJS Error:", error);
-      });
+  const formData = new FormData();
+  formData.append("phone", document.getElementById("sender-number").value);
+  formData.append("pubg_id", document.getElementById("pubg-id").value);
+  formData.append("package", selectedPackage);
+  formData.append("game", GAME_NAME);
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: formData
+  })
+  .then(() => {
+    // بعد الإرسال مباشرة نروح لصفحة الشكر
+    window.location.href = "thanks.html";
+  })
+  .catch(err => {
+    alert("❌ حصل خطأ أثناء الإرسال");
+    console.error("Error:", err);
+    submitButton.disabled = false;
+    submitButton.innerText = "إرسال الطلب";
   });
+});
 </script>
+
+
+
+
+
 
   <script>
     window.addEventListener("load", () => {

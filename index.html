@@ -27,6 +27,44 @@
   gtag('config', 'G-LS3Z6JTV3W');
 </script>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDaCB5CHyGOCh1joruOW2SjbyozWsOVQGU",
+    authDomain: "my-site-a96df.firebaseapp.com",
+    projectId: "my-site-a96df",
+    storageBucket: "my-site-a96df.appspot.com",
+    messagingSenderId: "411737239421",
+    appId: "1:411737239421:web:b24c551698ceb33f3d6614",
+    measurementId: "G-TRKFK7MMQ0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginLink = document.getElementById("loginLink");
+
+  loginLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        // بعد تسجيل الدخول نوجه المستخدم لصفحة الحساب
+        window.location.href = "user-dashboard.html"; 
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("حدث خطأ أثناء تسجيل الدخول");
+      });
+  });
+</script>
+
+
 </head>
 <body>
     <div id="loading">
@@ -43,6 +81,7 @@
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
+        <a href="#" id="loginLink">Login</a>
     </div>
   </div>
 
