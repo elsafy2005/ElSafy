@@ -263,6 +263,35 @@ body::before {
   pointer-events: none; 
   z-index: -1; /* بين العناصر والخلفية */
 }
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: row;       /* خليهم صف */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .desktop-nav {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;          /* تسمح بالتمرير أفقي إذا كبرت القوائم */
+    flex-wrap: nowrap;
+  }
+
+  .desktop-nav a {
+    flex-shrink: 0;            /* لا تصغر الروابط */
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .menu-btn { display: none; } /* نلغي زر القائمة لأنه مش محتاج */
+}
+
 
 </style>
 </head>
@@ -303,7 +332,6 @@ body::before {
 
 <div id="dashboard" style="display:none">
   <h1>طلباتك</h1>
-  <button id="logoutBtn">تسجيل الخروج</button>
   <div class="table-wrapper">
     <table id="ordersTable"></table>
   </div>
