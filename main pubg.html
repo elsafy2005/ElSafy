@@ -148,9 +148,91 @@
 
 
 
-<!-- Firebase SDKs -->
+<script>
+
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz7cMqpYdRRbEVA0ScQWvJwkoBrv9r3e9uxInFL_FZkULuBgl2xGABMCwWxS6L6Hei0vg/exec";
+  const GAME_NAME = "Pubg";
+  let selectedPackage = '';
+
+  function selectPackage(packageName, element) {
+    selectedPackage = packageName;
+    const transferForm = document.getElementById('transferForm');
+    if (transferForm) transferForm.style.display = 'block'; // بدل classList
+    document.getElementById("package-name").value = packageName;
+
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+    document.querySelectorAll('.package-card').forEach(card => {
+      card.classList.remove('selected');
+      const check = card.querySelector('.checkmark');
+      if (check) check.remove();
+    });
+
+    element.classList.add('selected');
+    const checkmark = document.createElement('span');
+    checkmark.className = 'checkmark';
+    checkmark.innerText = '✅';
+    element.appendChild(checkmark);
+  }
+
+  document.getElementById("orderForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    if(selectedPackage === '') {
+      alert("❌ الرجاء اختيار باقة أولاً");
+      return;
+    }
+
+    const submitButton = this.querySelector("button[type='submit']");
+    submitButton.disabled = true; 
+    submitButton.innerText = "جاري الإرسال...";
+
+    const phone = document.getElementById("sender-number").value;
+    const pubgId = document.getElementById("pubg-id").value;
+
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("⚠ لازم تسجل دخول الأول");
+        submitButton.disabled = false;
+        submitButton.innerText = "إرسال الطلب";
+        return;
+      }
+
+      // حفظ في Firestore
+      await addDoc(collection(db, "orders"), {
+        userId: user.uid,
+        email: user.email,
+        phone: phone,
+        pubg_id: pubgId,
+        package: selectedPackage,
+        game: GAME_NAME,
+        status: "قيد التنفيذ",
+        createdAt: serverTimestamp()
+      });
+
+      // حفظ في Google Sheet
+      const formData = new FormData();
+      formData.append("phone", phone);
+      formData.append("pubg_id", pubgId);
+      formData.append("package", selectedPackage);
+      formData.append("game", GAME_NAME);
+
+      await fetch(SCRIPT_URL, { method: "POST", body: formData });
+
+      window.location.href = "thanks.html";
+    } catch (err) {
+      alert("❌ حصل خطأ أثناء الإرسال");
+      console.error("Error:", err);
+      submitButton.disabled = false;
+      submitButton.innerText = "إرسال الطلب";
+    }
+  });
+</script>
+
 <script type="module">
-  // Import Firebase modules
+  // ✅ Firebase SDKs
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
@@ -169,88 +251,7 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
-  // Google Sheet URL
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz7cMqpYdRRbEVA0ScQWvJwkoBrv9r3e9uxInFL_FZkULuBgl2xGABMCwWxS6L6Hei0vg/exec";
-  const GAME_NAME = "Pubg";
-
-  let selectedPackage = '';
-
-  function selectPackage(packageName, element) {
-    selectedPackage = packageName;
-    document.getElementById("package-name").value = packageName;
-    document.getElementById('transferForm').classList.remove('hidden');
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-
-    document.querySelectorAll('.package-card').forEach(card => {
-      card.classList.remove('selected');
-      let check = card.querySelector('.checkmark');
-      if(check) check.remove();
-    });
-
-    element.classList.add('selected');
-    let checkmark = document.createElement('span');
-    checkmark.className = 'checkmark';
-    checkmark.innerText = '✅';
-    element.appendChild(checkmark);
-  }
-
-  document.getElementById("orderForm").addEventListener("submit", async function(e){
-    e.preventDefault();
-
-    if(selectedPackage === '') {
-      alert("❌ الرجاء اختيار باقة أولاً");
-      return;
-    }
-
-    const submitButton = this.querySelector("button[type='submit']");
-    submitButton.disabled = true;
-    submitButton.innerText = "جاري الإرسال...";
-
-    const phone = document.getElementById("sender-number").value;
-    const pubgId = document.getElementById("pubg-id").value;
-
-    try {
-      // Firestore
-      const user = auth.currentUser;
-      if (!user) {
-        alert("⚠ لازم تسجل دخول الأول");
-        submitButton.disabled = false;
-        submitButton.innerText = "إرسال الطلب";
-        return;
-      }
-
-      await addDoc(collection(db, "orders"), {
-        userId: user.uid,
-        email: user.email,
-        phone: phone,
-        pubg_id: pubgId,
-        package: selectedPackage,
-        game: GAME_NAME,
-        status: "قيد التنفيذ",
-        createdAt: serverTimestamp()
-      });
-
-      // Google Sheet
-      const formData = new FormData();
-      formData.append("phone", phone);
-      formData.append("pubg_id", pubgId);
-      formData.append("package", selectedPackage);
-      formData.append("game", GAME_NAME);
-
-      await fetch(SCRIPT_URL, { method: "POST", body: formData });
-
-      window.location.href = "thanks.html";
-    } catch(err) {
-      alert("❌ حصل خطأ أثناء الإرسال");
-      console.error(err);
-      submitButton.disabled = false;
-      submitButton.innerText = "إرسال الطلب";
-    }
-  });
 </script>
-
-
 
 
   <script>
