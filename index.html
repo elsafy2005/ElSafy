@@ -29,33 +29,31 @@
  
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-  // إعدادات مشروع Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
-    authDomain: "elsafy-store.firebaseapp.com",
-    projectId: "elsafy-store",
-    storageBucket: "elsafy-store.firebasestorage.app",
-    messagingSenderId: "517856691965",
-    appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
-    measurementId: "G-H5Y50LG1DS"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+  authDomain: "elsafy-store.firebaseapp.com",
+  projectId: "elsafy-store",
+  storageBucket: "elsafy-store.firebasestorage.app",
+  messagingSenderId: "517856691965",
+  appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+  measurementId: "G-H5Y50LG1DS"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-  // عناصر الهيدر
+document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginLink");
   const userName = document.getElementById("userName");
   const userPhoto = document.getElementById("userPhoto");
-
-  // إنشاء زر خروج إذا مش موجود
   let logoutBtn = document.getElementById("logoutBtn");
+
   if(!logoutBtn) {
     logoutBtn = document.createElement("a");
     logoutBtn.href = "#";
@@ -66,22 +64,20 @@
     logoutBtn.style.marginLeft = "10px";
   }
 
-  // مراقبة حالة تسجيل الدخول
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      userName.innerText = "Welcome " + user.displayName;
-      userPhoto.src = user.photoURL || "images/default-user.png";
+      userName.innerText = user.displayName;
+      userPhoto.src = user.photoURL || "images/img_avatar.png"; // صورة افتراضية لو مفيش
       loginBtn.style.display = "none";
       logoutBtn.style.display = "inline-block";
     } else {
       userName.innerText = "";
-      userPhoto.src = "images/default-user.png"; // صورة افتراضية
+      userPhoto.src = "images/img_avatar.png"; // صورة افتراضية
       loginBtn.style.display = "inline-block";
       logoutBtn.style.display = "none";
     }
   });
 
-  // تسجيل الدخول
   loginBtn.addEventListener("click", (e) => {
     e.preventDefault();
     signInWithPopup(auth, provider)
@@ -94,13 +90,13 @@
       });
   });
 
-  // تسجيل الخروج
   logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
     signOut(auth).then(() => {
-      window.location.href = "index.html"; 
+      window.location.href = "index.html";
     });
   });
+});
 </script>
 
 
@@ -122,10 +118,8 @@
       <a href="Contact.HTML">Contact</a>
       <a href="About.html">About</a>
       <a href="#" id="loginLink">Login</a>
-<img id="userPhoto" src="images/img_avatar.png" alt="User Photo" style="width:40px; border-radius:50%;">
+<img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
 <span id="userName"></span>
-
-
     </div>
   </div>
 
