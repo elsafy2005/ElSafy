@@ -218,7 +218,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
   import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-  // ✅ Firebase config
+
   const firebaseConfig = {
     apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
     authDomain: "elsafy-store.firebaseapp.com",
@@ -230,21 +230,41 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
   };
 
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
   const db = getFirestore(app);
 
-  async function sendDataToFirestore(data) {
-  try {
-    const docRef = await addDoc(collection(db, "orders"), data);
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
 
-// مثال:
-sendDataToFirestore({name: "Zeyad", product: "Game", quantity: 2});
+  document.getElementById("orderForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    if(selectedPackage === '') {
+      alert("❌ الرجاء اختيار باقة أولاً");
+      return;
+    }
 
+    const submitButton = this.querySelector("button[type='submit']");
+    submitButton.disabled = true; 
+    submitButton.innerText = "جاري الإرسال...";
+
+    const orderData = {
+      order_id: Date.now(),
+      player_id: document.getElementById("pubg-id").value,
+      name: "", // لو عايز تضيف اسم حقل هنا
+      phone: document.getElementById("sender-number").value,
+      game_type: GAME_NAME,
+      package: selectedPackage,
+      timestamp: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, "orders"), orderData);
+      window.location.href = "thanks.html";
+    } catch(err) {
+      alert("❌ حصل خطأ أثناء الإرسال");
+      console.error(err);
+      submitButton.disabled = false;
+      submitButton.innerText = "إرسال الطلب";
+    }
+  });
+  
 </script>
 
 
