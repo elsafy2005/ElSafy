@@ -294,11 +294,7 @@ h1 {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
-body{
-  direction: ltr;
 
-
-}
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -514,9 +510,4 @@ body{
 @media screen and (max-width:768px) {
   .desktop-nav { display: none; } /* اخفاء القوائم العادية */
   .menu-btn { display: inline-block; } /* اظهار زر القائمة */
-}
-body{
-  direction: ltr;
-
-
 }
