@@ -362,10 +362,43 @@ body::before {
 
 <table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
 
+<!-- HTML مثال -->
+<header class="header">
+  <a href="#" id="loginLink">تسجيل الدخول</a>
+  <a href="#" id="logoutBtn" style="display:none;">تسجيل الخروج</a>
+  <span id="userName"></span>
+  <img id="userPhoto" src="images/img_avatar.png" alt="User" width="35" height="35">
+</header>
+
+<section id="dashboard" style="display:none;">
+  <table id="ordersTable" border="1" style="width:100%; text-align:center;">
+    <tr>
+      <th>Order ID</th>
+      <th>ID</th>
+      <th>Phone</th>
+      <th>Game</th>
+      <th>Package</th>
+      <th>Time</th>
+    </tr>
+  </table>
+</section>
+
+<form id="orderForm">
+  <input type="text" id="pubg-id" placeholder="ادخل ID PUBG" required>
+  <input type="text" id="sender-number" placeholder="رقم الهاتف" required>
+  <select id="game-select">
+    <option value="Pubg">Pubg</option>
+    <option value="FreeFire">FreeFire</option>
+    <!-- أضف ألعاب أخرى -->
+  </select>
+  <input type="text" id="package" placeholder="الباقة" required>
+  <button type="submit">إرسال الطلب</button>
+</form>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 // إعداد Firebase
 const firebaseConfig = {
@@ -383,39 +416,42 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// العناصر
 const loginBtn = document.getElementById("loginLink");
 const logoutBtn = document.getElementById("logoutBtn");
 const userName = document.getElementById("userName");
 const userPhoto = document.getElementById("userPhoto");
-const userNameMobile = document.getElementById("userNameMobile");
-const userPhotoMobile = document.getElementById("userPhotoMobile");
 const ordersTable = document.getElementById("ordersTable");
+const dashboard = document.getElementById("dashboard");
+const orderForm = document.getElementById("orderForm");
 
-// حالة المستخدم الحالي
 let currentUser = null;
 
-// تابع تسجيل الدخول وتغيير الحالة
+// متابعة حالة تسجيل الدخول
 onAuthStateChanged(auth, async (user) => {
-  if(user) {
-    currentUser = user;
+  currentUser = user || null;
+
+  if (currentUser) {
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-    userName.innerText = user.displayName;
-    userPhoto.src = user.photoURL || "images/img_avatar.png";
-    if(userNameMobile) userNameMobile.innerText = user.displayName;
-    if(userPhotoMobile) userPhotoMobile.src = user.photoURL || "images/img_avatar.png";
-    document.getElementById("dashboard").style.display = "block";
-    await loadDashboard(user.uid);
+    userName.innerText = currentUser.displayName;
+    userPhoto.src = currentUser.photoURL || "images/img_avatar.png";
+    dashboard.style.display = "block";
+    await loadDashboard(currentUser.uid);
   } else {
-    currentUser = null;
     loginBtn.style.display = "inline-block";
     logoutBtn.style.display = "none";
     userName.innerText = "";
     userPhoto.src = "images/img_avatar.png";
-    if(userNameMobile) userNameMobile.innerText = "";
-    if(userPhotoMobile) userPhotoMobile.src = "images/img_avatar.png";
-    document.getElementById("dashboard").style.display = "none";
+    dashboard.style.display = "none";
+    ordersTable.innerHTML = `
+      <tr>
+        <th>Order ID</th>
+        <th>ID</th>
+        <th>Phone</th>
+        <th>Game</th>
+        <th>Package</th>
+        <th>Time</th>
+      </tr>`;
   }
 });
 
@@ -431,24 +467,51 @@ loginBtn.addEventListener("click", async (e) => {
 });
 
 // تسجيل الخروج
-logoutBtn?.addEventListener("click", async (e) => {
+logoutBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
     await signOut(auth);
-    ordersTable.innerHTML = "";
   } catch(err) {
     console.error(err);
     alert("حدث خطأ أثناء تسجيل الخروج.");
   }
 });
 
-// تحميل الداشبورد وعرض الطلبات
+// إرسال الطلب
+orderForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if(!currentUser) return alert("❌ يجب تسجيل الدخول أولاً");
+
+  const pubgId = document.getElementById("pubg-id").value;
+  const phone = document.getElementById("sender-number").value;
+  const game = document.getElementById("game-select").value;
+  const packageValue = document.getElementById("package").value;
+
+  try {
+    await addDoc(collection(db, "orders"), {
+      order_id: Date.now(),
+      player_id: currentUser.uid,
+      id_pubg: pubgId,
+      phone: phone,
+      game_type: game,
+      package: packageValue,
+      timestamp: serverTimestamp()
+    });
+    alert("✅ تم إرسال الطلب بنجاح!");
+    orderForm.reset();
+    await loadDashboard(currentUser.uid);
+  } catch(err) {
+    console.error(err);
+    alert("❌ حدث خطأ أثناء إرسال الطلب");
+  }
+});
+
+// تحميل البيانات في الداشبورد
 async function loadDashboard(uid) {
   const ordersRef = collection(db, "orders");
   const q = query(ordersRef, where("player_id", "==", uid));
-  const snapshot = await getDocs(q);
+  const querySnapshot = await getDocs(q);
 
-  // إنشاء جدول منظم
   ordersTable.innerHTML = `
     <tr>
       <th>Order ID</th>
@@ -460,7 +523,7 @@ async function loadDashboard(uid) {
     </tr>
   `;
 
-  if(snapshot.empty) {
+  if(querySnapshot.empty) {
     const row = ordersTable.insertRow();
     const cell = row.insertCell(0);
     cell.colSpan = 6;
@@ -468,7 +531,7 @@ async function loadDashboard(uid) {
     return;
   }
 
-  snapshot.forEach(doc => {
+  querySnapshot.forEach(doc => {
     const data = doc.data();
     const row = ordersTable.insertRow();
     row.insertCell(0).innerText = data.order_id || "-";
@@ -479,38 +542,8 @@ async function loadDashboard(uid) {
     row.insertCell(5).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
   });
 }
-
-// إرسال الطلبات
-const orderForm = document.getElementById("orderForm");
-if(orderForm) {
-  const GAME_NAME = "PUBG";
-  orderForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const phone = document.getElementById("sender-number").value;
-    const pubgId = document.getElementById("pubg-id").value;
-    const selectedPackage = document.getElementById("package-select").value;
-    const orderId = Date.now(); // رقم فريد لكل طلب
-
-    try {
-      await addDoc(collection(db, "orders"), {
-        phone,
-        id_pubg: pubgId,
-        package: selectedPackage,
-        game_type: GAME_NAME,
-        order_id: orderId,
-        timestamp: serverTimestamp(),
-        player_id: currentUser ? currentUser.uid : "guest"
-      });
-      alert("تم إرسال الطلب بنجاح!");
-      orderForm.reset();
-      if(currentUser) await loadDashboard(currentUser.uid);
-    } catch(err) {
-      console.error(err);
-      alert("حدث خطأ أثناء إرسال الطلب.");
-    }
-  });
-}
 </script>
+
 <script>
     window.addEventListener("load", () => {
       setTimeout(() => {
