@@ -236,7 +236,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
   // متابعة حالة تسجيل الدخول
   onAuthStateChanged(auth, (user) => {
     if(user) {
-      currentUser = user; // حفظ المستخدم الحالي
+      currentUser = user; 
       console.log("Logged in as:", user.uid);
     } else {
       currentUser = null;
@@ -263,7 +263,8 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
 
     const orderData = {
       order_id: Date.now(),
-      player_id: currentUser.uid, // استخدام uid للمستخدم
+      player_id: currentUser.uid,        // الربط الآمن
+      pubg_id: document.getElementById("pubg-id").value,  // للعرض في الداشبورد
       phone: document.getElementById("sender-number").value,
       game_type: GAME_NAME,
       package: selectedPackage,
@@ -281,6 +282,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
     }
   });
 </script>
+
 
 
 
