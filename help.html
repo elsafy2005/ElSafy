@@ -418,6 +418,66 @@ body::before {
   pointer-events: none; 
   z-index: -1; /* بين العناصر والخلفية */
 }
+/* الهيدر العام */
+.header {
+  display: flex;
+  justify-content: space-between; /* يوزع المساحة بين اللوجو والعناصر */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(0,0,0,0.5);
+  flex-wrap: wrap;
+}
+
+/* اللوجو على الشمال */
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* زر القائمة للموبايل */
+.menu-btn {
+  display: none; /* يظهر فقط في الموبايل */
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* القوائم العادية للكمبيوتر */
+.desktop-nav {
+  display: flex;
+  gap: 15px;
+}
+
+/* Responsive للموبايل */
+@media screen and (max-width: 768px) {
+  .desktop-nav { display: none; } /* اخفاء القوائم العادية */
+  .menu-btn { display: block; }   /* اظهار زر القائمة */
+
+  .header {
+    flex-direction: row;
+    justify-content: space-between; /* اللوجو على الشمال، الزر على اليمين */
+    align-items: center;
+    padding: 10px 15px;
+  }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  #dropdownMenu {
+    top: 60px;
+    right: 0; /* تظهر من اليمين */
+    left: auto;
+  }
+}
+
 /* شاشة اللودينج */
 #loading {
   position: fixed;
@@ -612,7 +672,7 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
     </div>
   </div>
 <div class="header">
-  <img class="logo" src="images/logo.png" />
+  <img class="logo" src="images/logo.png" alt="Logo" />
 
   <!-- القوائم العادية للويب -->
   <nav class="desktop-nav">
@@ -621,9 +681,9 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
     <a href="user-dashboard.html">Orders</a>
     <a href="About.html">About</a>
     <a href="#" id="loginLinkDesktop">Login</a>
-    <img id="userPhotoDesktop" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+    <img id="userPhotoDesktop" src="images/img_avatar.png" alt="User">
     <span id="userNameDesktop"></span>
-    <a href="#" id="logoutBtnDesktop" style="display:none; margin-left:10px;">Logout</a>
+    <a href="#" id="logoutBtnDesktop" style="display:none;">Logout</a>
   </nav>
 
   <!-- زر القوائم للموبايل -->
@@ -636,11 +696,12 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
       <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
       <a href="#" id="loginLinkMobile">Login</a>
-      <img id="userPhotoMobile" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <img id="userPhotoMobile" src="images/img_avatar.png" alt="User">
       <span id="userNameMobile"></span>
-      <a href="#" id="logoutBtnMobile" style="display:none; margin-left:10px;">Logout</a>
+      <a href="#" id="logoutBtnMobile" style="display:none;">Logout</a>
   </div>
 </div>
+
 <div class="container">
 <h1>نقدر نساعدك ازاي</h1>
 
