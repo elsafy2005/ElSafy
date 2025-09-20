@@ -515,3 +515,8 @@ body{
   .desktop-nav { display: none; } /* اخفاء القوائم العادية */
   .menu-btn { display: inline-block; } /* اظهار زر القائمة */
 }
+body{
+  direction: ltr;
+
+
+}
