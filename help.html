@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar"  >
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <title>Customer Dashboard - My Tickets</title>
@@ -400,10 +400,42 @@ body {
   }
 }
 
-#userNameMobile {
-  color: rgba(255, 255, 255, 0.767);
+/* بعد الاختفاء */
+#loading.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
-#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
+
+/* القائمة المنسدلة */
+#dropdownMenu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px; 
+  left: 0; /* تظهر من الشمال */
+  background: #1e3a8a;
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+#dropdownMenu a {
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+#dropdownMenu a:hover {
+  background-color: #374ac0;
+}
+
+/* Media Query للموبايل */
+@media screen and (max-width:768px) {
+  .desktop-nav { display: none; } /* اخفاء القوائم العادية */
+  .menu-btn { display: inline-block; } /* اظهار زر القائمة */
+}
+
 body::before {
   content: "";
   position: fixed; 
@@ -493,230 +525,7 @@ body::before {
     height: 60px;
   }
 }
-
-/* شاشة اللودينج */
-#loading {
-  position: fixed;
-  inset: 0;
-  backdrop-filter: blur(12px); /* بلور ناعم */
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-
-/* loader احترافي */
-.loader {
-  display: flex;
-  gap: 12px;
-}
-
-.loader span {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  box-shadow: 0 0 15px rgba(0, 198, 255, 0.7);
-  animation: bounce 0.6s infinite alternate;
-}
-
-.loader span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.loader span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes bounce {
-  from {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  to {
-    transform: translateY(-20px) scale(1.2);
-    opacity: 1;
-  }
-}
-
-/* بعد الاختفاء */
-#loading.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* باقي الصفحة */
-body {
-  margin: 0;
-  font-family: "Cairo", sans-serif;
-  background: url("your-bg.jpg") center/cover no-repeat;
-}
-
-.content {
-  text-align: center;
-  padding: 50px;
-  color: #fff;
-}
-.package-card.selected {
-  border: 3px solid #3498db;
-  background-color: #092f4e;
-  transition: 0.3s;
-  position: relative;
-}
-
-.package-card .checkmark {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 20px;
-}
-.desktop-nav {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-/* صورة المستخدم */
-.user-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-/* Responsive للموبايل */
-@media (max-width: 768px) {
-  .desktop-nav { display: none; }
-  .menu-btn { display: inline-block; }
-}
-body{
-  direction: ltr;
-
-
-}
-/* صورة المستخدم */
-.userPhoto {
-  width: 35px;          /* حجم أصغر */
-  height: 35px;
-  border-radius: 50%;   /* دائري */
-  object-fit: cover;    /* لتعبئة الصورة داخل الدائرة */
-  margin-left: 8px;
-  vertical-align: middle;
-  border: 2px solid #fff; /* إطار خفيف */
-}
-
-/* اسم المستخدم */
-.userName {
-  font-weight: 600;
-  color: #fff;
-  margin-left: 5px;
-  vertical-align: middle;
-  max-width: 120px;       /* منع الالتصاق بالحدود */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#userNameMobile {
-  color: rgba(255, 255, 255, 0.767);
-}
-#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
-.desktop-nav a {
-  text-decoration: none;
-  color: #ffffff;
-  padding: 5px 12px; /* تصغير البوكس */
-  line-height: 1.4;
-  border-radius: 5px;
-  transition: 0.3s;
-}
-
-.desktop-nav a:hover {
-  background-color: #007BFF;
-  color: #fff;
-}
-
-/* صورة المستخدم واسم المستخدم */
-#userPhoto, #userPhotoMobile {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-
-#userName, #userNameMobile {
-  margin-left: 5px;
-  font-weight: bold;
-}
-
-
-
-/* اخفاء زر القائمة والقائمة المنسدلة على الكمبيوتر */
-.menu-btn, #dropdownMenu {
-  display: none;
-}
-
-/* Media Query للموبايل */
-@media screen and (max-width:768px) {
-  .desktop-nav { display: none; }      /* اخفاء القوائم العادية */
-  .menu-btn { display: block; }        /* اظهار زر القائمة */
-  #dropdownMenu {
-    display: none;                     /* مخفي افتراضياً */
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    background: #1e3a8a;
-    border-radius: 8px;
-    min-width: 150px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.2);
-    z-index: 999;
-  }
-  #dropdownMenu a {
-    padding: 12px 20px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  #dropdownMenu a:hover { background: #374ac0; }
-}
-.menu-btn {
-  display: none;
-  background: #007BFF;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  font-size: 18px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.dropdown a {
-  text-decoration: none;
-  color: #333;
-  padding: 8px;
-  border-radius: 5px;
-  transition: 0.3s;
-}
-.dropdown a:hover {
-  background-color: #007BFF;
-  color: #fff;
-}
-.dropdown.show {
-  right: 0;
-}
-
-/* صورة المستخدم */
-.user-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-/* Responsive للموبايل */
-@media (max-width: 768px) {
-  .desktop-nav { display: none; }
-  .menu-btn { display: inline-block; }
-}
+body{ direction: ltr;}
 /* عنوان التيكيتات */
 h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
 </style>
@@ -730,18 +539,18 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
     </div>
   </div>
 <div class="header">
-  <img class="logo" src="images/logo.png" alt="Logo" />
+  <img class="logo" src="images/logo.png" />
 
-  <!-- القوائم العادية للكمبيوتر -->
+  <!-- القوائم العادية للويب -->
   <nav class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="Contact.HTML">Contact</a>
     <a href="user-dashboard.html">Orders</a>
     <a href="About.html">About</a>
     <a href="#" id="loginLinkDesktop">Login</a>
-    <img id="userPhotoDesktop" src="images/img_avatar.png" alt="User">
+    <img id="userPhotoDesktop" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
     <span id="userNameDesktop"></span>
-    <a href="#" id="logoutBtnDesktop" style="display:none;">Logout</a>
+    <a href="#" id="logoutBtnDesktop" style="display:none; margin-left:10px;">Logout</a>
   </nav>
 
   <!-- زر القوائم للموبايل -->
@@ -754,12 +563,11 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
       <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
       <a href="#" id="loginLinkMobile">Login</a>
-      <img id="userPhotoMobile" src="images/img_avatar.png" alt="User">
+      <img id="userPhotoMobile" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
       <span id="userNameMobile"></span>
-      <a href="#" id="logoutBtnMobile" style="display:none;">Logout</a>
+      <a href="#" id="logoutBtnMobile" style="display:none; margin-left:10px;">Logout</a>
   </div>
 </div>
-
 <div class="container">
 <h1>نقدر نساعدك ازاي</h1>
 
@@ -922,6 +730,20 @@ window.addEventListener("click", function(e){
 
 
 <script>
+
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+// إخفاء القائمة عند الضغط خارجها
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
+<script>
+
 
 function toggleDropdown() {
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
