@@ -240,7 +240,6 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -255,85 +254,41 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول
+// متابعة حالة تسجيل الدخول لمرة واحدة
 onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
-
-  const loginBtn = document.getElementById("loginLink");
-  const userName = document.getElementById("userName");
-  const userPhoto = document.getElementById("userPhoto");
-  let logoutBtn = document.getElementById("logoutBtn");
-
-  if(!logoutBtn) {
-    logoutBtn = document.createElement("a");
-    logoutBtn.href = "#";
-    logoutBtn.id = "logoutBtn";
-    logoutBtn.innerText = "Logout";
-    loginBtn.parentNode.appendChild(logoutBtn);
-    logoutBtn.style.display = "none";
-    logoutBtn.style.marginLeft = "10px";
-  }
+  const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
+  const logoutBtns = [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")];
+  const userPhotos = [document.getElementById("userPhotoDesktop"), document.getElementById("userPhotoMobile")];
+  const userNames = [document.getElementById("userNameDesktop"), document.getElementById("userNameMobile")];
 
   if(user){
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    userName.innerText = user.displayName;
-    userPhoto.src = user.photoURL || "images/img_avatar.png";
-  } else {
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-    userName.innerText = "";
-    userPhoto.src = "images/img_avatar.png";
-  }
-});
-const loginBtns = [
-  document.getElementById("loginLinkDesktop"),
-  document.getElementById("loginLinkMobile")
-];
-const logoutBtns = [
-  document.getElementById("logoutBtnDesktop"),
-  document.getElementById("logoutBtnMobile")
-];
-const userPhotos = [
-  document.getElementById("userPhotoDesktop"),
-  document.getElementById("userPhotoMobile")
-];
-const userNames = [
-  document.getElementById("userNameDesktop"),
-  document.getElementById("userNameMobile")
-];
-
-// متابعة حالة تسجيل الدخول
-onAuthStateChanged(auth, (user) => {
-  if(user){
-    loginBtns.forEach(btn => btn.style.display = "none");
-    logoutBtns.forEach(btn => btn.style.display = "inline-block");
+    loginBtns.forEach(btn => btn.style.display="none");
+    logoutBtns.forEach(btn => btn.style.display="inline-block");
     userPhotos.forEach(photo => photo.src = user.photoURL || "images/img_avatar.png");
     userNames.forEach(name => name.innerText = user.displayName);
   } else {
-    loginBtns.forEach(btn => btn.style.display = "inline-block");
-    logoutBtns.forEach(btn => btn.style.display = "none");
+    loginBtns.forEach(btn => btn.style.display="inline-block");
+    logoutBtns.forEach(btn => btn.style.display="none");
     userPhotos.forEach(photo => photo.src = "images/img_avatar.png");
     userNames.forEach(name => name.innerText = "");
   }
 });
 
 // تسجيل الدخول
-loginBtns.forEach(btn => {
+[document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
     try{
       await signInWithPopup(auth, provider);
-      // يحدث الصفحة بعد تسجيل الدخول لتطبيق كل العناصر
       window.location.reload();
-    }catch(err){
+    } catch(err){
       console.error("Login Error:", err);
       alert("حدث خطأ أثناء تسجيل الدخول");
     }
@@ -341,41 +296,27 @@ loginBtns.forEach(btn => {
 });
 
 // تسجيل الخروج
-logoutBtns.forEach(btn => {
+[document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
     try{
       await signOut(auth);
       window.location.reload();
-    }catch(err){
+    } catch(err){
       console.error("Logout Error:", err);
       alert("حدث خطأ أثناء تسجيل الخروج");
     }
   });
 });
 
-// تسجيل الدخول
-document.getElementById("loginLink").addEventListener("click", (e)=>{
-  e.preventDefault();
-  signInWithPopup(auth, provider)
-    .then(()=> window.location.href="index.html")
-    .catch(err => console.error(err));
-});
-
-// تسجيل الخروج
-document.getElementById("logoutBtn")?.addEventListener("click", (e)=>{
-  e.preventDefault();
-  signOut(auth).then(()=> window.location.href="index.html");
-});
-
-// إرسال الطلب
+// إرسال الطلب إلى Firestore
 document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
   if(!selectedPackage) return alert("❌ اختر باقة أولاً");
-  if(!currentUser) return alert("❌ يجب تسجيل الدخول");
+  if(!currentUser) return alert("❌ يجب تسجيل الدخول أولاً");
 
   const submitButton = e.target.querySelector("button[type='submit']");
-  submitButton.disabled = true; 
+  submitButton.disabled = true;
   submitButton.innerText = "جاري الإرسال...";
 
   try {
@@ -384,19 +325,20 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
       player_id: currentUser.uid,
       pubg_id: document.getElementById("pubg-id").value,
       phone: document.getElementById("sender-number").value,
-      game_type: GAME_NAME,
+      game_type: "PUBG", // أو GAME_NAME لو معرف
       package: selectedPackage,
       timestamp: serverTimestamp()
     });
     window.location.href = "thanks.html";
   } catch(err){
-    console.error(err);
-    alert("❌ حصل خطأ أثناء الإرسال");
+    console.error("Firestore Error:", err);
+    alert("❌ حدث خطأ أثناء إرسال الطلب");
     submitButton.disabled = false;
     submitButton.innerText = "إرسال الطلب";
   }
 });
 </script>
+
 
 
 <script>
