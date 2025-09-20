@@ -396,34 +396,28 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user || null;
 
   if(currentUser){
-    // إخفاء زر تسجيل الدخول وإظهار زر تسجيل الخروج
     loginBtn.forEach(btn => btn.style.display = "none");
     logoutBtn.forEach(btn => btn.style.display = "inline-block");
-
-    // عرض اسم وصورة المستخدم
     userName.forEach(el => el.innerText = currentUser.displayName);
     userPhoto.forEach(el => el.src = currentUser.photoURL || "images/img_avatar.png");
-
     document.getElementById("dashboard").style.display = "block";
     await loadDashboard(currentUser.uid);
   } else {
-    // إظهار زر تسجيل الدخول وإخفاء زر تسجيل الخروج
     loginBtn.forEach(btn => btn.style.display = "inline-block");
     logoutBtn.forEach(btn => btn.style.display = "none");
-
     userName.forEach(el => el.innerText = "");
     userPhoto.forEach(el => el.src = "images/img_avatar.png");
-
     document.getElementById("dashboard").style.display = "none";
   }
 });
 
-// تسجيل الدخول
+// تسجيل الدخول بدون إعادة تحميل
 loginBtn.forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
     try {
       await signInWithPopup(auth, provider);
+      // لا تعيد تحميل الصفحة، الداشبورد سيظهر مباشرة
     } catch(err) {
       console.error(err);
       alert("حدث خطأ أثناء تسجيل الدخول.");
@@ -437,7 +431,7 @@ logoutBtn.forEach(btn => {
     e.preventDefault();
     try {
       await signOut(auth);
-      ordersTable.innerHTML = ""; // مسح الجدول بعد الخروج
+      ordersTable.innerHTML = "";
     } catch(err) {
       console.error(err);
       alert("حدث خطأ أثناء تسجيل الخروج.");
@@ -474,7 +468,7 @@ async function loadDashboard(uid) {
     const data = doc.data();
     const row = ordersTable.insertRow();
     row.insertCell(0).innerText = data.order_id || "-";
-    row.insertCell(1).innerText = data.pubg_id || "-"; // Pubg ID الحقيقي
+    row.insertCell(1).innerText = data.pubg_id || "-"; 
     row.insertCell(2).innerText = data.phone || "-";
     row.insertCell(3).innerText = data.game_type || "-";
     row.insertCell(4).innerText = data.package || "-";
@@ -483,6 +477,7 @@ async function loadDashboard(uid) {
 }
 </script>
 
+
 <script>
     window.addEventListener("load", () => {
       setTimeout(() => {
@@ -490,5 +485,19 @@ async function loadDashboard(uid) {
       }, 1400); // ثانية و7 أعشار
     });
   </script>
+  <script>
+const dropdown = document.getElementById("dropdownMenu");
+
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+// إخفاء القائمة عند الضغط خارجها
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
 </body>
 </html>
