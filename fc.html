@@ -31,12 +31,30 @@
   <!-- HEADER -->
   <div class="header">
     <img class="logo" src="images/logo.png" />
-    <div class="header-links">
+      <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+          <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
+  </nav>
+
+  <!-- زر القوائم للموبايل -->
+  <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
+
+  <!-- القائمة المنسدلة للموبايل -->
+  <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
+      <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
-    </div>
+      <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
   </div>
+</div>
 
 <div class="delivery-note">
   ⚡ Shipping takes from 2 minutes to 2 hours!
@@ -199,7 +217,121 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
       }, 1400); // ثانية و7 أعشار
     });
   </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+  authDomain: "elsafy-store.firebaseapp.com",
+  projectId: "elsafy-store",
+  storageBucket: "elsafy-store.appspot.com",
+  messagingSenderId: "517856691965",
+  appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+  measurementId: "G-H5Y50LG1DS"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
+
+let currentUser = null;
+
+// متابعة حالة تسجيل الدخول
+onAuthStateChanged(auth, (user) => {
+  currentUser = user || null;
+
+  const loginBtn = document.getElementById("loginLink");
+  const userName = document.getElementById("userName");
+  const userPhoto = document.getElementById("userPhoto");
+  let logoutBtn = document.getElementById("logoutBtn");
+
+  if(!logoutBtn) {
+    logoutBtn = document.createElement("a");
+    logoutBtn.href = "#";
+    logoutBtn.id = "logoutBtn";
+    logoutBtn.innerText = "Logout";
+    loginBtn.parentNode.appendChild(logoutBtn);
+    logoutBtn.style.display = "none";
+    logoutBtn.style.marginLeft = "10px";
+  }
+
+  if(user){
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+    userName.innerText = user.displayName;
+    userPhoto.src = user.photoURL || "images/img_avatar.png";
+  } else {
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+    userName.innerText = "";
+    userPhoto.src = "images/img_avatar.png";
+  }
+});
+
+// تسجيل الدخول
+document.getElementById("loginLink").addEventListener("click", (e)=>{
+  e.preventDefault();
+  signInWithPopup(auth, provider)
+    .then(()=> window.location.href="index.html")
+    .catch(err => console.error(err));
+});
+
+// تسجيل الخروج
+document.getElementById("logoutBtn")?.addEventListener("click", (e)=>{
+  e.preventDefault();
+  signOut(auth).then(()=> window.location.href="index.html");
+});
+
+// إرسال الطلب
+document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  if(!selectedPackage) return alert("❌ اختر باقة أولاً");
+  if(!currentUser) return alert("❌ يجب تسجيل الدخول");
+
+  const submitButton = e.target.querySelector("button[type='submit']");
+  submitButton.disabled = true; 
+  submitButton.innerText = "جاري الإرسال...";
+
+  try {
+    await addDoc(collection(db, "orders"), {
+      order_id: Date.now(),
+      player_id: currentUser.uid,
+      pubg_id: document.getElementById("pubg-id").value,
+      phone: document.getElementById("sender-number").value,
+      game_type: GAME_NAME,
+      package: selectedPackage,
+      timestamp: serverTimestamp()
+    });
+    window.location.href = "thanks.html";
+  } catch(err){
+    console.error(err);
+    alert("❌ حصل خطأ أثناء الإرسال");
+    submitButton.disabled = false;
+    submitButton.innerText = "إرسال الطلب";
+  }
+});
+</script>
+
+
+<script>
+const dropdown = document.getElementById("dropdownMenu");
+
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+// إخفاء القائمة عند الضغط خارجها
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
   <footer class="site-footer">
   <div class="footer-content">
     <p>© 2025 جميع الحقوق محفوظة - <span> El Safy Store </span> 💙</p>

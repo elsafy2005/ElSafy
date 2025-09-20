@@ -25,12 +25,30 @@
       <!-- HEADER -->
   <div class="header">
     <img class="logo" src="images/logo.png" />
-    <div class="header-links">
+      <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+          <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
+  </nav>
+
+  <!-- زر القوائم للموبايل -->
+  <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
+
+  <!-- القائمة المنسدلة للموبايل -->
+  <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
+      <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
-    </div>
+      <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
   </div>
+</div>
   
 <section class="about">
   <h1> ABOUT</h1>

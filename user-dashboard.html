@@ -134,6 +134,11 @@
   #logoutBtn { margin:15px auto; display:block; padding:10px 25px; background:#ef4444; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:500; transition:0.3s; }
   #logoutBtn:hover { background:#f87171; }
 
+  body{
+  direction: ltr;
+
+
+}
   /* Responsive */
   @media (max-width:768px){
     th, td { font-size:0.9rem; padding:8px 10px; }
@@ -208,7 +213,114 @@ body::after {
   gap: 10px;
   flex-wrap: wrap;
 }
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
+.desktop-nav a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 5px 12px; /* تصغير البوكس */
+  line-height: 1.4;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.desktop-nav a:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+/* صورة المستخدم واسم المستخدم */
+#userPhoto, #userPhotoMobile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+#userName, #userNameMobile {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+
+
+/* اخفاء زر القائمة والقائمة المنسدلة على الكمبيوتر */
+.menu-btn, #dropdownMenu {
+  display: none;
+}
+
+/* Media Query للموبايل */
+@media screen and (max-width:768px) {
+  .desktop-nav { display: none; }      /* اخفاء القوائم العادية */
+  .menu-btn { display: block; }        /* اظهار زر القائمة */
+  #dropdownMenu {
+    display: none;                     /* مخفي افتراضياً */
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+  #dropdownMenu a {
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  #dropdownMenu a:hover { background: #374ac0; }
+}
+.menu-btn {
+  display: none;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown a {
+  text-decoration: none;
+  color: #333;
+  padding: 8px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.dropdown a:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+.dropdown.show {
+  right: 0;
+}
+
+/* صورة المستخدم */
+.user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Responsive للموبايل */
+@media (max-width: 768px) {
+  .desktop-nav { display: none; }
+  .menu-btn { display: inline-block; }
+}
+body{
+  direction: ltr;
+
+
+}
 @media (max-width: 600px) {
   .nav-links {
     flex-direction: column; 
@@ -297,17 +409,50 @@ body::after {
   position: relative;
   z-index: 2; 
 }
+@media (max-width: 600px) {
+  .nav-links {
+    flex-direction: column; 
+    align-items: flex-start;
+  }
+}
+@media (max-width: 600px) {
+  .header-links {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+  }
+  }
 </style>
 </head>
 <body>
   <div class="header">
     <img class="logo" src="images/logo.png" />
-    <div class="header-links">
+      <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+          <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
+  </nav>
+
+  <!-- زر القوائم للموبايل -->
+  <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
+
+  <!-- القائمة المنسدلة للموبايل -->
+  <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
-      <a href="Contact.html">Contact</a>
+      <a href="Contact.HTML">Contact</a>
+      <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
-    </div>
+      <a href="#" id="loginLink">Login</a>
+      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userName"></span>
   </div>
+</div>
 
 <div id="dashboard" style="display:none">
   <h1>طلباتك</h1>
