@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Customer Dashboard - My Tickets</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f9f9f9; margin:0; padding:20px; }
+h1, h2 { text-align:center; }
+.container { max-width:800px; margin:0 auto; }
+.ticket, .newTicket { background:#fff; border:1px solid #ccc; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+.ticket h3, .newTicket h3 { margin:0 0 10px; }
+.ticket p { margin:5px 0; }
+textarea { width:100%; height:60px; margin-top:5px; padding:5px; border-radius:5px; border:1px solid #ccc; }
+input[type=text] { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+button { margin-top:10px; padding:8px 12px; border:none; border-radius:5px; background:#007bff; color:#fff; cursor:pointer; }
+button:hover { background:#0056b3; }
+.status { font-weight:bold; }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>لوحة تحكم العميل</h1>
+
+<div class="newTicket">
+  <h3>فتح تيكيت جديد</h3>
+  <input type="text" id="ticketSubject" placeholder="موضوع التيكيت" />
+  <textarea id="ticketMessage" placeholder="اكتب رسالتك هنا"></textarea>
+  <button id="openTicketBtn">فتح التيكيت</button>
+</div>
+
+<h2>تيكيتاتي</h2>
+<div id="ticketsContainer">جاري تحميل التيكيتات...</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+  authDomain: "elsafy-store.firebaseapp.com",
+  projectId: "elsafy-store",
+  storageBucket: "elsafy-store.appspot.com",
+  messagingSenderId: "517856691965",
+  appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+  measurementId: "G-H5Y50LG1DS"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
+
+let currentUser = null;
+
+// متابعة حالة تسجيل الدخول
+onAuthStateChanged(auth, async (user) => {
+  if(!user){
+    try{ await signInWithPopup(auth, provider); } 
+    catch(err){ alert("❌ حدث خطأ أثناء تسجيل الدخول"); return; }
+  }
+  currentUser = auth.currentUser;
+  loadTickets();
+});
+
+// فتح تيكيت جديد
+document.getElementById("openTicketBtn").addEventListener("click", async () => {
+  const subject = document.getElementById("ticketSubject").value.trim();
+  const message = document.getElementById("ticketMessage").value.trim();
+  if(!subject || !message) return alert("❌ الرجاء ملء كل الحقول");
+
+  try {
+    await addDoc(collection(db, "tickets"), {
+      user_id: currentUser.uid,
+      user_name: currentUser.displayName,
+      subject,
+      message,
+      status: "قيد التنفيذ",
+      adminReply: "",
+      timestamp: serverTimestamp()
+    });
+    alert("✅ تم فتح التيكيت بنجاح");
+    document.getElementById("ticketSubject").value = "";
+    document.getElementById("ticketMessage").value = "";
+    loadTickets();
+  } catch(err){
+    console.error(err);
+    alert("❌ حدث خطأ أثناء فتح التيكيت");
+  }
+});
+
+// تحميل التيكيتات الخاصة بالمستخدم فقط
+async function loadTickets(){
+  const ticketsContainer = document.getElementById("ticketsContainer");
+  ticketsContainer.innerHTML = "جاري تحميل التيكيتات...";
+
+  const ticketsQuery = query(collection(db, "tickets"), where("user_id", "==", currentUser.uid));
+  const snapshot = await getDocs(ticketsQuery);
+  ticketsContainer.innerHTML = "";
+
+  snapshot.forEach(docSnap => {
+    const ticket = docSnap.data();
+    const ticketDiv = document.createElement("div");
+    ticketDiv.className = "ticket";
+
+    ticketDiv.innerHTML = `
+      <h3>${ticket.subject}</h3>
+      <p><strong>الرسالة:</strong> ${ticket.message}</p>
+      <p><strong>الحالة:</strong> <span class="status">${ticket.status}</span></p>
+      <p><strong>رد الادمن:</strong></p>
+      <textarea class="adminReply" readonly>${ticket.adminReply || ""}</textarea>
+    `;
+
+    ticketsContainer.appendChild(ticketDiv);
+  });
+
+  if(snapshot.empty){
+    ticketsContainer.innerHTML = "<p>لا توجد تيكيتات حتى الآن.</p>";
+  }
+}
+</script>
+
+</body>
+</html>
