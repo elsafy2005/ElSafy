@@ -144,9 +144,12 @@
 
 
 <script type="module">
+  // 📌 استيراد فايربيز
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
+  // 📌 بيانات فايربيز بتاعتك
   const firebaseConfig = {
     apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
     authDomain: "elsafy-store.firebaseapp.com",
@@ -159,52 +162,84 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK-sx5sRflYa8O0rfLWJSTVrQ6E9TXyh_GCW_UTVVs72MDUsjbhxPywGt6kSPG5zvWWw/exec"; 
-  const GAME_NAME = "Pubg Mobile"; 
+  // 📌 لينك جوجل شيت
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4Vj-AN4XjuBZLZvk5z2dz6WC6x9Nwn8BiYNViGK_NIPF35KhywJ2iouPA0YFw0JJiMw/exec";
+  const GAME_NAME = "Pubg Mobile";
 
   let selectedPackage = '';
 
+  // اختيار الباقة
+  function selectPackage(packageName, element) {
+    selectedPackage = packageName;
+    document.getElementById("package-name").value = packageName;
+    document.getElementById('transferForm').classList.remove('hidden');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+    document.querySelectorAll('.package-card').forEach(card => {
+      card.classList.remove('selected');
+      let check = card.querySelector('.checkmark');
+      if (check) check.remove();
+    });
+
+    element.classList.add('selected');
+    let checkmark = document.createElement('span');
+    checkmark.className = 'checkmark';
+    checkmark.innerText = '✅';
+    element.appendChild(checkmark);
+  }
+  window.selectPackage = selectPackage;
+
+  // 📌 عند إرسال الفورم
   document.getElementById("orderForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     if (selectedPackage === '') {
-      alert("❌ لازم تختار باقة");
+      alert("❌ الرجاء اختيار باقة أولاً");
       return;
     }
 
-    const submitButton = e.target.querySelector("button[type='submit']");
+    const submitButton = this.querySelector("button[type='submit']");
     submitButton.disabled = true;
     submitButton.innerText = "جاري الإرسال...";
 
-    const user = auth.currentUser;
-    if (!user) {
-      alert("⚠️ لازم تسجل دخول الأول");
-      submitButton.disabled = false;
-      submitButton.innerText = "إرسال الطلب";
-      return;
-    }
+    const phone = document.getElementById("sender-number").value;
+    const pubg_id = document.getElementById("pubg-id").value;
 
+    // 🟢 الخطوة 1: حفظ في جوجل شيت
     const formData = new FormData();
-    formData.append("uid", user.uid); // 🟢 ربط الطلب بالمستخدم
-    formData.append("phone", document.getElementById("sender-number").value);
-    formData.append("pubg_id", document.getElementById("pubg-id").value);
+    formData.append("phone", phone);
+    formData.append("pubg_id", pubg_id);
     formData.append("package", selectedPackage);
     formData.append("game", GAME_NAME);
 
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      body: formData
-    })
-    .then(() => {
+    try {
+      await fetch(SCRIPT_URL, { method: "POST", body: formData });
+
+      // 🟢 الخطوة 2: حفظ في Firestore (لو المستخدم مسجل دخول)
+      const user = auth.currentUser;
+      if (user) {
+        await addDoc(collection(db, "orders"), {
+          userId: user.uid,
+          game: GAME_NAME,
+          pubg_id: pubg_id,
+          package: selectedPackage,
+          phone: phone,
+          status: "قيد التنفيذ",
+          createdAt: serverTimestamp()
+        });
+      }
+
+      // 🟢 الخطوة 3: تحويل لصفحة الشكر
       window.location.href = "thanks.html";
-    })
-    .catch(err => {
-      alert("❌ خطأ أثناء الإرسال");
-      console.error(err);
+
+    } catch (err) {
+      alert("❌ حصل خطأ أثناء الإرسال");
+      console.error("Error:", err);
       submitButton.disabled = false;
       submitButton.innerText = "إرسال الطلب";
-    });
+    }
   });
 </script>
 
