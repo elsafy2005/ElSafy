@@ -363,7 +363,7 @@ body::before {
 <table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
 
 
-  <script type="module">
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
@@ -394,16 +394,16 @@ let currentUser = null;
 
 // متابعة حالة تسجيل الدخول
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    currentUser = user;
+  currentUser = user || null;
+
+  if(currentUser){
     loginBtn.style.display = "none";
     if(logoutBtn) logoutBtn.style.display = "inline-block";
-    userName.innerText = user.displayName;
-    userPhoto.src = user.photoURL || "images/img_avatar.png";
+    userName.innerText = currentUser.displayName;
+    userPhoto.src = currentUser.photoURL || "images/img_avatar.png";
     document.getElementById("dashboard").style.display = "block";
-    await loadDashboard(user.uid);
+    await loadDashboard(currentUser.uid);
   } else {
-    currentUser = null;
     loginBtn.style.display = "inline-block";
     if(logoutBtn) logoutBtn.style.display = "none";
     userName.innerText = "";
@@ -444,7 +444,7 @@ async function loadDashboard(uid) {
   ordersTable.innerHTML = `
     <tr>
       <th>Order ID</th>
-      <th>Player ID</th>
+      <th>ID</th>
       <th>Phone</th>
       <th>Game</th>
       <th>Package</th>
@@ -464,7 +464,7 @@ async function loadDashboard(uid) {
     const data = doc.data();
     const row = ordersTable.insertRow();
     row.insertCell(0).innerText = data.order_id || "-";
-    row.insertCell(1).innerText = data.player_id || "-";
+    row.insertCell(1).innerText = data.id_pubg || "-"; // يظهر Pubg ID الحقيقي
     row.insertCell(2).innerText = data.phone || "-";
     row.insertCell(3).innerText = data.game_type || "-";
     row.insertCell(4).innerText = data.package || "-";
@@ -472,27 +472,6 @@ async function loadDashboard(uid) {
   });
 }
 </script>
-<script>
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loading").classList.add("hidden");
-      }, 1400); // ثانية و7 أعشار
-    });
-  </script>
-  
-<script>
-const dropdown = document.getElementById("dropdownMenu");
 
-function toggleDropdown() {
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-
-// إخفاء القائمة عند الضغط خارجها
-window.addEventListener("click", function(e){
-  if(!e.target.matches('.menu-btn')){
-    dropdown.style.display = "none";
-  }
-});
-</script>
 </body>
 </html>
