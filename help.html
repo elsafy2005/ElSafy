@@ -23,10 +23,10 @@ button { background:#007bff; color:#fff; padding:12px 20px; border:none; border-
 button:hover { background:#0056b3; }
 
 /* تيكيتات المستخدم */
-.ticket { background:#fff; border-radius:12px; padding:20px; margin:15px 0; box-shadow:0 3px 10px rgba(0,0,0,0.05); transition: transform 0.2s; }
+.ticket { background:#0c88cf; border-radius:12px; padding:20px; margin:15px 0; box-shadow:0 3px 10px rgba(0,0,0,0.05); transition: transform 0.2s; }
 .ticket:hover { transform: translateY(-2px); }
 .ticket h3 { margin-top:0; color:#007bff; }
-.ticket p { margin:6px 0; color:#ffffff; }
+.ticket p { margin:6px 0; color:#f3f3f3; }
 .ticket .status { font-weight:bold; color:#e67e22; }
 .ticket .adminReply { background:#f0f3f7; border:none; resize:none; color:#333; }
 .ticket .adminReply[readonly] { background:#f0f3f7; }
@@ -510,7 +510,10 @@ body::before {
 #dropdownMenu a:hover {
   background-color: #374ac0;
 }
-
+#userNameMobile {
+  color: rgba(255, 255, 255, 0.767);
+}
+#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
 /* Responsive للموبايل */
 @media screen and (max-width: 768px) {
   .desktop-nav { display: none; } /* اخفاء القوائم العادية */
