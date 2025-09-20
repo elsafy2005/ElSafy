@@ -20,17 +20,20 @@
       <span></span>
     </div>
   </div>
-  <!-- HEADER -->
-  <div class="header">
-    <img class="logo" src="images/logo.png" />
-      <nav class="desktop-nav">
+<!-- HEADER -->
+<div class="header">
+  <img class="logo" src="images/logo.png" />
+
+  <!-- القوائم العادية للويب -->
+  <nav class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="Contact.HTML">Contact</a>
     <a href="user-dashboard.html">Orders</a>
     <a href="About.html">About</a>
-          <a href="#" id="loginLink">Login</a>
-      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
-      <span id="userName"></span>
+    <a href="#" id="loginLinkDesktop">Login</a>
+    <img id="userPhotoDesktop" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+    <span id="userNameDesktop"></span>
+    <a href="#" id="logoutBtnDesktop" style="display:none; margin-left:10px;">Logout</a>
   </nav>
 
   <!-- زر القوائم للموبايل -->
@@ -42,9 +45,10 @@
       <a href="Contact.HTML">Contact</a>
       <a href="user-dashboard.html">Orders</a>
       <a href="About.html">About</a>
-      <a href="#" id="loginLink">Login</a>
-      <img id="userPhoto" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
-      <span id="userName"></span>
+      <a href="#" id="loginLinkMobile">Login</a>
+      <img id="userPhotoMobile" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userNameMobile"></span>
+      <a href="#" id="logoutBtnMobile" style="display:none; margin-left:10px;">Logout</a>
   </div>
 </div>
 
@@ -265,6 +269,68 @@ onAuthStateChanged(auth, (user) => {
     userPhoto.src = "images/img_avatar.png";
   }
 });
+
+const loginBtns = [
+  document.getElementById("loginLinkDesktop"),
+  document.getElementById("loginLinkMobile")
+];
+const logoutBtns = [
+  document.getElementById("logoutBtnDesktop"),
+  document.getElementById("logoutBtnMobile")
+];
+const userPhotos = [
+  document.getElementById("userPhotoDesktop"),
+  document.getElementById("userPhotoMobile")
+];
+const userNames = [
+  document.getElementById("userNameDesktop"),
+  document.getElementById("userNameMobile")
+];
+
+// متابعة حالة تسجيل الدخول
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    loginBtns.forEach(btn => btn.style.display = "none");
+    logoutBtns.forEach(btn => btn.style.display = "inline-block");
+    userPhotos.forEach(photo => photo.src = user.photoURL || "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = user.displayName);
+  } else {
+    loginBtns.forEach(btn => btn.style.display = "inline-block");
+    logoutBtns.forEach(btn => btn.style.display = "none");
+    userPhotos.forEach(photo => photo.src = "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = "");
+  }
+});
+
+// تسجيل الدخول
+loginBtns.forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signInWithPopup(auth, provider);
+      // يحدث الصفحة بعد تسجيل الدخول لتطبيق كل العناصر
+      window.location.reload();
+    }catch(err){
+      console.error("Login Error:", err);
+      alert("حدث خطأ أثناء تسجيل الدخول");
+    }
+  });
+});
+
+// تسجيل الخروج
+logoutBtns.forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signOut(auth);
+      window.location.reload();
+    }catch(err){
+      console.error("Logout Error:", err);
+      alert("حدث خطأ أثناء تسجيل الخروج");
+    }
+  });
+});
+
 
 // تسجيل الدخول
 document.getElementById("loginLink").addEventListener("click", (e)=>{
