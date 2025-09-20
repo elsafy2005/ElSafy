@@ -362,7 +362,6 @@ body::before {
 
 <table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
 
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
@@ -384,55 +383,66 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-const loginBtn = document.getElementById("loginLink");
-const logoutBtn = document.getElementById("logoutBtn");
-const userName = document.getElementById("userName");
-const userPhoto = document.getElementById("userPhoto");
+const loginBtn = document.querySelectorAll(".loginLink");
+const logoutBtn = document.querySelectorAll(".logoutBtn");
+const userName = document.querySelectorAll(".userName");
+const userPhoto = document.querySelectorAll(".userPhoto");
 const ordersTable = document.getElementById("ordersTable");
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول
+// متابعة حالة تسجيل الدخول لكل الأجهزة
 onAuthStateChanged(auth, async (user) => {
   currentUser = user || null;
 
   if(currentUser){
-    loginBtn.style.display = "none";
-    if(logoutBtn) logoutBtn.style.display = "inline-block";
-    userName.innerText = currentUser.displayName;
-    userPhoto.src = currentUser.photoURL || "images/img_avatar.png";
+    // إخفاء زر تسجيل الدخول وإظهار زر تسجيل الخروج
+    loginBtn.forEach(btn => btn.style.display = "none");
+    logoutBtn.forEach(btn => btn.style.display = "inline-block");
+
+    // عرض اسم وصورة المستخدم
+    userName.forEach(el => el.innerText = currentUser.displayName);
+    userPhoto.forEach(el => el.src = currentUser.photoURL || "images/img_avatar.png");
+
     document.getElementById("dashboard").style.display = "block";
     await loadDashboard(currentUser.uid);
   } else {
-    loginBtn.style.display = "inline-block";
-    if(logoutBtn) logoutBtn.style.display = "none";
-    userName.innerText = "";
-    userPhoto.src = "images/img_avatar.png";
+    // إظهار زر تسجيل الدخول وإخفاء زر تسجيل الخروج
+    loginBtn.forEach(btn => btn.style.display = "inline-block");
+    logoutBtn.forEach(btn => btn.style.display = "none");
+
+    userName.forEach(el => el.innerText = "");
+    userPhoto.forEach(el => el.src = "images/img_avatar.png");
+
     document.getElementById("dashboard").style.display = "none";
   }
 });
 
 // تسجيل الدخول
-loginBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    await signInWithPopup(auth, provider);
-  } catch(err) {
-    console.error(err);
-    alert("حدث خطأ أثناء تسجيل الدخول.");
-  }
+loginBtn.forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithPopup(auth, provider);
+    } catch(err) {
+      console.error(err);
+      alert("حدث خطأ أثناء تسجيل الدخول.");
+    }
+  });
 });
 
 // تسجيل الخروج
-logoutBtn?.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    await signOut(auth);
-    ordersTable.innerHTML = ""; // مسح الجدول بعد الخروج
-  } catch(err) {
-    console.error(err);
-    alert("حدث خطأ أثناء تسجيل الخروج.");
-  }
+logoutBtn.forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      ordersTable.innerHTML = ""; // مسح الجدول بعد الخروج
+    } catch(err) {
+      console.error(err);
+      alert("حدث خطأ أثناء تسجيل الخروج.");
+    }
+  });
 });
 
 // تحميل الطلبات وعرضها في الجدول
@@ -464,7 +474,7 @@ async function loadDashboard(uid) {
     const data = doc.data();
     const row = ordersTable.insertRow();
     row.insertCell(0).innerText = data.order_id || "-";
-    row.insertCell(1).innerText = data.pubg_id|| "-"; // يظهر Pubg ID الحقيقي
+    row.insertCell(1).innerText = data.pubg_id || "-"; // Pubg ID الحقيقي
     row.insertCell(2).innerText = data.phone || "-";
     row.insertCell(3).innerText = data.game_type || "-";
     row.insertCell(4).innerText = data.package || "-";
@@ -472,6 +482,7 @@ async function loadDashboard(uid) {
   });
 }
 </script>
+
 <script>
     window.addEventListener("load", () => {
       setTimeout(() => {
