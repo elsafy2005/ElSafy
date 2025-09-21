@@ -28,108 +28,78 @@
 </script>
  
 
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
   authDomain: "elsafy-store.firebaseapp.com",
   projectId: "elsafy-store",
-  storageBucket: "elsafy-store.firebasestorage.app",
+  storageBucket: "elsafy-store.appspot.com",
   messagingSenderId: "517856691965",
   appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
   measurementId: "G-H5Y50LG1DS"
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("loginLink");
-  const userName = document.getElementById("userName");
-  const userPhoto = document.getElementById("userPhoto");
-  let logoutBtn = document.getElementById("logoutBtn");
-  
-const loginBtns = [
-  document.getElementById("loginLinkDesktop"),
-  document.getElementById("loginLinkMobile")
-];
-const logoutBtns = [
-  document.getElementById("logoutBtnDesktop"),
-  document.getElementById("logoutBtnMobile")
-];
-const userPhotos = [
-  document.getElementById("userPhotoDesktop"),
-  document.getElementById("userPhotoMobile")
-];
-const userNames = [
-  document.getElementById("userNameDesktop"),
-  document.getElementById("userNameMobile")
-];
+let currentUser = null;
 
-// متابعة حالة تسجيل الدخول
+// متابعة حالة تسجيل الدخول لمرة واحدة
 onAuthStateChanged(auth, (user) => {
+  currentUser = user || null;
+  const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
+  const logoutBtns = [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")];
+  const userPhotos = [document.getElementById("userPhotoDesktop"), document.getElementById("userPhotoMobile")];
+  const userNames = [document.getElementById("userNameDesktop"), document.getElementById("userNameMobile")];
+
   if(user){
-    loginBtns.forEach(btn => btn.style.display = "none");
-    logoutBtns.forEach(btn => btn.style.display = "inline-block");
+    loginBtns.forEach(btn => btn.style.display="none");
+    logoutBtns.forEach(btn => btn.style.display="inline-block");
     userPhotos.forEach(photo => photo.src = user.photoURL || "images/img_avatar.png");
     userNames.forEach(name => name.innerText = user.displayName);
   } else {
-    loginBtns.forEach(btn => btn.style.display = "inline-block");
-    logoutBtns.forEach(btn => btn.style.display = "none");
+    loginBtns.forEach(btn => btn.style.display="inline-block");
+    logoutBtns.forEach(btn => btn.style.display="none");
     userPhotos.forEach(photo => photo.src = "images/img_avatar.png");
     userNames.forEach(name => name.innerText = "");
   }
 });
 
-  if(!logoutBtn) {
-    logoutBtn = document.createElement("a");
-    logoutBtn.href = "#";
-    logoutBtn.id = "logoutBtn";
-    logoutBtn.innerText = "Logout";
-    loginBtn.parentNode.appendChild(logoutBtn);
-    logoutBtn.style.display = "none";
-    logoutBtn.style.marginLeft = "10px";
-  }
-
-  
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      userName.innerText = user.displayName;
-      userPhoto.src = user.photoURL || "images/img_avatar.png"; // صورة افتراضية لو مفيش
-      loginBtn.style.display = "none";
-      logoutBtn.style.display = "inline-block";
-    } else {
-      userName.innerText = "";
-      userPhoto.src = "images/img_avatar.png"; // صورة افتراضية
-      loginBtn.style.display = "inline-block";
-      logoutBtn.style.display = "none";
+// تسجيل الدخول
+[document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signInWithPopup(auth, provider);
+      window.location.reload();
+    } catch(err){
+      console.error("Login Error:", err);
+      alert("حدث خطأ أثناء تسجيل الدخول");
     }
   });
+});
 
-  loginBtn.addEventListener("click", (e) => {
+// تسجيل الخروج
+[document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
     e.preventDefault();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        window.location.href = "index.html";
-      })
-      .catch((error) => {
-        console.error("Login Error:", error);
-        alert("حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.");
-      });
-  });
-
-  logoutBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    });
+    try{
+      await signOut(auth);
+      window.location.reload();
+    } catch(err){
+      console.error("Logout Error:", err);
+      alert("حدث خطأ أثناء تسجيل الخروج");
+    }
   });
 });
+
 </script>
 
 
