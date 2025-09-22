@@ -207,8 +207,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -2; /* تحت كل حاجة */
-  background: url("images/wall.gif") no-repeat center center;
+  z-index: -2;   background: url("images/wall.gif") no-repeat center center;
   background-size: cover;
 }
 
@@ -220,10 +219,8 @@ body::before {
   right: 0; 
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
-  pointer-events: none; 
-  z-index: -1; /* بين العناصر والخلفية */
-}
+  backdrop-filter: blur(5px);   pointer-events: none; 
+  z-index: -1; }
 
 #userNameMobile {
   color: rgba(255, 255, 255, 0.767);
@@ -433,9 +430,7 @@ body {
 }
 .slider {
   width: 95%;
-  max-width: 1100px;   /* أعرض شوية */
-  height: 400px;       /* أطول */
-  margin: 40px auto;
+  max-width: 1100px;     height: 400px;         margin: 40px auto;
   overflow: hidden;
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.5);
@@ -455,16 +450,13 @@ body {
 .slides img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* يخلي الصورة تملأ السلايدر من غير ما تتشوه */
-  border-radius: 16px;
+  object-fit: cover;     border-radius: 16px;
   cursor: pointer;
 }
 
-/* تعديل للموبايل */
 @media (max-width: 768px) {
   .slider {
-    height: 200px; /* أقصر عشان الصورة تبان */
-  }
+    height: 200px;   }
 
   .slides img {
     border-radius: 10px;
@@ -472,15 +464,12 @@ body {
 
   .navigation .bar {
     width: 8px;
-    height: 8px; /* تصغير الأيقونات */
-  }
+    height: 8px;   }
 }
 
-/* تعديل للموبايل الصغير جداً */
 @media (max-width: 480px) {
   .slider {
-    height: 180px; /* أقل كمان */
-  }
+    height: 180px;   }
 
   .navigation .bar {
     width: 6px;
@@ -488,14 +477,11 @@ body {
   }
 }
 
-/* شاشة اللودينج */
 #loading {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;     /* هنا بدلنا 100vw */
-  height: 100vh;   /* ارتفاع الشاشة */
-  backdrop-filter: blur(12px);
+  width: 100%;       height: 100vh;     backdrop-filter: blur(12px);
   background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
@@ -504,8 +490,7 @@ body {
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
-    /* loader احترافي */
-    .loader {
+        .loader {
       display: flex;
       gap: 12px;
     }
@@ -538,14 +523,12 @@ body {
       }
     }
 
-    /* بعد الاختفاء */
-    #loading.hidden {
+        #loading.hidden {
       opacity: 0;
       visibility: hidden;
     }
 
-    /* باقي الصفحة */
-    body {
+        body {
       margin: 0;
       font-family: "Cairo", sans-serif;
       background: url("your-bg.jpg") center/cover no-repeat;
@@ -555,14 +538,11 @@ body {
       text-align: center;
       padding: 50px;
       color: #fff;
-      height: 3000px; /* علشان نجرب الاسكرول */
-    }
+      height: 3000px;     }
     body, h1, h2, h3, p ,span {
     font-family: 'Bungee', cursive;
-    font-weight: 300; /* Light */
-}
+    font-weight: 300; }
 
-/* القوائم للويب */
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -572,8 +552,7 @@ body {
 .desktop-nav a {
   text-decoration: none;
   color: #ffffff;
-  padding: 5px 12px; /* تصغير البوكس */
-  line-height: 1.4;
+  padding: 5px 12px;   line-height: 1.4;
   border-radius: 5px;
   transition: 0.3s;
 }
@@ -583,7 +562,6 @@ body {
   color: #fff;
 }
 
-/* صورة المستخدم واسم المستخدم */
 #userPhoto, #userPhotoMobile {
   width: 35px;
   height: 35px;
@@ -599,18 +577,13 @@ body {
 
 
 
-/* اخفاء زر القائمة والقائمة المنسدلة على الكمبيوتر */
 .menu-btn, #dropdownMenu {
   display: none;
 }
 
-/* Media Query للموبايل */
 @media screen and (max-width:768px) {
-  .desktop-nav { display: none; }      /* اخفاء القوائم العادية */
-  .menu-btn { display: block; }        /* اظهار زر القائمة */
-  #dropdownMenu {
-    display: none;                     /* مخفي افتراضياً */
-    flex-direction: column;
+  .desktop-nav { display: none; }        .menu-btn { display: block; }          #dropdownMenu {
+    display: none;                         flex-direction: column;
     position: absolute;
     top: 60px;
     right: 10px;
@@ -654,37 +627,28 @@ body {
   right: 0;
 }
 
-/* صورة المستخدم */
 .user-img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
 
-/* Responsive للموبايل */
 @media (max-width: 768px) {
   .desktop-nav { display: none; }
   .menu-btn { display: inline-block; }
 }
-/* صورة المستخدم */
 .userPhoto {
-  width: 35px;          /* حجم أصغر */
-  height: 35px;
-  border-radius: 50%;   /* دائري */
-  object-fit: cover;    /* لتعبئة الصورة داخل الدائرة */
-  margin-left: 8px;
+  width: 35px;            height: 35px;
+  border-radius: 50%;     object-fit: cover;      margin-left: 8px;
   vertical-align: middle;
-  border: 2px solid #fff; /* إطار خفيف */
-}
+  border: 2px solid #fff; }
 
-/* اسم المستخدم */
 .userName {
   font-weight: 600;
   color: #fff;
   margin-left: 5px;
   vertical-align: middle;
-  max-width: 120px;       /* منع الالتصاق بالحدود */
-  overflow: hidden;
+  max-width: 120px;         overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

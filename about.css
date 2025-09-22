@@ -126,8 +126,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -2; /* تحت كل حاجة */
-  background: url("images/From\ KlickPin\ CF\ Pin\ by\ Cristian\ Alejandro\ Sanchez\ Ala\ on\ Juguetes\ in\ 2025\ _\ Greenscreen\ ideas\ Green\ screen\ footage\ Moving\ backgrounds.gif") no-repeat center center;
+  z-index: -2;   background: url("images/From\ KlickPin\ CF\ Pin\ by\ Cristian\ Alejandro\ Sanchez\ Ala\ on\ Juguetes\ in\ 2025\ _\ Greenscreen\ ideas\ Green\ screen\ footage\ Moving\ backgrounds.gif") no-repeat center center;
   background-size: cover;
 }
 
@@ -139,10 +138,8 @@ body::before {
   right: 0; 
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
-  pointer-events: none; 
-  z-index: -1; /* بين العناصر والخلفية */
-}
+  backdrop-filter: blur(5px);   pointer-events: none; 
+  z-index: -1; }
 .header {
   display: flex;
   justify-content: space-between;
@@ -189,8 +186,7 @@ body::before {
 #loading {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(12px); /* بلور ناعم */
-  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);   background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,7 +194,6 @@ body::before {
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
-/* loader احترافي */
 .loader {
   display: flex;
   gap: 12px;
@@ -232,13 +227,11 @@ body::before {
   }
 }
 
-/* بعد الاختفاء */
 #loading.hidden {
   opacity: 0;
   visibility: hidden;
 }
 
-/* باقي الصفحة */
 body {
   margin: 0;
   font-family: "Cairo", sans-serif;
@@ -255,11 +248,7 @@ body {
   margin: 100px auto;
   padding: 30px 40px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.1); /* شفافية */
-  backdrop-filter: blur(10px); /* بلور */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* بوردر خفيف */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* ظل ناعم */
-  color: #fff;
+  background: rgba(255, 255, 255, 0.1);   backdrop-filter: blur(10px);   border: 1px solid rgba(255, 255, 255, 0.2);   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);   color: #fff;
   text-align: center;
   line-height: 1.8;
   font-size: 18px;
@@ -280,7 +269,6 @@ body {
   margin-bottom: 15px;
 }
 
-/* أنيميشن الدخول */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -307,8 +295,7 @@ h1 {
 .desktop-nav a {
   text-decoration: none;
   color: #ffffff;
-  padding: 5px 12px; /* تصغير البوكس */
-  line-height: 1.4;
+  padding: 5px 12px;   line-height: 1.4;
   border-radius: 5px;
   transition: 0.3s;
 }
@@ -318,7 +305,6 @@ h1 {
   color: #fff;
 }
 
-/* صورة المستخدم واسم المستخدم */
 #userPhoto, #userPhotoMobile {
   width: 35px;
   height: 35px;
@@ -334,18 +320,13 @@ h1 {
 
 
 
-/* اخفاء زر القائمة والقائمة المنسدلة على الكمبيوتر */
 .menu-btn, #dropdownMenu {
   display: none;
 }
 
-/* Media Query للموبايل */
 @media screen and (max-width:768px) {
-  .desktop-nav { display: none; }      /* اخفاء القوائم العادية */
-  .menu-btn { display: block; }        /* اظهار زر القائمة */
-  #dropdownMenu {
-    display: none;                     /* مخفي افتراضياً */
-    flex-direction: column;
+  .desktop-nav { display: none; }        .menu-btn { display: block; }          #dropdownMenu {
+    display: none;                         flex-direction: column;
     position: absolute;
     top: 60px;
     right: 10px;
@@ -389,14 +370,12 @@ h1 {
   right: 0;
 }
 
-/* صورة المستخدم */
 .user-img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
 
-/* Responsive للموبايل */
 @media (max-width: 768px) {
   .desktop-nav { display: none; }
   .menu-btn { display: inline-block; }
@@ -411,22 +390,19 @@ h1 {
   }
 
   .logo {
-    order: 1; /* اللوجو على اليمين */
-    width: 60px;
+    order: 1;     width: 60px;
     height: 60px;
   }
 
   .menu-btn {
     display: inline-block;
-    order: 2; /* الزر على الشمال */
-  }
+    order: 2;   }
 
   .dropdown {
     display: none;
     position: absolute;
     top: 60px;
-    left: 0;  /* تظهر القايمة على الشمال */
-    background: #1e3a8a;
+    left: 0;      background: #1e3a8a;
     border-radius: 8px;
     min-width: 150px;
     box-shadow:0 6px 15px rgba(0,0,0,0.2);
@@ -434,14 +410,12 @@ h1 {
     z-index: 999;
   }
 }
-/* الهيدر العام */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  position: relative; /* مش ثابت */
-  background-color: rgba(0,0,0,0.5);
+  position: relative;   background-color: rgba(0,0,0,0.5);
   flex-wrap: wrap;
   z-index: 2;
 }
@@ -451,10 +425,8 @@ h1 {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  order: 2; /* اللوجو على اليمين */
-}
+  order: 2; }
 
-/* زر القائمة */
 .menu-btn {
   display: none;
   background: #007BFF;
@@ -464,10 +436,8 @@ h1 {
   font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
-  order: 1; /* الزر على الشمال */
-}
+  order: 1; }
 
-/* القوائم العادية للكمبيوتر */
 .desktop-nav {
   display: flex;
   gap: 15px;
@@ -485,14 +455,12 @@ h1 {
   background-color: #007BFF;
 }
 
-/* القائمة المنسدلة */
 #dropdownMenu {
   display: none;
   flex-direction: column;
   position: absolute;
   top: 60px; 
-  left: 0; /* تظهر من الشمال */
-  background: #1e3a8a;
+  left: 0;   background: #1e3a8a;
   border-radius: 8px;
   min-width: 150px;
   box-shadow:0 6px 15px rgba(0,0,0,0.2);
@@ -509,8 +477,5 @@ h1 {
   background-color: #374ac0;
 }
 
-/* Media Query للموبايل */
 @media screen and (max-width:768px) {
-  .desktop-nav { display: none; } /* اخفاء القوائم العادية */
-  .menu-btn { display: inline-block; } /* اظهار زر القائمة */
-}
+  .desktop-nav { display: none; }   .menu-btn { display: inline-block; } }

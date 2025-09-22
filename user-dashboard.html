@@ -7,30 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-  /* صورة المستخدم */
+ 
 .userPhoto {
-  width: 35px;          /* حجم أصغر */
+  width: 35px;          
   height: 35px;
-  border-radius: 50%;   /* دائري */
-  object-fit: cover;    /* لتعبئة الصورة داخل الدائرة */
+  border-radius: 50%;  
+  object-fit: cover;    
   margin-left: 8px;
   vertical-align: middle;
-  border: 2px solid #fff; /* إطار خفيف */
+  border: 2px solid #fff; 
 }
 
-/* اسم المستخدم */
+
 .userName {
   font-weight: 600;
   color: #fff;
   margin-left: 5px;
   vertical-align: middle;
-  max-width: 120px;       /* منع الالتصاق بالحدود */
+  max-width: 120px;      
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Reset & Base */
+
 * {
   margin: 0;
   padding: 0;
@@ -45,7 +45,7 @@ body {
   min-height: 100vh;
 }
 
-/* Loading Screen */
+
 #loading {
   position: fixed;
   inset: 0;
@@ -75,7 +75,7 @@ body {
 }
 #loading.hidden { opacity: 0; visibility: hidden; }
 
-/* Header */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -116,11 +116,11 @@ body {
 }
 .desktop-nav a:hover { background-color: #007BFF; }
 
-/* User Image */
+
 #userPhoto { width: 40px; height: 40px; border-radius: 50%; margin-left: 5px; }
 #userName { font-weight: bold; margin-left:5px; }
 
-/* Mobile Menu */
+
 .menu-btn {
   display: none;
   background: #007BFF;
@@ -150,7 +150,7 @@ body {
 }
 .dropdown a:hover { background: #374ac0; }
 
-/* Dashboard */
+
 #dashboard {
   padding: 20px;
   max-width: 1200px;
@@ -183,7 +183,7 @@ th {
 tr:nth-child(even) { background:#f3f4f6; }
 tr:hover { background:#e0e7ff; }
 
-/* Logout Button */
+
 .logoutBtn {
   margin: 15px auto;
   display: block;
@@ -198,7 +198,7 @@ tr:hover { background:#e0e7ff; }
 }
 .logoutBtn:hover { background:#f87171; }
 
-/* Responsive */
+
 @media screen and (max-width:768px) {
   .header { flex-direction: column; align-items: flex-start; gap:15px; padding:10px 20px; }
   .logo { width: 60px; height: 60px; }
@@ -217,15 +217,15 @@ tr:hover { background:#e0e7ff; }
   color: rgba(255, 255, 255, 0.767);
 }
 #userNameDesktop { color: rgba(255, 255, 255, 0.842);}
-/* الجدول في موبيل */
+
 .table-wrapper {
-  overflow-x: auto; /* يسمح بالتمرير أفقي */
+  overflow-x: auto; 
   width: 100%;
   margin: 20px auto;
 }
 
 .table-wrapper table {
-  min-width: 600px; /* يعطي الجدول عرض كافي للأعمدة */
+  min-width: 600px; 
   width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
@@ -249,8 +249,8 @@ tr:hover { background:#e0e7ff; }
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 70px;       /* تحت اللوجو */
-    left: 10px;      /* بدل right: 10px */
+    top: 70px;       
+    left: 10px;      
     background: #1e3a8a;
     border-radius: 8px;
     min-width: 150px;
@@ -271,7 +271,7 @@ tr:hover { background:#e0e7ff; }
   #dashboard h1 { font-size: 1.5rem; }
 
   .table-wrapper table {
-    min-width: 500px; /* أصغر على الموبايل */
+    min-width: 500px; 
   }
 
   .table-wrapper th, .table-wrapper td {
@@ -286,7 +286,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -2; /* تحت كل حاجة */
+  z-index: -2;
   background: url("images/wall.gif") no-repeat center center;
   background-size: cover;
 }
@@ -299,9 +299,9 @@ body::before {
   right: 0; 
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
+  backdrop-filter: blur(5px); 
   pointer-events: none; 
-  z-index: -1; /* بين العناصر والخلفية */
+  z-index: -1; 
 }
 @media screen and (max-width:768px) {
   .header {
@@ -313,21 +313,21 @@ body::before {
   }
 
   .logo {
-    order: 1; /* اللوجو على اليمين */
+    order: 1;
     width: 60px;
     height: 60px;
   }
 
   .menu-btn {
     display: inline-block;
-    order: 2; /* الزر على الشمال */
+    order: 2; 
   }
 
   .dropdown {
     display: none;
     position: absolute;
     top: 60px;
-    left: 0;  /* تظهر القايمة على الشمال */
+    left: 0;  
     background: #1e3a8a;
     border-radius: 8px;
     min-width: 150px;
@@ -348,13 +348,13 @@ body::before {
     </div>
   </div>
 <div class="header">
-  <!-- زر القوائم للموبايل -->
+ 
   <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
 
-  <!-- اللوجو -->
+  
   <img class="logo" src="images/logo.png" />
 
-  <!-- القايمة المنسدلة -->
+ 
   <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
@@ -367,7 +367,7 @@ body::before {
 
   </div>
 
-  <!-- القايمة العادية للبيسي -->
+  
   <nav class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="Contact.HTML">Contact</a>
@@ -438,7 +438,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// تسجيل الدخول
+
 loginBtns.forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -451,7 +451,7 @@ loginBtns.forEach(btn => {
   });
 });
 
-// تسجيل الخروج
+
 logoutBtns.forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -465,7 +465,7 @@ logoutBtns.forEach(btn => {
   });
 });
 
-// تحميل الطلبات
+
 async function loadDashboard(uid) {
   const ordersRef = collection(db, "orders");
   const q = query(ordersRef, where("player_id", "==", uid));
@@ -509,7 +509,7 @@ async function loadDashboard(uid) {
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loading").classList.add("hidden");
-      }, 1400); // ثانية و7 أعشار
+      }, 1400);
     });
   </script>
   <script>
@@ -519,7 +519,7 @@ function toggleDropdown() {
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
 }
 
-// إخفاء القائمة عند الضغط خارجها
+
 window.addEventListener("click", function(e){
   if(!e.target.matches('.menu-btn')){
     dropdown.style.display = "none";

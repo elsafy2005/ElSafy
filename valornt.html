@@ -10,7 +10,7 @@
 <meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
 <meta name="author" content="Elsafy Store">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LS3Z6JTV3W"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -28,11 +28,11 @@
       <span></span>
     </div>
   </div>
-<!-- HEADER -->
+
 <div class="header">
   <img class="logo" src="images/logo.png" />
 
-  <!-- القوائم العادية للويب -->
+  
   <nav class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="Contact.HTML">Contact</a>
@@ -45,10 +45,10 @@
     <a href="#" id="logoutBtnDesktop" style="display:none; margin-left:10px;">Logout</a>
   </nav>
 
-  <!-- زر القوائم للموبايل -->
+ 
   <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
 
-  <!-- القائمة المنسدلة للموبايل -->
+  
   <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
@@ -157,7 +157,7 @@
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWL-9s-EV8PthAzGc81IHNFaOZ2uy7VjEezxCkf_vwOxAY22ISPzItqn71bgBqH7fTng/exec";
-const GAME_NAME = "Valornt"; // ثابت حسب موقعك
+const GAME_NAME = "Valornt"; 
 
 let selectedPackage = '';
 
@@ -167,14 +167,14 @@ function selectPackage(packageName, element) {
   document.getElementById('transferForm').classList.remove('hidden');
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 
-  // إزالة التأثير من كل الكروت
+
   document.querySelectorAll('.package-card').forEach(card => {
     card.classList.remove('selected');
     let check = card.querySelector('.checkmark');
     if(check) check.remove();
   });
 
-  // إضافة تأثير الكرت المختار وعلامة ✅
+
   element.classList.add('selected');
   let checkmark = document.createElement('span');
   checkmark.className = 'checkmark';
@@ -182,7 +182,7 @@ function selectPackage(packageName, element) {
   element.appendChild(checkmark);
 }
 
-// التعامل مع إرسال الفورم
+
 document.getElementById("orderForm").addEventListener("submit", function(e){
   e.preventDefault();
 
@@ -206,7 +206,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
     body: formData
   })
   .then(() => {
-    // بعد الإرسال مباشرة نروح لصفحة الشكر
+
     window.location.href = "thanks.html";
   })
   .catch(err => {
@@ -222,7 +222,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loading").classList.add("hidden");
-      }, 1400); // ثانية و7 أعشار
+      }, 1400);
     });
   </script>
 <script type="module">
@@ -247,7 +247,7 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول لمرة واحدة
+
 onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
   const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
@@ -268,7 +268,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// تسجيل الدخول
+
 [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -282,7 +282,7 @@ onAuthStateChanged(auth, (user) => {
   });
 });
 
-// تسجيل الخروج
+
 [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -296,7 +296,7 @@ onAuthStateChanged(auth, (user) => {
   });
 });
 
-// إرسال الطلب إلى Firestore
+
 document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
   if(!selectedPackage) return alert("❌ اختر باقة أولاً");
@@ -312,9 +312,9 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
       player_id: currentUser.uid,
       pubg_id: document.getElementById("pubg-id").value,
       phone: document.getElementById("sender-number").value,
-      game_type: "Valornt", // أو GAME_NAME لو معرف
+      game_type: "Valornt", 
       package: selectedPackage,
-       status: "قيد التنفيذ", // ✅ هنا القيمة الجديدة
+       status: "قيد التنفيذ",
       timestamp: serverTimestamp()
     });
     window.location.href = "thanks.html";
@@ -335,7 +335,7 @@ function toggleDropdown() {
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
 }
 
-// إخفاء القائمة عند الضغط خارجها
+
 window.addEventListener("click", function(e){
   if(!e.target.matches('.menu-btn')){
     dropdown.style.display = "none";

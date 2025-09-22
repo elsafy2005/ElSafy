@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Admin Dashboard - Tickets</title>
 <style>
-/* إعدادات عامة */
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7fa; margin:0; padding:0; }
 h1 { text-align:center; color:#ffffff; margin-top:20px; }
 .container { max-width:1000px; margin:0 auto; padding:20px; }
@@ -15,8 +14,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -2; /* تحت كل حاجة */
-  background: url("images/wall.gif") no-repeat center center;
+  z-index: -2;   background: url("images/wall.gif") no-repeat center center;
   background-size: cover;
 }
 
@@ -28,26 +26,20 @@ body::before {
   right: 0; 
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px); /* يعمل بلور احترافي */
-  pointer-events: none; 
-  z-index: -1; /* بين العناصر والخلفية */
-}
-/* بطاقة التيكيت */
+  backdrop-filter: blur(5px);   pointer-events: none; 
+  z-index: -1; }
 .ticket { background:#302e2e; border-radius:12px; padding:20px; margin:15px 0; box-shadow:0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s; }
 .ticket:hover { transform: translateY(-3px); }
 .ticket h3 { margin-top:0; color:#007bff; }
 .ticket p { margin:6px 0; color:#ffffff; }
 .ticket .status { font-weight:bold; color:#e67e22; }
 
-/* الحقول */
 textarea, select { width:100%; padding:10px; margin-top:8px; margin-bottom:12px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box; font-size:14px; }
 textarea:focus, select:focus { outline:none; border-color:#007bff; }
 
-/* زرار */
 button { background:#007bff; color:#fff; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-size:15px; transition: background 0.2s; }
 button:hover { background:#0056b3; }
 
-/* قسم البحث أو الفلترة (اختياري) */
 .searchContainer { display:flex; justify-content:flex-end; margin-bottom:15px; }
 .searchContainer input { width:250px; margin-left:10px; }
 .p { color: #fff;}

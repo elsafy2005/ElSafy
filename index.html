@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://elsafystore.netlify.app/images/logo.png">
 <meta property="og:type" content="website">
 
-<!-- Google tag (gtag.js) -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LS3Z6JTV3W"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -51,7 +51,7 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول لمرة واحدة
+
 onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
   const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
@@ -72,7 +72,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// تسجيل الدخول
+
 [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -86,7 +86,7 @@ onAuthStateChanged(auth, (user) => {
   });
 });
 
-// تسجيل الخروج
+
 [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -117,7 +117,7 @@ onAuthStateChanged(auth, (user) => {
 <div class="header">
   <img class="logo" src="images/logo.png" />
 
-  <!-- القوائم العادية للويب -->
+
   <nav class="desktop-nav">
     <a href="index.html">Home</a>
     <a href="Contact.HTML">Contact</a>
@@ -130,10 +130,10 @@ onAuthStateChanged(auth, (user) => {
     <a href="#" id="logoutBtnDesktop" style="display:none; margin-left:10px;">Logout</a>
   </nav>
 
-  <!-- زر القوائم للموبايل -->
+
   <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
 
-  <!-- القائمة المنسدلة للموبايل -->
+
   <div class="dropdown" id="dropdownMenu">
       <a href="index.html">Home</a>
       <a href="Contact.HTML">Contact</a>
@@ -148,7 +148,7 @@ onAuthStateChanged(auth, (user) => {
 </div>
 
 
-  <!-- Landing Page -->
+
   <div class="landing-page">
     <div class="landing-page-left-section">
       <span>Welcome To El Safy Store !</span>
@@ -175,7 +175,7 @@ onAuthStateChanged(auth, (user) => {
   
 
 <div>
-    <!-- Trending Games -->
+
   <div class="trending-container">
     <span>Trending</span>
     <div class="trending-header">
@@ -324,15 +324,15 @@ onAuthStateChanged(auth, (user) => {
     }, 4000);
   </script>
  <script>
-    // قفل الاسكرول وقت اللودنج
+ 
     document.body.style.overflow = "hidden";
 
-    // يخفي شاشة اللودنج بعد تحميل الصفحة
+
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loading").classList.add("hidden");
-        document.body.style.overflow = "auto"; // رجّع الاسكرول
-      }, 1600); // 2 ثانية تجربة
+        document.body.style.overflow = "auto"; 
+      }, 1600);
     });
   </script>
 
@@ -343,7 +343,7 @@ function toggleDropdown() {
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
 }
 
-// اغلاق القائمة لو ضغط المستخدم خارجها
+
 window.addEventListener("click", function(e){
   if(!e.target.matches('.menu-btn')){
     dropdown.style.display = "none";
