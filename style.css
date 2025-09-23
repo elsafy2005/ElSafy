@@ -200,18 +200,16 @@ body {
   margin: 10px;
 }
 
-body::after {
-  content: "";
+#bgVideo {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -2;   background: url("images/wall.gif") no-repeat center center;
-  background-size: cover;
+  object-fit: cover; 
+  z-index: -2;      
 }
-
-body::before {
+.video-overlay {
   content: "";
   position: fixed; 
   top: 0; 

@@ -19,7 +19,7 @@ body {
   color: #ffffff;
   border: none;
 }
-body{ direction: ltr;}
+body{ direction: rtl;}
 .btn:hover {
   background-color: #f2858c;
 }
@@ -149,8 +149,9 @@ body {
   display: flex;
   gap: 15px;
   align-items: center;
-  order: 2;
+  order: 1;
 }
+
 
 
 .desktop-nav a#loginLinkDesktop {
