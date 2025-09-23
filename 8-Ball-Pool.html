@@ -6,7 +6,29 @@
   <link rel="stylesheet" href="ball.css" />
   <link rel="icon" type="image/png" href="images/logo.png">
    <title>El Safy Store | Game Top-Up</title>
-<meta name="description" content="Elsafy Store - أسرع وأأمن موقع لشحن الألعاب زي PUBG, Free Fire, Mobile Legends و 8 Ball Pool. شحن مضمون وفوري بأفضل الأسعار.">
+<meta name="description" content="اشحن كوينز 8 Ball Pool بسرعة و أمان عبر El Safy Store. أسعار ممتازة وضمان وصول فوري." />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "8 Ball Pool Coins",
+  "image": "https://elsafystore.netlify.app/images/download%20(1).jpg",
+  "description": "شحن كوينز 8 Ball Pool بسرعة وآمان عبر El Safy Store.",
+  "brand": {
+    "@type": "Brand",
+    "name": "8 Ball Pool"
+  },
+  "sku": "8BP-Coins",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://elsafystore.netlify.app/8-ball-pool",
+    "priceCurrency": "EGP",
+    "price": "15",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
 <meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
 <meta name="author" content="Elsafy Store">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -311,7 +333,7 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
   if(!selectedPackage) return alert("❌ اختر باقة أولاً");
   if(!currentUser) return alert("❌يجب تسجيل الدخول أولا حتي لا يحدث خطاء في الارسال");
-  
+
   const submitButton = e.target.querySelector("button[type='submit']");
   submitButton.disabled = true;
   submitButton.innerText = "جاري الإرسال...";
