@@ -9,6 +9,17 @@ body {
   position: relative;
   min-height: 100vh;
 }
+#dropdownMenu a {
+    padding: 6px 12px; 
+    font-size: 14px;  
+    line-height: 1.3;  
+}
+
+
+#dropdownMenu {
+    gap: 0;  
+    padding: 5px 0; 
+}
 
 
 body::before {
