@@ -268,53 +268,60 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول
+
 onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
-});
+  const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
+  const logoutBtns = [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")];
+  const userPhotos = [document.getElementById("userPhotoDesktop"), document.getElementById("userPhotoMobile")];
+  const userNames = [document.getElementById("userNameDesktop"), document.getElementById("userNameMobile")];
 
-// فتح البوب أب
-function openPopup(){
-  document.getElementById("popupTitle").innerText = "⚠️ لازم تسجل الأول";
-  document.getElementById("popupMsg").style.display = "block";
-  document.getElementById("popupLoginBtn").style.display = "inline-block";
-  document.getElementById("loginPopup").style.display = "flex";
-}
-
-// قفل البوب أب
-function closePopup(){
-  document.getElementById("loginPopup").style.display = "none";
-}
-
-// زر تسجيل الدخول داخل البوب أب
-document.getElementById("popupLoginBtn").addEventListener("click", async ()=>{
-  try{
-    await signInWithPopup(auth, provider);
-    window.location.reload();
-  } catch(err){
-    console.error("Login Error:", err);
-    alert("حدث خطأ أثناء تسجيل الدخول");
+  if(user){
+    loginBtns.forEach(btn => btn.style.display="none");
+    logoutBtns.forEach(btn => btn.style.display="inline-block");
+    userPhotos.forEach(photo => photo.src = user.photoURL || "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = user.displayName);
+  } else {
+    loginBtns.forEach(btn => btn.style.display="inline-block");
+    logoutBtns.forEach(btn => btn.style.display="none");
+    userPhotos.forEach(photo => photo.src = "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = "");
   }
 });
 
-// زر الإلغاء
-document.getElementById("popupCancelBtn").addEventListener("click", ()=>{
-  closePopup();
+
+[document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signInWithPopup(auth, provider);
+      window.location.reload();
+    } catch(err){
+      console.error("Login Error:", err);
+      alert("حدث خطأ أثناء تسجيل الدخول");
+    }
+  });
 });
 
-// معالجة الفورم
+
+[document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signOut(auth);
+      window.location.reload();
+    } catch(err){
+      console.error("Logout Error:", err);
+      alert("حدث خطأ أثناء تسجيل الخروج");
+    }
+  });
+});
+
+
 document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
-
-  if(!selectedPackage){
-    alert("❌ اختر باقة أولاً");
-    return;
-  }
-
-  if(!currentUser){
-    openPopup(); // لو مش مسجل نفتح البوب أب
-    return;
-  }
+  if(!selectedPackage) return alert("❌ اختر باقة أولاً");
+  if(!currentUser) return alert("❌يجب تسجيل الدخول أولا حتي لا يحدث خطاء في الارسال");
 
   const submitButton = e.target.querySelector("button[type='submit']");
   submitButton.disabled = true;
@@ -328,7 +335,7 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
       phone: document.getElementById("sender-number").value,
       game_type: "PUBG",
       package: selectedPackage,
-      status: "قيد التنفيذ",
+       status: "قيد التنفيذ", 
       timestamp: serverTimestamp()
     });
     window.location.href = "thanks.html";
@@ -367,14 +374,6 @@ window.addEventListener("click", function(e){
     });
   </script>
 
-<div class="popup-overlay" id="loginPopup">
-  <div class="popup-box">
-    <h2 id="popupTitle">⚠️ لازم تسجل الأول</h2>
-    <p id="popupMsg">سجل دخولك بحساب جوجل عشان تكمل الطلب</p>
-    <button id="popupLoginBtn">تسجيل الدخول</button>
-    <button id="popupCancelBtn">إلغاء</button>
-  </div>
-</div>
 
   <footer class="site-footer">
   <div class="footer-content">

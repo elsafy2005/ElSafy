@@ -307,7 +307,7 @@ onAuthStateChanged(auth, (user) => {
 document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
   if(!selectedPackage) return alert("❌ اختر باقة أولاً");
-  if(!currentUser) return alert("❌ يجب تسجيل الدخول أولاً");
+  if(!currentUser) return alert("❌يجب تسجيل الدخول أولا حتي لا يحدث خطاء في الارسال");
 
   const submitButton = e.target.querySelector("button[type='submit']");
   submitButton.disabled = true;
