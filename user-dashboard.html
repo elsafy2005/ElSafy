@@ -288,16 +288,21 @@ tr:hover { background:#e0e7ff; }
   object-fit: cover; 
   z-index: -2;      
 }
+
+
 .video-overlay {
-  content: "";
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  bottom: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
+}
+
+.video-overlay {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(5px);   pointer-events: none; 
-  z-index: -1; }
+  }
 @media screen and (max-width:768px) {
   .header {
     flex-direction: row;
@@ -350,7 +355,7 @@ tr:hover { background:#e0e7ff; }
     </div>
   </div>
 
-  <video autoplay muted loop playsinline poster="images/wall.gif" id="bgVideo">
+  <video autoplay muted loop playsinline poster="images/wall.jpg" id="bgVideo">
   <source src="images/wall.gif" type="video/mp4">
 </video>
 <div class="video-overlay"></div>
