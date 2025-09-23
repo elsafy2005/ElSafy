@@ -186,17 +186,18 @@
   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
   placeholder="مثلاً: 5221122334"
 />
-  <label for="pubg-id"> ZONE ID  :</label>
+<label for="zone-id">ZONE ID :</label>
 <input
   type="text"
-  id="pubg-id"
-  name="pubg_id"
+  id="zone-id"
+  name="zone_id"
   required
   inputmode="numeric"
   pattern="[0-9]*"
   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-  placeholder="مثلاً: 5221122334"
+  placeholder="مثلاً: 123456"
 />
+
 
   <input type="hidden" id="package-name" name="package_name" />
 
@@ -207,7 +208,7 @@
   </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWL-9s-EV8PthAzGc81IHNFaOZ2uy7VjEezxCkf_vwOxAY22ISPzItqn71bgBqH7fTng/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7Ky_7AJxNBVL8BPTio9QGmqEvnxlBiNhPOwCtAknplMQmFvzC-9tPvyxj8lyPZvNSsw/exec";
 const GAME_NAME = "Mobile Legends"; 
 
 let selectedPackage = '';
@@ -246,11 +247,13 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
   submitButton.disabled = true; 
   submitButton.innerText = "جاري الإرسال...";
 
-  const formData = new FormData();
-  formData.append("phone", document.getElementById("sender-number").value);
-  formData.append("pubg_id", document.getElementById("pubg-id").value);
+   const formData = new FormData();
+   formData.append("phone", document.getElementById("sender-number").value);
+   formData.append("pubg_id", document.getElementById("pubg-id").value);
+   formData.append("zone_id", document.getElementById("zone-id").value); 
   formData.append("package", selectedPackage);
   formData.append("game", GAME_NAME);
+
 
   fetch(SCRIPT_URL, {
     method: "POST",
@@ -356,6 +359,8 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
       player_id: currentUser.uid,
       pubg_id: document.getElementById("pubg-id").value,
       phone: document.getElementById("sender-number").value,
+      zone_id: document.getElementById("zone-id").value,
+
       game_type: "Mobile Leagends", 
       package: selectedPackage,
        status: "قيد التنفيذ", 

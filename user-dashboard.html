@@ -438,19 +438,13 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-
 loginBtns.forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.preventDefault();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch(err) {
-      console.error(err);
-      alert("حدث خطأ أثناء تسجيل الدخول.");
-    }
+    try { await signInWithPopup(auth, provider); } 
+    catch(err){ console.error(err); alert("حدث خطأ أثناء تسجيل الدخول."); }
   });
 });
-
 
 logoutBtns.forEach(btn => {
   btn.addEventListener("click", async (e) => {
@@ -465,7 +459,6 @@ logoutBtns.forEach(btn => {
   });
 });
 
-
 async function loadDashboard(uid) {
   const ordersRef = collection(db, "orders");
   const q = query(ordersRef, where("player_id", "==", uid));
@@ -474,19 +467,20 @@ async function loadDashboard(uid) {
   ordersTable.innerHTML = `
     <tr>
       <th>Order ID</th>
-      <th>ID</th>
+      <th>Player ID</th>
+      <th>ZONE ID</th>
+      <th>Package</th>
       <th>Phone</th>
       <th>Game</th>
-      <th>Package</th>
       <th>Status</th>
       <th>Time</th>
     </tr>
   `;
 
-  if (querySnapshot.empty) {
+  if(querySnapshot.empty){
     const row = ordersTable.insertRow();
     const cell = row.insertCell(0);
-    cell.colSpan = 6;
+    cell.colSpan = 8;
     cell.innerText = "لا توجد طلبات مسجلة";
     return;
   }
@@ -495,36 +489,15 @@ async function loadDashboard(uid) {
     const data = doc.data();
     const row = ordersTable.insertRow();
     row.insertCell(0).innerText = data.order_id || "-";
-    row.insertCell(1).innerText = data.pubg_id || "-"; 
-    row.insertCell(2).innerText = data.phone || "-";
-    row.insertCell(3).innerText = data.game_type || "-";
-    row.insertCell(4).innerText = data.package || "-";
-    row.insertCell(5).innerText = data.status || "-";
-    row.insertCell(6).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
+    row.insertCell(1).innerText = data.pubg_id || "-";
+    row.insertCell(2).innerText = data.zone_id || "-"; 
+    row.insertCell(3).innerText = data.package || "-";
+    row.insertCell(4).innerText = data.phone || "-";
+    row.insertCell(5).innerText = data.game_type || "-";
+    row.insertCell(6).innerText = data.status || "-";
+    row.insertCell(7).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
   });
 }
-</script>
-
-<script>
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loading").classList.add("hidden");
-      }, 1000);
-    });
-  </script>
-  <script>
-const dropdown = document.getElementById("dropdownMenu");
-
-function toggleDropdown() {
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-
-
-window.addEventListener("click", function(e){
-  if(!e.target.matches('.menu-btn')){
-    dropdown.style.display = "none";
-  }
-});
 </script>
 </body>
 </html>
