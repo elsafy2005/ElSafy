@@ -73,7 +73,7 @@
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loading").classList.add("hidden");
-      }, 1400); // ثانية و7 أعشار
+      }, 1000); 
     });
   </script>
   <script type="module">
@@ -100,7 +100,7 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول
+
 onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
 
@@ -148,7 +148,7 @@ const userNames = [
   document.getElementById("userNameMobile")
 ];
 
-// متابعة حالة تسجيل الدخول
+
 onAuthStateChanged(auth, (user) => {
   if(user){
     loginBtns.forEach(btn => btn.style.display = "none");
@@ -163,13 +163,13 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// تسجيل الدخول
+
 loginBtns.forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
     try{
       await signInWithPopup(auth, provider);
-      // يحدث الصفحة بعد تسجيل الدخول لتطبيق كل العناصر
+      
       window.location.reload();
     }catch(err){
       console.error("Login Error:", err);
@@ -178,7 +178,7 @@ loginBtns.forEach(btn => {
   });
 });
 
-// تسجيل الخروج
+
 logoutBtns.forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -192,7 +192,7 @@ logoutBtns.forEach(btn => {
   });
 });
 
-// تسجيل الدخول
+
 document.getElementById("loginLink").addEventListener("click", (e)=>{
   e.preventDefault();
   signInWithPopup(auth, provider)
@@ -200,13 +200,13 @@ document.getElementById("loginLink").addEventListener("click", (e)=>{
     .catch(err => console.error(err));
 });
 
-// تسجيل الخروج
+
 document.getElementById("logoutBtn")?.addEventListener("click", (e)=>{
   e.preventDefault();
   signOut(auth).then(()=> window.location.href="index.html");
 });
 
-// إرسال الطلب
+
 document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
   if(!selectedPackage) return alert("❌ اختر باقة أولاً");
@@ -244,7 +244,7 @@ function toggleDropdown() {
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
 }
 
-// إخفاء القائمة عند الضغط خارجها
+
 window.addEventListener("click", function(e){
   if(!e.target.matches('.menu-btn')){
     dropdown.style.display = "none";

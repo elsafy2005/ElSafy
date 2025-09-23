@@ -79,7 +79,7 @@ const db = getFirestore(app);
 
 let ticketsArray = [];
 
-// تسجيل الدخول لمرة واحدة
+
 onAuthStateChanged(auth, async (user) => {
   if(!user){
     try{ await signInWithPopup(auth, provider); } 
@@ -88,7 +88,7 @@ onAuthStateChanged(auth, async (user) => {
   loadTickets();
 });
 
-// تحميل التيكيتات
+
 async function loadTickets(){
   const ticketsContainer = document.getElementById("ticketsContainer");
   ticketsContainer.innerHTML = "جاري تحميل التيكيتات...";
@@ -101,7 +101,7 @@ async function loadTickets(){
   renderTickets(ticketsArray);
 }
 
-// عرض التيكيتات
+
 function renderTickets(tickets){
   const ticketsContainer = document.getElementById("ticketsContainer");
   ticketsContainer.innerHTML = "";
@@ -130,7 +130,7 @@ function renderTickets(tickets){
       <button class="updateBtn">تحديث الحالة والرد</button>
     `;
 
-    // تحديث الحالة والرد
+    
     ticketDiv.querySelector(".updateBtn").addEventListener("click", async () => {
       const newStatus = ticketDiv.querySelector(".statusSelect").value;
       const reply = ticketDiv.querySelector(".adminReply").value;
@@ -149,7 +149,7 @@ function renderTickets(tickets){
   });
 }
 
-// بحث سريع
+
 document.getElementById("searchTickets").addEventListener("input", (e)=>{
   const term = e.target.value.toLowerCase();
   const filtered = ticketsArray.filter(t => 

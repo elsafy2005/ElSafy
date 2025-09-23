@@ -1,25 +1,38 @@
 <!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="leag.css" />
-  <link rel="icon" type="image/png" href="images/logo.png">
-   <title>El Safy Store | Game Top-Up</title>
+  <meta charset="UTF-8" />
+  <title>El Safy Store | Game Top-Up</title>
 <meta name="description" content="Elsafy Store - أسرع وأأمن موقع لشحن الألعاب زي PUBG, Free Fire, Mobile Legends و 8 Ball Pool. شحن مضمون وفوري بأفضل الأسعار.">
 <meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
 <meta name="author" content="Elsafy Store">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="valo.css" />
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LS3Z6JTV3W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-LS3Z6JTV3W');
+</script>
 </head>
 <body>
-    <div id="loading">
+ <div id="loading">
     <div class="loader">
       <span></span>
       <span></span>
       <span></span>
     </div>
   </div>
+   <video autoplay muted loop playsinline id="bgVideo">
+  <source src="images/giphy.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
 <div class="header">
   <img class="logo" src="images/logo.png" />
 
@@ -50,47 +63,55 @@
   </div>
 </div>
 
-<div class="delivery-note">
+  <div class="delivery-note">
   ⚡ Shipping takes from 2 minutes to 2 hours!
 </div>
- <div class="container">
+
+
+  <div class="container">
     <h1>تحديد الكمية</h1>
 
 <div class="packages">
-  <div class="package-card" onclick="selectPackage('575 RP', this)">
-    <img src="images/leag1.png" alt="575 RP">
-    <h3>575 RP</h3>
-    <p>260 جنيه</p>
+  <div class="package-card" onclick="selectPackage('30 CP', this)">
+    <img src="images/cpcall.png" alt="30 CP">
+    <h3>30 CP</h3>
+    <p>25 جنيه</p>
   </div>
 
-  <div class="package-card" onclick="selectPackage('1380 RP', this)">
-    <img src="images/leag2.png" alt="1380 RP">
-    <h3>1380 RP</h3>
-    <p>575 جنيه</p>
+  <div class="package-card" onclick="selectPackage('80 CP', this)">
+    <img src="images/cpcall.png" alt="80 CP">
+    <h3>80 CP</h3>
+    <p>55 جنيه</p>
   </div>
 
-  <div class="package-card" onclick="selectPackage('2800 RP', this)">
-    <img src="images/leag 3.png" alt="2800 RP">
-    <h3>2800 RP</h3>
-    <p>1110 جنيه</p>
+  <div class="package-card" onclick="selectPackage('420 CP', this)">
+    <img src="images/cpcall.png" alt="420 CP">
+    <h3>420 CP</h3>
+    <p>265 جنيه</p>
   </div>
 
-  <div class="package-card" onclick="selectPackage('4500 RP', this)">
-    <img src="images/leag 4.png" alt="4500 RP">
-    <h3>4500 RP</h3>
-    <p>1755 جنيه</p>
+  <div class="package-card" onclick="selectPackage('880 CP', this)">
+    <img src="images/cpcall.png" alt="880 CP">
+    <h3>880 CP</h3>
+    <p>500 جنيه</p>
   </div>
 
-  <div class="package-card" onclick="selectPackage('6500 RP', this)">
-    <img src="images/leag 6.png" alt="6500 RP">
-    <h3>6500 RP</h3>
-    <p>2500 جنيه</p>
+  <div class="package-card" onclick="selectPackage('2400 CP', this)">
+    <img src="images/cpcall.png" alt="2400 CP">
+    <h3>2400 CP</h3>
+    <p>1220 جنيه</p>
   </div>
 
-  <div class="package-card" onclick="selectPackage('13500 RP', this)">
-    <img src="images/leag 5.png" alt="13500 RP">
-    <h3>13500 RP</h3>
-    <p>5000 جنيه</p>
+  <div class="package-card" onclick="selectPackage('5000 CP', this)">
+    <img src="images/cpcall.png" alt="5000 CP">
+    <h3>5000 CP</h3>
+    <p>2340 جنيه</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('10800 CP', this)">
+    <img src="images/cpcall.png" alt="10800 CP">
+    <h3>10800 CP</h3>
+    <p>4750 جنيه</p>
   </div>
 </div>
 
@@ -120,7 +141,7 @@
 />
 
 
-  <label for="pubg-id">Riot ID :</label>
+  <label for="pubg-id">ID :</label>
 <input
   type="text"
   id="pubg-id"
@@ -129,7 +150,7 @@
   inputmode="numeric"
   pattern="[0-9]*"
   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-  placeholder="مثلاً: 5221122334"
+
 />
 
 
@@ -143,7 +164,7 @@
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWL-9s-EV8PthAzGc81IHNFaOZ2uy7VjEezxCkf_vwOxAY22ISPzItqn71bgBqH7fTng/exec";
-const GAME_NAME = "League of Legends"; // ثابت حسب موقعك
+const GAME_NAME = "Call of Duty Mobile"; 
 
 let selectedPackage = '';
 
@@ -153,14 +174,14 @@ function selectPackage(packageName, element) {
   document.getElementById('transferForm').classList.remove('hidden');
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 
-  // إزالة التأثير من كل الكروت
+  
   document.querySelectorAll('.package-card').forEach(card => {
     card.classList.remove('selected');
     let check = card.querySelector('.checkmark');
     if(check) check.remove();
   });
 
-  // إضافة تأثير الكرت المختار وعلامة ✅
+ 
   element.classList.add('selected');
   let checkmark = document.createElement('span');
   checkmark.className = 'checkmark';
@@ -168,7 +189,7 @@ function selectPackage(packageName, element) {
   element.appendChild(checkmark);
 }
 
-// التعامل مع إرسال الفورم
+
 document.getElementById("orderForm").addEventListener("submit", function(e){
   e.preventDefault();
 
@@ -192,8 +213,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
     body: formData
   })
   .then(() => {
-    // بعد الإرسال مباشرة نروح لصفحة الشكر
-    window.location.href = "thanks.html";
+        window.location.href = "thanks.html";
   })
   .catch(err => {
     alert("❌ حصل خطأ أثناء الإرسال");
@@ -204,11 +224,11 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
 });
 </script>
 
-   <script>
+<script>
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loading").classList.add("hidden");
-      }, 1400); // ثانية و7 أعشار
+      }, 1000); 
     });
   </script>
 
@@ -234,7 +254,7 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-// متابعة حالة تسجيل الدخول لمرة واحدة
+
 onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
   const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
@@ -255,7 +275,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// تسجيل الدخول
+
 [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -269,7 +289,7 @@ onAuthStateChanged(auth, (user) => {
   });
 });
 
-// تسجيل الخروج
+
 [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -283,7 +303,7 @@ onAuthStateChanged(auth, (user) => {
   });
 });
 
-// إرسال الطلب إلى Firestore
+
 document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
   e.preventDefault();
   if(!selectedPackage) return alert("❌ اختر باقة أولاً");
@@ -299,9 +319,9 @@ document.getElementById("orderForm")?.addEventListener("submit", async (e)=>{
       player_id: currentUser.uid,
       pubg_id: document.getElementById("pubg-id").value,
       phone: document.getElementById("sender-number").value,
-      game_type: "League of Legends", // أو GAME_NAME لو معرف
+      game_type: "Call of Duty Mobile", 
       package: selectedPackage,
-       status: "قيد التنفيذ", // ✅ هنا القيمة الجديدة
+       status: "قيد التنفيذ", 
       timestamp: serverTimestamp()
     });
     window.location.href = "thanks.html";
@@ -322,13 +342,14 @@ function toggleDropdown() {
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
 }
 
-// إخفاء القائمة عند الضغط خارجها
+
 window.addEventListener("click", function(e){
   if(!e.target.matches('.menu-btn')){
     dropdown.style.display = "none";
   }
 });
 </script>
+
   <footer class="site-footer">
   <div class="footer-content">
     <p>© 2025 جميع الحقوق محفوظة - <span> El Safy Store </span> 💙</p>
