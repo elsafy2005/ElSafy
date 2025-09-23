@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Customer Dashboard - My Tickets</title>
 <style>
 
@@ -47,12 +48,7 @@ h1 {
     font-family: 'Roboto', sans-serif;
     font-size: 2.5rem;
     color: #ffffff;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    animation:  2s infinite;
 }
 
 .desktop-nav {
@@ -341,6 +337,7 @@ body {
   object-fit: cover;
 }
 
+
 .header::before {
   content: "";
   position: absolute;
@@ -352,6 +349,33 @@ body {
 .header * {
   position: relative;
   z-index: 2; 
+}
+.header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 10px 50px;
+  background-color: rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 2;
+}
+
+
+.logo {
+  order: 1;
+}
+
+
+.desktop-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  order: 2;
+}
+
+
+.desktop-nav a#loginLinkDesktop {
+  margin-left: 15px; 
 }
 
 
@@ -485,6 +509,7 @@ body::before {
 }
 body{ direction: ltr;}
 h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
+
 </style>
 </head>
 <body>
@@ -541,9 +566,9 @@ h2 { margin-top:50px; margin-bottom:20px; color:#007bff; }
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-
+// ==== Firebase Config ====
 const firebaseConfig = {
   apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
   authDomain: "elsafy-store.firebaseapp.com",
@@ -553,6 +578,7 @@ const firebaseConfig = {
   appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
   measurementId: "G-H5Y50LG1DS"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -560,12 +586,27 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-
+// ==== Elements ====
 const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
 const logoutBtns = [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")];
 const userPhotos = [document.getElementById("userPhotoDesktop"), document.getElementById("userPhotoMobile")];
 const userNames = [document.getElementById("userNameDesktop"), document.getElementById("userNameMobile")];
+const dropdown = document.getElementById("dropdownMenu");
+const menuBtn = document.querySelector(".menu-btn");
 
+// ==== Dropdown Toggle ====
+menuBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // منع الـ click من الوصول للـ window
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+});
+
+window.addEventListener("click", function(e){
+  if (!dropdown.contains(e.target) && e.target !== menuBtn) {
+    dropdown.style.display = "none";
+  }
+});
+
+// ==== Auth State Change ====
 onAuthStateChanged(auth, async (user) => {
   currentUser = user || null;
 
@@ -583,7 +624,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-
+// ==== Login ====
 loginBtns.forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -597,7 +638,7 @@ loginBtns.forEach(btn => {
   });
 });
 
-
+// ==== Logout ====
 logoutBtns.forEach(btn => {
   btn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -611,7 +652,7 @@ logoutBtns.forEach(btn => {
   });
 });
 
-
+// ==== Open Ticket ====
 document.getElementById("openTicketBtn").addEventListener("click", async () => {
   if(!currentUser) return alert("❌ يجب تسجيل الدخول أولاً");
 
@@ -639,7 +680,7 @@ document.getElementById("openTicketBtn").addEventListener("click", async () => {
   }
 });
 
-
+// ==== Load Tickets ====
 async function loadTickets(){
   if(!currentUser) return;
 
@@ -671,53 +712,13 @@ async function loadTickets(){
   });
 }
 
-
-const dropdown = document.getElementById("dropdownMenu");
-function toggleDropdown() {
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-window.addEventListener("click", function(e){
-  if(!e.target.matches('.menu-btn')){
-    dropdown.style.display = "none";
-  }
+// ==== Loading Screen Hide ====
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loading").classList.add("hidden");
+  }, 1000);
 });
 </script>
 
-
-
-<script>
-
-function toggleDropdown() {
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-
-
-window.addEventListener("click", function(e){
-  if(!e.target.matches('.menu-btn')){
-    dropdown.style.display = "none";
-  }
-});
-</script>
-<script>
-
-
-function toggleDropdown() {
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-
-
-window.addEventListener("click", function(e){
-  if(!e.target.matches('.menu-btn')){
-    dropdown.style.display = "none";
-  }
-});
-</script>
-<script>
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loading").classList.add("hidden");
-      }, 1000); 
-    });
-  </script>
 </body>
 </html>

@@ -19,7 +19,7 @@ body {
   color: #ffffff;
   border: none;
 }
-
+body{ direction: ltr;}
 .btn:hover {
   background-color: #f2858c;
 }
@@ -129,6 +129,33 @@ body {
   z-index: -2;      
 }
 
+.header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 10px 50px;
+  background-color: rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 2;
+}
+
+
+.logo {
+  order: 1;
+}
+
+
+.desktop-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  order: 2;
+}
+
+
+.desktop-nav a#loginLinkDesktop {
+  margin-left: 15px; 
+}
 
 .video-overlay {
   position: fixed;
