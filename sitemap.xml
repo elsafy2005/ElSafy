@@ -9,57 +9,67 @@
 
 <url>
   <loc>https://elsafystore.netlify.app/</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://elsafystore.netlify.app/contact</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elsafystore.netlify.app/user-dashboard</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elsafystore.netlify.app/about</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://elsafystore.netlify.app/main%20pubg.html</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://elsafystore.netlify.app/free</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <loc>https://elsafystore.netlify.app/help</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elsafystore.netlify.app/valornt</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://elsafystore.netlify.app/main%20valo.html</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <loc>https://elsafystore.netlify.app/pubg-mobile</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://elsafystore.netlify.app/stm</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <loc>https://elsafystore.netlify.app/free-fire</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://elsafystore.netlify.app/fc</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <loc>https://elsafystore.netlify.app/call-of-duty-mobile</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://elsafystore.netlify.app/leag</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <loc>https://elsafystore.netlify.app/mobile-legends</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://elsafystore.netlify.app/ball</loc>
-  <lastmod>2025-09-19T09:07:46+00:00</lastmod>
+  <loc>https://elsafystore.netlify.app/fc-mobile</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elsafystore.netlify.app/league-of-legends</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elsafystore.netlify.app/8-ball-pool</loc>
+  <lastmod>2025-09-23T13:44:36+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
