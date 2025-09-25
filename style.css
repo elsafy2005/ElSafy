@@ -306,27 +306,7 @@ a, a:hover {
 .card a {
   color: inherit;
 }
-.site-footer {
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); 
-  color: #fff;
-  padding: 20px 10px;
-  text-align: center;
-  font-family: 'Cairo', sans-serif;
-  font-size: 15px;
-  margin-top: 50px;
-  border-top: 2px solid #00aaff;
-}
 
-.site-footer span {
-  color: #00c3ff;
-  font-weight: bold;
-}
-
-.footer-content p {
-  margin: 0;
-  line-height: 1.6;
-  letter-spacing: 0.5px;
-}
 .header {
   display: flex;
   justify-content: space-between;
@@ -391,13 +371,7 @@ a, a:hover {
   color: inherit;
   text-decoration: none;
 }
-.footer {
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-  font-size: 14px;
-  opacity: 0.6;
-}
+
 section, form, h1 {
   opacity: 0;
   transform: translateY(20px);
@@ -424,13 +398,7 @@ body {
 }
 
 
-.site-footer {
-  background-color: #111;
-  color: white;
-  text-align: center;
-  padding: 15px 10px;
-  font-size: 14px;
-}
+
 .slider {
   width: 95%;
   max-width: 1100px;     height: 400px;         margin: 40px auto;
@@ -654,4 +622,83 @@ body {
   max-width: 120px;         overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .trending-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px; 
+    padding: 5px;
+    justify-items: center;
+  }
+
+  .card {
+    width: 100%;      
+    padding: 8px;
+  }
+
+  .card img.thumb {
+    height: 80px;    
+    object-fit: cover;
+  }
+
+  .card-name h3 {
+    font-size: 12px;
+  }
+
+  .card-name p {
+    font-size: 10px;
+  }
+
+  .card-info img {
+    width: 18px;
+    height: 18px;
+  }
+}
+@media (max-width: 768px) {
+  .slider {
+    width: 100%;       
+    max-width: 100%;   
+    height: 180px;      
+    margin: 20px 0;  
+    border-radius: 0;  
+  }
+
+  .slides img {
+    width: 100%;       
+    height: 100%;      
+    object-fit: cover; 
+    border-radius: 0;   
+  }
+}
+
+@media (max-width: 768px) {
+  
+  .landing-page-left-section h1 {
+    font-size: 24px; 
+    line-height: 1.2;
+  }
+
+  
+  .slider {
+    width: 100%;
+    max-width: 100%;
+    height: 180px; 
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+
+  .slides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+
+  .landing-page {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+  }
 }

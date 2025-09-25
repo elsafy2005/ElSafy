@@ -1099,3 +1099,30 @@ body{
   color: rgba(255, 255, 255, 0.767);
 }
 #userNameDesktop { color: rgba(255, 255, 255, 0.842);}
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: translateY(10px);
+  }
+
+  }
+    @media (max-width: 768px) {
+.delivery-note {
+  width: 45%; 
+  margin: 10px auto;
+  padding: 6px 10px;
+  border-radius: 10px;
+  text-align: center;
+  white-space: nowrap;       
+  overflow: hidden;           
+  text-overflow: ellipsis;    
+  font-size: clamp(12px, 4vw, 18px); 
+  line-height: 1.2;
+  white-space: normal;
+}
+  }
