@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - El Safy Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+ 
+.userPhoto {
+  width: 35px;          
+  height: 35px;
+  border-radius: 50%;  
+  object-fit: cover;    
+  margin-left: 8px;
+  vertical-align: middle;
+  border: 2px solid #fff; 
+}
+
+
+.userName {
+  font-weight: 600;
+  color: #fff;
+  margin-left: 5px;
+  vertical-align: middle;
+  max-width: 120px;      
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cairo', sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  color: #333;
+  direction: ltr;
+  min-height: 100vh;
+}
+
+
+#dropdownMenu {
+    width: 180px; 
+    right: 10px; 
+    flex-direction: column;
+    padding: 5px 0; 
+    box-sizing: border-box;
+}
+
+
+#dropdownMenu a {
+    padding: 8px 12px;  
+    font-size: 14px;
+}
+
+
+@media screen and (max-width: 480px) {
+    #dropdownMenu {
+        width: 140px;
+    }
+    #dropdownMenu a {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}
+#dropdownMenu {
+    position: absolute;
+    top: 60px;      
+    right: 0;        
+    left: auto;      
+    display: none;
+    flex-direction: column;
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    z-index: 999;
+}
+
+#dropdownMenu a {
+    padding: 6px 12px; 
+    font-size: 14px;  
+    line-height: 1.3;  
+}
+
+
+#dropdownMenu {
+    gap: 0;  
+    padding: 5px 0; 
+}
+
+#loading {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.loader {
+  display: flex;
+  gap: 12px;
+}
+.loader span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  animation: bounce 0.6s infinite alternate;
+}
+.loader span:nth-child(2) { animation-delay: 0.2s; }
+.loader span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  from { transform: translateY(0) scale(1); opacity: 0.6; }
+  to { transform: translateY(-20px) scale(1.2); opacity: 1; }
+}
+#loading.hidden { opacity: 0; visibility: hidden; }
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 50px;
+  background-color: rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1000;
+}
+.header::before {
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-color: rgba(0,0,0,0.4);
+  z-index:1;
+}
+.header * { position: relative; z-index:2; }
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.desktop-nav a {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.desktop-nav a:hover { background-color: #007BFF; }
+
+
+#userPhoto { width: 40px; height: 40px; border-radius: 50%; margin-left: 5px; }
+#userName { font-weight: bold; margin-left:5px; }
+
+
+.menu-btn {
+  display: none;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background: #1e3a8a;
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+.dropdown a {
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+}
+.dropdown a:hover { background: #374ac0; }
+
+
+#dashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 120px auto 50px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+#dashboard h1 { color:#1e3a8a; margin-bottom: 25px; font-size:2rem; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+}
+th {
+  background: #1e3a8a;
+  color: #fff;
+  font-weight: 500;
+}
+tr:nth-child(even) { background:#f3f4f6; }
+tr:hover { background:#e0e7ff; }
+
+
+.logoutBtn {
+  margin: 15px auto;
+  display: block;
+  padding: 10px 25px;
+  background: #ef4444;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:500;
+  transition: 0.3s;
+}
+.logoutBtn:hover { background:#f87171; }
+
+
+@media screen and (max-width:768px) {
+  .header { flex-direction: column; align-items: flex-start; gap:15px; padding:10px 20px; }
+  .logo { width: 60px; height: 60px; }
+  .desktop-nav { display: none; }
+  .menu-btn { display: inline-block; }
+  .dropdown { top: 70px; right:10px; }
+
+  table {
+    font-size: 12px;
+  }
+  th, td { padding: 6px 8px; }
+  #dashboard h1 { font-size:1.5rem; }
+  #dashboard { margin: 150px 10px 50px 10px; }
+}
+#userNameMobile {
+  color: rgba(255, 255, 255, 0.767);
+}
+#userNameDesktop { color: rgba(255, 255, 255, 0.842);}
+
+.table-wrapper {
+  overflow-x: auto; 
+  width: 100%;
+  margin: 20px auto;
+}
+
+.table-wrapper table {
+  min-width: 600px; 
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.table-wrapper th,
+.table-wrapper td {
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.table-wrapper th {
+  background: #1e3a8a;
+  color: #fff;
+  font-weight: 500;
+}
+@media screen and (max-width:768px) {
+  .dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;       
+    left: 10px;      
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+}
+
+.table-wrapper tr:nth-child(even) { background:#f3f4f6; }
+.table-wrapper tr:hover { background:#e0e7ff; }
+
+@media screen and (max-width:768px) {
+  #dashboard {
+    margin: 20px 10px 50px 10px;
+    padding: 15px;
+  }
+
+  #dashboard h1 { font-size: 1.5rem; }
+
+  .table-wrapper table {
+    min-width: 500px; 
+  }
+
+  .table-wrapper th, .table-wrapper td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  z-index: -2;      
+}
+
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
+}
+
+.video-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);   pointer-events: none; 
+  }
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+  }
+
+  .logo {
+    order: 1;
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu-btn {
+    display: inline-block;
+    order: 2; 
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;  
+    background: #1e3a8a;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+    flex-direction: column;
+    z-index: 999;
+  }
+}
+@media screen and (max-width:768px) {
+  .menu-btn { display: block; }
+  #dropdownMenu {
+    display: none;
+    flex-direction: column;
+  }
+}
+
+</style>
+</head>
+<body>
+      <div id="loading">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <video autoplay muted loop playsinline poster="images/wall.jpg" id="bgVideo">
+  <source src="images/wall.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<div class="header">
+ 
+  <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
+
+  
+  <img class="logo" src="images/logo.png" />
+
+ 
+  <div class="dropdown" id="dropdownMenu">
+      <a href="index.html">Home</a>
+      <a href="Contact.HTML">Contact</a>
+      <a href="user-dashboard.html">Orders</a>
+      <a href="About.html">About</a>
+      <a href="help.html">Customer Service</a>
+<a href="#" class="loginLink">Login</a>
+<img class="userPhoto" src="images/img_avatar.png" alt="User">
+<span class="userName"></span>
+
+  </div>
+
+  
+  <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+    <a href="help.html">Customer Service</a>
+<a href="#" class="loginLink">Login</a>
+<img class="userPhoto" src="images/img_avatar.png" alt="User">
+<span class="userName"></span>
+  </nav>
+</div>
+
+
+<div id="dashboard" style="display:none">
+  <h1>طلباتك</h1>
+<button class="logoutBtn" style="display:none">تسجيل الخروج</button>
+  <div class="table-wrapper">
+    <table id="ordersTable"></table>
+  </div>
+
+
+<table id="ordersTable" border="1" style="width:100%; text-align:center;"></table>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+  authDomain: "elsafy-store.firebaseapp.com",
+  projectId: "elsafy-store",
+  storageBucket: "elsafy-store.appspot.com",
+  messagingSenderId: "517856691965",
+  appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+  measurementId: "G-H5Y50LG1DS"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+const loginBtns = document.querySelectorAll(".loginLink");
+const logoutBtns = document.querySelectorAll(".logoutBtn");
+const userNames = document.querySelectorAll(".userName");
+const userPhotos = document.querySelectorAll(".userPhoto");
+const ordersTable = document.getElementById("ordersTable");
+
+let currentUser = null;
+
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user || null;
+
+  if(currentUser){
+    loginBtns.forEach(btn => btn.style.display = "none");
+    logoutBtns.forEach(btn => btn.style.display = "inline-block");
+    userNames.forEach(el => el.innerText = currentUser.displayName);
+    userPhotos.forEach(el => el.src = currentUser.photoURL || "images/img_avatar.png");
+    document.getElementById("dashboard").style.display = "block";
+    await loadDashboard(currentUser.uid);
+  } else {
+    loginBtns.forEach(btn => btn.style.display = "inline-block");
+    logoutBtns.forEach(btn => btn.style.display = "none");
+    userNames.forEach(el => el.innerText = "");
+    userPhotos.forEach(el => el.src = "images/img_avatar.png");
+    document.getElementById("dashboard").style.display = "none";
+  }
+});
+
+loginBtns.forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try { await signInWithPopup(auth, provider); } 
+    catch(err){ console.error(err); alert("حدث خطأ أثناء تسجيل الدخول."); }
+  });
+});
+
+logoutBtns.forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      ordersTable.innerHTML = "";
+    } catch(err) {
+      console.error(err);
+      alert("حدث خطأ أثناء تسجيل الخروج.");
+    }
+  });
+});
+
+async function loadDashboard(uid) {
+  const ordersRef = collection(db, "orders");
+  const q = query(ordersRef, where("player_id", "==", uid));
+  const querySnapshot = await getDocs(q);
+
+  ordersTable.innerHTML = `
+    <tr>
+      <th>Order ID</th>
+      <th>Player ID</th>
+      <th>ZONE ID</th>
+      <th>Package</th>
+      <th>Phone</th>
+      <th>Game</th>
+      <th>Status</th>
+      <th>Time</th>
+    </tr>
+  `;
+
+  if(querySnapshot.empty){
+    const row = ordersTable.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 8;
+    cell.innerText = "لا توجد طلبات مسجلة";
+    return;
+  }
+
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+    const row = ordersTable.insertRow();
+    row.insertCell(0).innerText = data.order_id || "-";
+    row.insertCell(1).innerText = data.pubg_id || "-";
+    row.insertCell(2).innerText = data.zone_id || "-"; 
+    row.insertCell(3).innerText = data.package || "-";
+    row.insertCell(4).innerText = data.phone || "-";
+    row.insertCell(5).innerText = data.game_type || "-";
+    row.insertCell(6).innerText = data.status || "-";
+    row.insertCell(7).innerText = data.timestamp ? new Date(data.timestamp.seconds*1000).toLocaleString() : "-";
+  });
+}
+</script>
+<script>
+const dropdown = document.getElementById("dropdownMenu");
+
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
+<script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

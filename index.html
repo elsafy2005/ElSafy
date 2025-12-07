@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+   <title> El Safy Store | Game Top-Up</title>
+   
+<meta name="description" content="Elsafy Store - أسرع وأأمن موقع لشحن الألعاب  PUBG, Free Fire, Mobile Legends و 8 Ball Pool. شحن مضمون وفوري بأفضل الأسعار.">
+<meta name="keywords" content="Elsafy Store, شحن ألعاب, PUBG UC, Free Fire, Mobile Legends, 8 Ball Pool, Game Top-Up">
+<meta name="author" content="Elsafy Store">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="El Safy Store | Game Top-Up">
+<meta property="og:url" content="https://elsafystore.netlify.app/">
+<meta property="og:image" content="https://elsaf   ystore.netlify.app/images/logo.png">
+<meta property="og:type" content="website"> 
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LS3Z6JTV3W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LS3Z6JTV3W');
+</script>
+ 
+<script type="application/ld+json">
+{-
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Elsafy Store",
+  "url": "https://elsafystore.netlify.app/",
+  "logo": "https://elsafystore.netlify.app/images/logo.png",
+  "description": "أسرع وأأمن موقع لشحن الألعاب PUBG, Free Fire, Mobile Legends و 8 Ball Pool.",
+  "sameAs": [
+    "https://www.facebook.com/elsafystore",
+    "https://www.instagram.com/elsafystore"
+  ]
+}
+</script>
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Vi_4C3rZ-ZWwuKZgRHF40WPddR2JCvQ",
+  authDomain: "elsafy-store.firebaseapp.com",
+  projectId: "elsafy-store",
+  storageBucket: "elsafy-store.appspot.com",
+  messagingSenderId: "517856691965",
+  appId: "1:517856691965:web:a3ba8b4e89ad8d8e8d2094",
+  measurementId: "G-H5Y50LG1DS"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
+
+let currentUser = null;
+
+
+onAuthStateChanged(auth, (user) => {
+  currentUser = user || null;
+  const loginBtns = [document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")];
+  const logoutBtns = [document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")];
+  const userPhotos = [document.getElementById("userPhotoDesktop"), document.getElementById("userPhotoMobile")];
+  const userNames = [document.getElementById("userNameDesktop"), document.getElementById("userNameMobile")];
+
+  if(user){
+    loginBtns.forEach(btn => btn.style.display="none");
+    logoutBtns.forEach(btn => btn.style.display="inline-block");
+    userPhotos.forEach(photo => photo.src = user.photoURL || "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = user.displayName);
+  } else {
+    loginBtns.forEach(btn => btn.style.display="inline-block");
+    logoutBtns.forEach(btn => btn.style.display="none");
+    userPhotos.forEach(photo => photo.src = "images/img_avatar.png");
+    userNames.forEach(name => name.innerText = "");
+  }
+});
+
+
+[document.getElementById("loginLinkDesktop"), document.getElementById("loginLinkMobile")].forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signInWithPopup(auth, provider);
+      window.location.reload();
+    } catch(err){
+      console.error("Login Error:", err);
+      alert("حدث خطأ أثناء تسجيل الدخول");
+    }
+  });
+});
+
+
+[document.getElementById("logoutBtnDesktop"), document.getElementById("logoutBtnMobile")].forEach(btn => {
+  btn.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    try{
+      await signOut(auth);
+      window.location.reload();
+    } catch(err){
+      console.error("Logout Error:", err);
+      alert("حدث خطأ أثناء تسجيل الخروج");
+    }
+  });
+});
+
+</script>
+
+
+
+</head>
+<body>
+    <div id="loading">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+<video autoplay muted loop playsinline poster="images/wall.jpg" id="bgVideo">
+  <source src="images/wall.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<div class="header">
+  <img class="logo" src="images/logo.png" />
+
+
+  <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="Contact.HTML">Contact</a>
+    <a href="user-dashboard.html">Orders</a>
+    <a href="About.html">About</a>
+    <a href="help.html">Customer Service</a>
+    <a href="#" id="loginLinkDesktop">Login</a>
+    <img id="userPhotoDesktop" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+    <span id="userNameDesktop"></span>
+    <a href="#" id="logoutBtnDesktop" style="display:none; margin-left:10px;">Logout</a>
+  </nav>
+
+
+  <button class="menu-btn" onclick="toggleDropdown()">☰ القوائم</button>
+
+
+  <div class="dropdown" id="dropdownMenu">
+      <a href="index.html">Home</a>
+      <a href="Contact.HTML">Contact</a>
+      <a href="user-dashboard.html">Orders</a>
+      <a href="About.html">About</a>
+      <a href="help.html">Customer Service</a>
+      <a href="#" id="loginLinkMobile">Login</a>
+      <img id="userPhotoMobile" src="images/img_avatar.png" alt="User" style="width:40px; height:40px; border-radius:50%; margin-left:10px;">
+      <span id="userNameMobile"></span>
+      <a href="#" id="logoutBtnMobile" style="display:none; margin-left:10px;">Logout</a>
+  </div>
+</div>
+
+
+
+  <div class="landing-page">
+    <div class="landing-page-left-section">
+      <span>Welcome To El Safy Store !</span>
+      <h1>Top-Up Your Favorite Games in Seconds</h1>
+      <p>
+        Welcome to the El Safy Store. We offer you a service to charge all games in an easy and safe way
+      </p>
+    </div>
+  <div class="slider">
+    <div class="slides" id="slides">
+      <a href="main pubg.html"><img src="images/banbupd.jpg" alt="PUBG"></a>
+      <a href="free.html"><img src="images/banfree.png" alt="Free Fire"></a>
+      <a href="valornt.html"><img src="images/valoban.webp" alt="Mobile Legends"></a>
+    </div>
+  </div>
+
+  <div class="navigation" id="nav-dots">
+    <span class="bar active"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </div>
+  </div>
+  
+  
+
+<div>
+
+  <div class="trending-container">
+    <span>Trending</span>
+    <div class="trending-header">
+      <h1>Trending Games</h1>
+      
+    </div>
+    <div class="trending-cards">
+ 
+
+        
+<a href="pubg-mobile.html" class="card">
+  <img class="thumb" src="images/trending-01.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Action</p>
+      <h3>PUBG Mobile</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+
+<a href="free-fire.html" class="card">
+  <img class="thumb" src="images/free.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Action</p>
+      <h3>FREE FIRE</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+
+
+
+<a href="call-of-duty-mobile.html" class="card">
+  <img class="thumb" src="images/call.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Action</p>
+      <h3>Call of Duty Mobile</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+
+        
+
+<a href="Mobile-Legends.html" class="card">
+  <img class="thumb" src="images/download.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Action</p>
+      <h3>Mobile Legends: Bang Bang</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+
+
+
+<a href="fc-mobile.html" class="card">
+  <img class="thumb" src="images/fc.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Football</p>
+      <h3>FC Mobile</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+<a href="League-of-Legends.html" class="card">
+  <img class="thumb" src="images/League_of_Legends_icon.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Action</p>
+      <h3>League of Legends</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+<a href="8-Ball-Pool.html" class="card">
+  <img class="thumb" src="images/download (1).jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Billiards</p>
+      <h3>8 Ball Pool</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+<a href="valornt.html" class="card">
+  <img class="thumb" src="images/valorant_tile.jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>Action</p>
+      <h3>VALORANT</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+
+<a href="stumble-guys.html" class="card">
+  <img class="thumb" src="images/images (1).jpg" width="240" />
+  <div class="card-info">
+    <div class="card-name">
+      <p>FUN</p>
+      <h3>Stumble Guys</h3>
+    </div>
+    <img src="images/online-shopping.png" />
+  </div>
+</a>
+  </div>
+</div>
+
+<div class="trending-container">
+  <span>Gift Cards</span>
+  <div class="trending-header">
+    <h1>Gift Cards</h1>
+  </div>
+
+  <div class="trending-cards">
+    <a href="google-play.html" class="card">
+      <img class="thumb" src="images/img-loader (1).webp" alt="Google Play">
+      <div class="card-info">
+        <div class="card-name">
+          <p>Store</p>
+          <h3>Google Play (USA)</h3>
+        </div>
+        <img src="images/online-shopping.png" alt="">
+      </div>
+    </a>
+
+        <a href="itunes.html" class="card">
+      <img class="thumb" src="images/img-loader (2).webp" width="240" />
+      <div class="card-info">
+        <div class="card-name">
+          <p>Store</p>
+          <h3>iTunes Cards (USA)</h3>
+        </div>
+        <img src="images/online-shopping.png" />
+      </div>
+    </a>
+
+
+
+ <a href="xbox.html" class="card">
+      <img class="thumb" src="images/ADuN6cXg3f6LzyCwr85w3jrS0UzJ5HSbEsfNKgWi.png" width="240" />
+      <div class="card-info">
+        <div class="card-name">
+          <p>Console</p>
+          <h3>Xbox Cards (USA)</h3>
+        </div>
+        <img src="images/online-shopping.png" />
+      </div>
+    </a>
+
+            <a href="playstation.html" class="card">
+      <img class="thumb" src="images/img-loader.webp" width="240" />
+      <div class="card-info">
+        <div class="card-name">
+          <p>Console</p>
+          <h3>Play Station Cards (UAE)</h3>
+        </div>
+        <img src="images/online-shopping.png" />
+      </div>
+    </a>
+
+    <a href="steam.html" class="card">
+      <img class="thumb" src="images/69286ecbe3114b63a719d2e5.avif" width="240" />
+      <div class="card-info">
+        <div class="card-name">
+          <p>Store</p>
+          <h3>Steam Card (USA)</h3>
+        </div>
+        <img src="images/online-shopping.png" />
+      </div>
+    </a>
+  
+       <a href="Fortnite.html" class="card">
+      <img class="thumb" src="images/fort.avif" width="240" />
+      <div class="card-info">
+        <div class="card-name">
+          <p>Redeem Code</p>
+          <h3>Fortnite Gift Card</h3>
+        </div>
+        <img src="images/online-shopping.png" />
+      </div>
+    </a>
+  
+  </div>
+</div>
+
+
+
+    <script>
+    const slides = document.getElementById("slides");
+    const dots = document.querySelectorAll(".bar");
+    let index = 0;
+
+    function showSlide(i) {
+      index = i;
+      slides.style.transform = `translateX(${-index * 100}%)`;
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[index].classList.add("active");
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => showSlide(i));
+    });
+
+    setInterval(() => {
+      index = (index + 1) % dots.length;
+      showSlide(index);
+    }, 4000);
+  </script>
+ <script>
+ 
+    document.body.style.overflow = "hidden";
+
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+        document.body.style.overflow = "auto"; 
+      }, 1000);
+    });
+  </script>
+
+<script>
+const dropdown = document.getElementById("dropdownMenu");
+
+function toggleDropdown() {
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+
+window.addEventListener("click", function(e){
+  if(!e.target.matches('.menu-btn')){
+    dropdown.style.display = "none";
+  }
+});
+</script>
+
+</body>
